@@ -22,7 +22,7 @@ class nme8:
 		n.dx = Cos(dir)*mag
 		n.dy = Sin(dir)*mag
 		n.move = freeze
-		nme8_list.AddLast( n )	
+		NME8_LIST.AddLast( n )	
 		return n
 	
 	
@@ -54,7 +54,7 @@ class nme8:
 		Endif 
 		Toward(px,py,PLAYFIELDW)
 		blackhole()
-		for othern8:nme8 = EachIn nme8_list
+		for othern8:nme8 = EachIn NME8_LIST
 			if othern8 <> Self
 				distx# = othern8.x-x
 				disty# = othern8.y-y
@@ -76,13 +76,13 @@ class nme8:
 		dist# = (distx * distx + disty * disty)
 		if dist < 12*12 + 12*12
 			killer = True		
-			if KillPlayer() Then nme8_LIST.Remove(Self)
+			if KillPlayer() Then NME8_LIST.Remove(Self)
 		
 	
 
 	def Blackhole()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			if n5.active			
 				Local ddx# = n5.x-x
 				Local ddy# = n5.y-y 
@@ -121,7 +121,7 @@ class nme8:
 			part.Create(x,y, 8 ,COL_BUTTER_R,COL_BUTTER_G,COL_BUTTER_B,t*120+r)	
 		
 		gridpoint.Shockwave(x,y)
-		nme8_LIST.Remove(Self)				
+		NME8_LIST.Remove(Self)				
 	
 
 	def Draw()

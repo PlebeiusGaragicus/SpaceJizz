@@ -619,243 +619,238 @@ def SaveConfig() -> bool:
 
 
 
-def SaveColours() -> bool:
+# def SaveColours() -> bool:
 
-	Local fh:TStream, fn$
+# 	Local fh:TStream, fn$
 
-	fn$ = "Colours.txt"
-	fh = WriteFile(fn$)
-	if fh != None
-		WriteLine(fh,"squares")
-		WriteLine(fh,COL_SQUARE_R)
-		WriteLine(fh,COL_SQUARE_G)
-		WriteLine(fh,COL_SQUARE_B)
-		WriteLine(fh,"pinwheels")
-		WriteLine(fh,COL_PIN_R)
-		WriteLine(fh,COL_PIN_G)
-		WriteLine(fh,COL_PIN_B)
-		WriteLine(fh,"diamonds")
-		WriteLine(fh,COL_DIAMOND_R)
-		WriteLine(fh,COL_DIAMOND_G)
-		WriteLine(fh,COL_DIAMOND_B)
-		WriteLine(fh,"cubes")
-		WriteLine(fh,COL_CUBE_R)
-		WriteLine(fh,COL_CUBE_G)
-		WriteLine(fh,COL_CUBE_B)
-		WriteLine(fh,"circles")
-		WriteLine(fh,COL_SEEKER_R)
-		WriteLine(fh,COL_SEEKER_G)
-		WriteLine(fh,COL_SEEKER_B)
-		WriteLine(fh,"butterflies")
-		WriteLine(fh,COL_BUTTER_R)
-		WriteLine(fh,COL_BUTTER_G)
-		WriteLine(fh,COL_BUTTER_B)
-		WriteLine(fh,"blackholes")
-		WriteLine(fh,COL_SUN_R)
-		WriteLine(fh,COL_SUN_G)
-		WriteLine(fh,COL_SUN_B)
-		WriteLine(fh,"clone")
-		WriteLine(fh,COL_CLONE_R)
-		WriteLine(fh,COL_CLONE_G)
-		WriteLine(fh,COL_CLONE_B)
-		WriteLine(fh,"snake head")
-		WriteLine(fh,COL_SNAKE_R)
-		WriteLine(fh,COL_SNAKE_G)
-		WriteLine(fh,COL_SNAKE_B)
-		WriteLine(fh,"snake tail")
-		WriteLine(fh,COL_TAIL_R)
-		WriteLine(fh,COL_TAIL_G)
-		WriteLine(fh,COL_TAIL_B)
-		WriteLine(fh,"triangles")
-		WriteLine(fh,COL_TRIANGLE_R)
-		WriteLine(fh,COL_TRIANGLE_G)
-		WriteLine(fh,COL_TRIANGLE_B)
-		WriteLine(fh,"player")
-		WriteLine(fh,COL_PLAYER_R)
-		WriteLine(fh,COL_PLAYER_G)
-		WriteLine(fh,COL_PLAYER_B)
-		WriteLine(fh,"shots")
-		WriteLine(fh,COL_SHOT_R)
-		WriteLine(fh,COL_SHOT_G)
-		WriteLine(fh , COL_SHOT_B)
-		WriteLine(fh,"super shots")
-		WriteLine(fh,COL_SHOT1_R)
-		WriteLine(fh,COL_SHOT1_G)
-		WriteLine(fh,COL_SHOT1_B)
-		WriteLine(fh,"bouncy shots")
-		WriteLine(fh,COL_SHOT2_R)
-		WriteLine(fh,COL_SHOT2_G)
-		WriteLine(fh , COL_SHOT2_B)
-		WriteLine(fh,"bomb")
-		WriteLine(fh,COL_BOMB_R)
-		WriteLine(fh,COL_BOMB_G)
-		WriteLine(fh,COL_BOMB_B)
-		WriteLine(fh,"scores")
-		WriteLine(fh,COL_SCORE_R)
-		WriteLine(fh,COL_SCORE_G)
-		WriteLine(fh,COL_SCORE_B)
-		WriteLine(fh,"powerups")
-		WriteLine(fh,COL_POWERUP_R)
-		WriteLine(fh,COL_POWERUP_G)
-		WriteLine(fh,COL_POWERUP_B)
-		WriteLine(fh,"trail")
-		WriteLine(fh,COL_TRAIL_R)
-		WriteLine(fh,COL_TRAIL_G)
-		WriteLine(fh,COL_TRAIL_B)
+# 	fn$ = "Colours.txt"
+# 	fh = WriteFile(fn$)
+# 	if fh != None
+# 		WriteLine(fh,"squares")
+# 		WriteLine(fh,COL_SQUARE_R)
+# 		WriteLine(fh,COL_SQUARE_G)
+# 		WriteLine(fh,COL_SQUARE_B)
+# 		WriteLine(fh,"pinwheels")
+# 		WriteLine(fh,COL_PIN_R)
+# 		WriteLine(fh,COL_PIN_G)
+# 		WriteLine(fh,COL_PIN_B)
+# 		WriteLine(fh,"diamonds")
+# 		WriteLine(fh,COL_DIAMOND_R)
+# 		WriteLine(fh,COL_DIAMOND_G)
+# 		WriteLine(fh,COL_DIAMOND_B)
+# 		WriteLine(fh,"cubes")
+# 		WriteLine(fh,COL_CUBE_R)
+# 		WriteLine(fh,COL_CUBE_G)
+# 		WriteLine(fh,COL_CUBE_B)
+# 		WriteLine(fh,"circles")
+# 		WriteLine(fh,COL_SEEKER_R)
+# 		WriteLine(fh,COL_SEEKER_G)
+# 		WriteLine(fh,COL_SEEKER_B)
+# 		WriteLine(fh,"butterflies")
+# 		WriteLine(fh,COL_BUTTER_R)
+# 		WriteLine(fh,COL_BUTTER_G)
+# 		WriteLine(fh,COL_BUTTER_B)
+# 		WriteLine(fh,"blackholes")
+# 		WriteLine(fh,COL_SUN_R)
+# 		WriteLine(fh,COL_SUN_G)
+# 		WriteLine(fh,COL_SUN_B)
+# 		WriteLine(fh,"clone")
+# 		WriteLine(fh,COL_CLONE_R)
+# 		WriteLine(fh,COL_CLONE_G)
+# 		WriteLine(fh,COL_CLONE_B)
+# 		WriteLine(fh,"snake head")
+# 		WriteLine(fh,COL_SNAKE_R)
+# 		WriteLine(fh,COL_SNAKE_G)
+# 		WriteLine(fh,COL_SNAKE_B)
+# 		WriteLine(fh,"snake tail")
+# 		WriteLine(fh,COL_TAIL_R)
+# 		WriteLine(fh,COL_TAIL_G)
+# 		WriteLine(fh,COL_TAIL_B)
+# 		WriteLine(fh,"triangles")
+# 		WriteLine(fh,COL_TRIANGLE_R)
+# 		WriteLine(fh,COL_TRIANGLE_G)
+# 		WriteLine(fh,COL_TRIANGLE_B)
+# 		WriteLine(fh,"player")
+# 		WriteLine(fh,COL_PLAYER_R)
+# 		WriteLine(fh,COL_PLAYER_G)
+# 		WriteLine(fh,COL_PLAYER_B)
+# 		WriteLine(fh,"shots")
+# 		WriteLine(fh,COL_SHOT_R)
+# 		WriteLine(fh,COL_SHOT_G)
+# 		WriteLine(fh , COL_SHOT_B)
+# 		WriteLine(fh,"super shots")
+# 		WriteLine(fh,COL_SHOT1_R)
+# 		WriteLine(fh,COL_SHOT1_G)
+# 		WriteLine(fh,COL_SHOT1_B)
+# 		WriteLine(fh,"bouncy shots")
+# 		WriteLine(fh,COL_SHOT2_R)
+# 		WriteLine(fh,COL_SHOT2_G)
+# 		WriteLine(fh , COL_SHOT2_B)
+# 		WriteLine(fh,"bomb")
+# 		WriteLine(fh,COL_BOMB_R)
+# 		WriteLine(fh,COL_BOMB_G)
+# 		WriteLine(fh,COL_BOMB_B)
+# 		WriteLine(fh,"scores")
+# 		WriteLine(fh,COL_SCORE_R)
+# 		WriteLine(fh,COL_SCORE_G)
+# 		WriteLine(fh,COL_SCORE_B)
+# 		WriteLine(fh,"powerups")
+# 		WriteLine(fh,COL_POWERUP_R)
+# 		WriteLine(fh,COL_POWERUP_G)
+# 		WriteLine(fh,COL_POWERUP_B)
+# 		WriteLine(fh,"trail")
+# 		WriteLine(fh,COL_TRAIL_R)
+# 		WriteLine(fh,COL_TRAIL_G)
+# 		WriteLine(fh,COL_TRAIL_B)
 
-		info$ = "Colour file saved."
-		infotimer = 30*4
-		CloseFile fh
-		return True
-	else:
-		return False
-
-
-
-
-
-
-def LoadColours() -> bool:
-
-	Local fh:TStream, fn$
-	Local com$
-
-	fn$ = "Colours.txt"
-	fh = OpenFile(fn$)
-	if fh != None
-		com$ = ReadLine(fh)
-		COL_SQUARE_R = Int(ReadLine(fh))
-		COL_SQUARE_G = Int(ReadLine(fh))
-		COL_SQUARE_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_PIN_R = Int(ReadLine(fh))
-		COL_PIN_G = Int(ReadLine(fh))
-		COL_PIN_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_DIAMOND_R = Int(ReadLine(fh))
-		COL_DIAMOND_G = Int(ReadLine(fh))
-		COL_DIAMOND_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_CUBE_R = Int(ReadLine(fh))
-		COL_CUBE_G = Int(ReadLine(fh))
-		COL_CUBE_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_SEEKER_R = Int(ReadLine(fh))
-		COL_SEEKER_G = Int(ReadLine(fh))
-		COL_SEEKER_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_BUTTER_R = Int(ReadLine(fh))
-		COL_BUTTER_G = Int(ReadLine(fh))
-		COL_BUTTER_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_SUN_R = Int(ReadLine(fh))
-		COL_SUN_G = Int(ReadLine(fh))
-		COL_SUN_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_CLONE_R = Int(ReadLine(fh))
-		COL_CLONE_G = Int(ReadLine(fh))
-		COL_CLONE_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_SNAKE_R = Int(ReadLine(fh))
-		COL_SNAKE_G = Int(ReadLine(fh))
-		COL_SNAKE_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_TAIL_R = Int(ReadLine(fh))
-		COL_TAIL_G = Int(ReadLine(fh))
-		COL_TAIL_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_TRIANGLE_R = Int(ReadLine(fh))
-		COL_TRIANGLE_G = Int(ReadLine(fh))
-		COL_TRIANGLE_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_PLAYER_R = Int(ReadLine(fh))
-		COL_PLAYER_G = Int(ReadLine(fh))
-		COL_PLAYER_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_SHOT_R = Int(ReadLine(fh))
-		COL_SHOT_G = Int(ReadLine(fh))
-		COL_SHOT_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_SHOT1_R = Int(ReadLine(fh))
-		COL_SHOT1_G = Int(ReadLine(fh))
-		COL_SHOT1_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_SHOT2_R = Int(ReadLine(fh))
-		COL_SHOT2_G = Int(ReadLine(fh))
-		COL_SHOT2_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_BOMB_R = Int(ReadLine(fh))
-		COL_BOMB_G = Int(ReadLine(fh))
-		COL_BOMB_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_SCORE_R = Int(ReadLine(fh))
-		COL_SCORE_G = Int(ReadLine(fh))
-		COL_SCORE_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_POWERUP_R = Int(ReadLine(fh))
-		COL_POWERUP_G = Int(ReadLine(fh))
-		COL_POWERUP_B = Int(ReadLine(fh) )
-
-		com$ = ReadLine(fh)
-		COL_TRAIL_R = Int(ReadLine(fh))
-		COL_TRAIL_G = Int(ReadLine(fh))
-		COL_TRAIL_B = Int(ReadLine(fh) )
-
-		info$ = "Colour file loaded."
-		infotimer = 30*4
-		CloseFile fh
-		return True
-	else:
-		info$ = "Colour file load failed."
-		infotimer = 30*4
-		return False
+# 		info$ = "Colour file saved."
+# 		infotimer = 30*4
+# 		CloseFile fh
+# 		return True
+# 	else:
+# 		return False
 
 
 
 
 
 
+# def LoadColours() -> bool:
+
+# 	Local fh:TStream, fn$
+# 	Local com$
+
+# 	fn$ = "Colours.txt"
+# 	fh = OpenFile(fn$)
+# 	if fh != None
+# 		com$ = ReadLine(fh)
+# 		COL_SQUARE_R = Int(ReadLine(fh))
+# 		COL_SQUARE_G = Int(ReadLine(fh))
+# 		COL_SQUARE_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_PIN_R = Int(ReadLine(fh))
+# 		COL_PIN_G = Int(ReadLine(fh))
+# 		COL_PIN_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_DIAMOND_R = Int(ReadLine(fh))
+# 		COL_DIAMOND_G = Int(ReadLine(fh))
+# 		COL_DIAMOND_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_CUBE_R = Int(ReadLine(fh))
+# 		COL_CUBE_G = Int(ReadLine(fh))
+# 		COL_CUBE_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_SEEKER_R = Int(ReadLine(fh))
+# 		COL_SEEKER_G = Int(ReadLine(fh))
+# 		COL_SEEKER_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_BUTTER_R = Int(ReadLine(fh))
+# 		COL_BUTTER_G = Int(ReadLine(fh))
+# 		COL_BUTTER_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_SUN_R = Int(ReadLine(fh))
+# 		COL_SUN_G = Int(ReadLine(fh))
+# 		COL_SUN_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_CLONE_R = Int(ReadLine(fh))
+# 		COL_CLONE_G = Int(ReadLine(fh))
+# 		COL_CLONE_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_SNAKE_R = Int(ReadLine(fh))
+# 		COL_SNAKE_G = Int(ReadLine(fh))
+# 		COL_SNAKE_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_TAIL_R = Int(ReadLine(fh))
+# 		COL_TAIL_G = Int(ReadLine(fh))
+# 		COL_TAIL_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_TRIANGLE_R = Int(ReadLine(fh))
+# 		COL_TRIANGLE_G = Int(ReadLine(fh))
+# 		COL_TRIANGLE_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_PLAYER_R = Int(ReadLine(fh))
+# 		COL_PLAYER_G = Int(ReadLine(fh))
+# 		COL_PLAYER_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_SHOT_R = Int(ReadLine(fh))
+# 		COL_SHOT_G = Int(ReadLine(fh))
+# 		COL_SHOT_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_SHOT1_R = Int(ReadLine(fh))
+# 		COL_SHOT1_G = Int(ReadLine(fh))
+# 		COL_SHOT1_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_SHOT2_R = Int(ReadLine(fh))
+# 		COL_SHOT2_G = Int(ReadLine(fh))
+# 		COL_SHOT2_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_BOMB_R = Int(ReadLine(fh))
+# 		COL_BOMB_G = Int(ReadLine(fh))
+# 		COL_BOMB_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_SCORE_R = Int(ReadLine(fh))
+# 		COL_SCORE_G = Int(ReadLine(fh))
+# 		COL_SCORE_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_POWERUP_R = Int(ReadLine(fh))
+# 		COL_POWERUP_G = Int(ReadLine(fh))
+# 		COL_POWERUP_B = Int(ReadLine(fh) )
+
+# 		com$ = ReadLine(fh)
+# 		COL_TRAIL_R = Int(ReadLine(fh))
+# 		COL_TRAIL_G = Int(ReadLine(fh))
+# 		COL_TRAIL_B = Int(ReadLine(fh) )
+
+# 		info$ = "Colour file loaded."
+# 		infotimer = 30*4
+# 		CloseFile fh
+# 		return True
+# 	else:
+# 		info$ = "Colour file load failed."
+# 		infotimer = 30*4
+# 		return False
 
 
 
 
-def CaptureScreen():
-	GrabImage(capturedimg,0,0)
+# def CaptureScreen():
+# 	GrabImage(capturedimg,0,0)
 
 
 
-def DrawAllStatic(sz: float=1):
+# def DrawAllStatic(sz: float=1):
 
-	SetColor 64,64,128
-	SetBlend SOLIDBLEND
-	if capturedimg is not None:
-		SetScale sz,sz
-		DrawImage capturedimg,SCREENW/2,SCREENH/2
+# 	SetColor 64,64,128
+# 	SetBlend SOLIDBLEND
+# 	if capturedimg is not None:
+# 		SetScale sz,sz
+# 		DrawImage capturedimg,SCREENW/2,SCREENH/2
 
-	SetScale 1,1
+# 	SetScale 1,1
 
 
 
 
 # TODO - this is an odd one, it returns a number for the option or False
-def Options(showgame:Int) -> int:
+# TODO - it also takes what is essentially a bool but as an int
+def Options(showgame: int) -> int:
 
 	Local xx:Int, yy:Int, cnt:Int
 	Local ret:Int = 0
@@ -879,8 +874,9 @@ def Options(showgame:Int) -> int:
 		xx = MouseX()
 		yy = MouseY()
 		SetLineWidth 2
-		tim = MilliSecs()
-		if showgame: DrawAllStatic(.9)
+		tim = time()
+		if showgame:
+			DrawAllStatic(.9)
 		SetColor 255,0,0
 		DrawString("Options",SCREENW/2-280,SCREENH/2-lsp*3,6)
 
@@ -891,7 +887,7 @@ def Options(showgame:Int) -> int:
 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2,SCREENW,5*4): sel = 1
 		if sel = 1 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
 		DrawString("Settings",SCREENW/2-280,SCREENH/2,4)
-		if showgame
+		if showgame:
 			if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp,SCREENW,5*4): sel = 2
 			if sel = 2 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
 			DrawString("End Game",SCREENW/2-280,SCREENH/2+lsp,4)
@@ -907,7 +903,7 @@ def Options(showgame:Int) -> int:
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		Flip 1
 		cnt += 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -1006,7 +1002,7 @@ def conf:Int(showgame:Int, st$="")
 		xx = MouseX()
 		yy = MouseY()
 
-		tim = MilliSecs()
+		tim = time()
 		if showgame: DrawAllStatic(.8)
 
 		SetColor 255,0,0
@@ -1022,7 +1018,7 @@ def conf:Int(showgame:Int, st$="")
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		Flip 1
 		cnt += 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -1089,7 +1085,7 @@ def Settings:Int(showgame:Int)
 		xx = MouseX()
 		yy = MouseY()
 
-		tim = MilliSecs()
+		tim = time()
 		if showgame: DrawAllStatic(.8)
 		SetColor 255,0,0
 		DrawString("Settings",SCREENW/2-280,SCREENH/2-lsp*3,6)
@@ -1116,7 +1112,7 @@ def Settings:Int(showgame:Int)
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		Flip 1
 		cnt += 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -1223,7 +1219,7 @@ def VideoSettings:Int(showgame:Int)
 		xx = MouseX()
 		yy = MouseY()
 		SetLineWidth 2
-		tim = MilliSecs()
+		tim = time()
 		if showgame:
 			DrawAllStatic(.7)
 		SetColor 255,0,0
@@ -1314,7 +1310,7 @@ def VideoSettings:Int(showgame:Int)
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		cnt += 1
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -1539,7 +1535,7 @@ def GameSettings:Int(showgame:Int)
 		xx = MouseX()
 		yy = MouseY()
 
-		tim = MilliSecs()
+		tim = time()
 		if showgame: DrawAllStatic(.7)
 		SetColor 255,0,0
 		DrawString("Game Settings",SCREENW/2-280,SCREENH/2-lsp*4,6)
@@ -1573,7 +1569,7 @@ def GameSettings:Int(showgame:Int)
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		cnt += 1
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -1701,7 +1697,7 @@ def AudioSettings(showgame:Int)
 		xx = MouseX()
 		yy = MouseY()
 
-		tim = MilliSecs()
+		tim = time()
 		if showgame: DrawAllStatic(.7)
 		SetColor 255,0,0
 		DrawString("Audio Settings",SCREENW/2-280,SCREENH/2-lsp*2,6)
@@ -1742,7 +1738,7 @@ def AudioSettings(showgame:Int)
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		cnt += 1
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -1854,7 +1850,7 @@ def ControllerSettings(showgame:Int)
 		xx = MouseX()
 		yy = MouseY()
 
-		tim = MilliSecs()
+		tim = time()
 		if showgame: DrawAllStatic(.7)
 		SetColor 255,0,0
 		DrawString("Controller Selection",SCREENW/2-280,SCREENH/2-lsp*2,6)
@@ -1873,7 +1869,7 @@ def ControllerSettings(showgame:Int)
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		cnt += 1
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -1978,7 +1974,7 @@ def HybridControllerSettings(showgame:Int)
 		xx = MouseX()
 		yy = MouseY()
 
-		tim = MilliSecs()
+		tim = time()
 		if showgame: DrawAllStatic(.6)
 		SetColor 255,0,0
 		DrawString("Hybrid Control",SCREENW/2-280,SCREENH/2-lsp*3,6)
@@ -2019,7 +2015,7 @@ def HybridControllerSettings(showgame:Int)
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		cnt += 1
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -2119,7 +2115,7 @@ def MouseControllerSettings(showgame:Int)
 		xx = MouseX()
 		yy = MouseY()
 
-		tim = MilliSecs()
+		tim = time()
 		if showgame: DrawAllStatic(.6)
 		SetColor 255,0,0
 		DrawString("Mouse Control",SCREENW/2-280,SCREENH/2-lsp*3,6)
@@ -2145,7 +2141,7 @@ def MouseControllerSettings(showgame:Int)
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		cnt += 1
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -2243,7 +2239,7 @@ def KeyboardControllerSettings(showgame:Int)
 		Cls
 		xx = MouseX()
 		yy = MouseY()
-		tim = MilliSecs()
+		tim = time()
 		if showgame:
 			DrawAllStatic(.6)
 		SetColor 255,0,0
@@ -2307,7 +2303,7 @@ def KeyboardControllerSettings(showgame:Int)
 		cnt += 1
 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -2411,7 +2407,7 @@ def JoypadControllerSettings(showgame:Int)
 		xx= MouseX()
 		yy = MouseY()
 
-		tim = MilliSecs()
+		tim = time()
 		if showgame: DrawAllStatic(.6)
 		SetColor 255,0,0
 		DrawString("Joypad Control",SCREENW/2-280,SCREENH/2-lsp*4,6)
@@ -2454,7 +2450,7 @@ def JoypadControllerSettings(showgame:Int)
 		DrawTarget(xx,yy,cnt,4)
 		cnt += 1
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 
@@ -2630,7 +2626,7 @@ def DualAnalogControllerSettings():
 
 	while not done:
 		Cls
-		tim = MilliSecs()
+		tim = time()
 		drawconfigstuff()
 
 		mx = MouseX()
@@ -2682,7 +2678,7 @@ def DualAnalogControllerSettings():
 
 		cnt += 1
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0
 			Delay 20-tim
 

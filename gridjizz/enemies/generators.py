@@ -16,7 +16,7 @@ class ge
 		g.rate = rate
 		g.kind = kind
 		g.move = freeze
-		ge_list.AddLast( g )	
+		GENERATOR_LIST.AddLast( g )	
 		return g
 	
 	
@@ -97,7 +97,7 @@ class ge
 			Local vol# = (1 - abs(pan)/10) * (1 - (abs(y-py)/PLAYFIELDH)/10)
 			PlaySound2(ge_killed_snd, 1, pan, vol)			
 			if points Then score.IncScore(x,y,200)
-			ge_LIST.Remove(Self)
+			GENERATOR_LIST.Remove(Self)
 		else:
 			Local freq# = 1+(sz)/64
 			Local pan# = (x-px)/PLAYFIELDW

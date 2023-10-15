@@ -17,7 +17,7 @@ class nme6
 		else:
 			SafeXY(x,y,px,py,40,1)		
 				
-		if CountList(nme6_list) > 16 * 24 Then return Null
+		if CountList(NME6_LIST) > 16 * 24 Then return Null
 		Local dir:Int,mag#
 		Local n:nme6 = New nme6
 		n.x = x
@@ -52,7 +52,7 @@ class nme6
 		else:
 			n.tail = Null
 					
-		nme6_list.AddLast( n )	
+		NME6_LIST.AddLast( n )	
 		return n
 	
 	
@@ -126,13 +126,13 @@ class nme6
 		if dist < 24*24
 			killer = True
 			MarkKiller()
-			if KillPlayer() Then nme6_LIST.Remove(Self)
+			if KillPlayer() Then NME6_LIST.Remove(Self)
 					
 	
 
 	def Blackhole()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			if n5.active			
 				Local ddx# = n5.x-x
 				Local ddy# = n5.y-y 
@@ -171,7 +171,7 @@ class nme6
 					tail.move = 300				
 				
 			
-			nme6_LIST.Remove(Self)
+			NME6_LIST.Remove(Self)
 		else:
 			if points
 				Local pan# = (x-px)/PLAYFIELDW
@@ -201,7 +201,7 @@ class nme6
 	
 
 	def Explode()
-		nme6_LIST.Remove(Self)
+		NME6_LIST.Remove(Self)
 		if move < 50
 			Local pan# = (x-px)/PLAYFIELDW
 			Local vol# = (1 - abs(pan)/10) * (1 - (abs(y-py)/PLAYFIELDH)/10)

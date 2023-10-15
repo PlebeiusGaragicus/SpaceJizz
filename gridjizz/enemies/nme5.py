@@ -14,7 +14,7 @@ Type nme5
 	Global sndindex:Int = 0
 	
 	def CreateDisplayEffect(x#, y#, size#)
-		Local cnt:Int = CountList(nme5_list)
+		Local cnt:Int = CountList(NME5_LIST)
 		if cnt > 15 Then return
 		Local n:nme5 = New nme5
 		n.x = x
@@ -28,7 +28,7 @@ Type nme5
 		Local mag# = Rnd(1,4)		
 		n.dx = Cos(dir)*mag
 		n.dy = Sin(dir)*mag
-		nme5_list.AddLast( n )	
+		NME5_LIST.AddLast( n )	
 	
 	
 	def UpdateDisplayEffect()
@@ -75,7 +75,7 @@ Type nme5
 		else:
 			SafeXY(x,y,px,py,40,1)		
 				
-		Local cnt:Int = CountList(nme5_list)
+		Local cnt:Int = CountList(NME5_LIST)
 		if cnt > 3 Then return
 		Local pan# = (x-px)/PLAYFIELDW
 		Local vol# = (1 - abs(pan)/10) * (1 - (abs(y-py)/PLAYFIELDH)/10)
@@ -96,7 +96,7 @@ Type nme5
 		n.dx = Cos(dir)*mag
 		n.dy = Sin(dir)*mag
 		n.move = freeze
-		nme5_list.AddLast( n )	
+		NME5_LIST.AddLast( n )	
 	
 	
 	def Update()
@@ -130,7 +130,7 @@ Type nme5
 		Local dist# = (distx * distx + disty * disty)
 		if dist < (12+sz/2)*(12+sz/2)+12*12
 			killer = True		
-			if KillPlayer() Then nme5_LIST.Remove(Self)
+			if KillPlayer() Then NME5_LIST.Remove(Self)
 		
 
 		if active
@@ -154,7 +154,7 @@ Type nme5
 	
 	def DoubleSun()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			if n5 <> Self
 				Local ddx# = n5.x-x
 				Local ddy# = n5.y-y
@@ -204,7 +204,7 @@ Type nme5
 			#gridpoint.pull(x,y,16,10)
 			gridpoint.Push(x,y,8,2)									
 			if sunloopchan[sndchindex] <> Null Then StopChannel(sunloopchan[sndchindex])
-			nme5_LIST.Remove(Self)
+			NME5_LIST.Remove(Self)
 			for t = 0 To 31
 				part.Create(x,y, 0 ,COL_SUN_R,COL_SUN_G,COL_SUN_B)	
 			
@@ -257,7 +257,7 @@ Type nme5
 				yy= y+Sin(t*20)*30
 				nme8.Create(xx,yy,4,1)	
 						
-			nme5_LIST.Remove(Self)			
+			NME5_LIST.Remove(Self)			
 			for t = 0 To 35
 				part.Create(x+Sin(t*10)*20,y+Cos(t*10)*20, 0 ,COL_SUN_R,COL_SUN_G,COL_SUN_B)	
 			

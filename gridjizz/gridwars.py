@@ -1,8 +1,8 @@
 import os
 import sys
-from time import sleep
+from time import sleep, time
 from math import sin, cos, sqrt, atan2
-from random import randint, uniform
+from random import randint, uniform, seed
 
 import pygame
 
@@ -115,19 +115,19 @@ print(circ)
 
 
 SHOT_LIST = []
-nme_LIST = []
-nme1_LIST = []
-nme2_LIST = []
-nme3_LIST = []
-nme4_LIST = []
-nme5_LIST = []
-nme6_LIST = []
-nme7_LIST = []
-nme8_LIST = []
-ge_LIST = []
-le_LIST = []
-pu_LIST = []
-score_list = []
+NME_LIST = []
+NME1_LIST = []
+NME2_LIST = []
+NME3_LIST = []
+NME4_LIST = []
+NME5_LIST = []
+NME6_LIST = []
+NME7_LIST = []
+NME8_LIST = []
+GENERATOR_LIST = []
+LINEEND_LIST = []
+POWERUP_LIST = []
+SCORE_LIST = []
 
 
 
@@ -145,15 +145,15 @@ def DoGameOver() -> int:
 		dying = True
 		UpdateAll()
 		Cls
-		tim = MilliSecs()
-		drawall()
+		tim = time()
+		DrawAll()
 		# if KeyDown(KEY_TAB): End
 		# if not KeyDown(KEY_F8)
 		SetColor 0,55+abs(Sin(looper/2))*200,0
 		DrawString("GAME OVER", SCREENW/2-abs(Sin(looper/2))*19*5*9*.5, SCREENH/2-abs(Sin(looper/2))*100, abs(Sin(looper/2))*20)
 
 		Flip 1
-		tim = MilliSecs() - tim
+		tim = time() - tim
 
 		if tim < 20 and tim > 0:
 			sleep(20-tim)
@@ -169,590 +169,6 @@ def DoGameOver() -> int:
 
 	return False
 
-
-
-
-
-
-def ShowFriends(f: int = -1) -> int:
-	Local counter: int = 0, i: int
-	Local tim: int
-
-	FlushKeys()
-	bombtime = 20
-	Local colr: int[8]
-	Local colg: int[8]
-	Local colb: int[8]
-	Local lsp: int = 50
-	Local lwsp: int = 0
-
-	while (counter < 900):
-		Cls
-		gcount += 1
-		tim = MilliSecs()
-		if randint(0,100) > 94 and counter < 850:
-			part.CreateFireworks(1)
-
-		part.UpdateParticles(1)
-		part.DrawParticles()
-		BlackholeParticles()
-
-		#red circles
-		for n5 in nme5_list:
-			n5.UpdateDisplayEffect()
-
-
-		SetColor 255,255,0
-		if (SCREENH<600):
-			lsp = 32
-			lwsp = 32
-		else:
-			lsp = 50
-			lwsp = 0
-
-		DrawString("Know Your Friends",SCREENW/2-4.5*5*18/2-32,10,4.5)
-
-		CycleColours()
-		CycleColours()
-		colr[7] = rcol
-		colg[7] = gcol
-		colb[7] = bcol
-		if counter % 4 = 0
-			for i= 1 To 7
-				colr[i-1] = colr[i]
-				colg[i-1] = colg[i]
-				colb[i-1] = colb[i]
-
-
-		if counter > 50:
-			SetColor 255,255,255
-			SetRotation(counter)
-		 	DrawImage whiteplayer,SCREENW/2-200+lwsp,SCREENH/2-lsp*4
-			SetRotation(0)
-			SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-			DrawString("Your Ship",SCREENW/2-100,SCREENH/2-lsp*4-10,3)
-			SetColor 255,255,255
-
-		if counter > 100:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200-lwsp,SCREENH/2-lsp*3,2
-			SetBlend LIGHTBLEND
-			SetColor colr[0],colg[0],colb[0]
-			SetRotation(counter*6)
-			DrawImage whitestar,SCREENW/2-200-lwsp,SCREENH/2-lsp*3
-			SetRotation 0
-			SetColor COL_DIAMOND_R,COL_DIAMOND_G,COL_DIAMOND_B
-			DrawString("Temporary Back Shooter",SCREENW/2-100,SCREENH/2-lsp*3-10,3)
-
-		if counter > 150:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200+lwsp,SCREENH/2-lsp*2,3
-			SetBlend LIGHTBLEND
-			SetColor colr[1],colg[1],colb[1]
-			SetRotation(counter*6+45)
-			DrawImage whitestar,SCREENW/2-200+lwsp,SCREENH/2-lsp*2
-			SetRotation 0
-			SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-			DrawString("Temporary Side Shooters",SCREENW/2-100,SCREENH/2-lsp*2-10,3)
-
-		if counter > 200:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200-lwsp,SCREENH/2-lsp,0
-			SetBlend LIGHTBLEND
-			SetColor colr[2],colg[2],colb[2]
-			SetRotation(counter*6)
-			DrawImage whitestar,SCREENW/2-200-lwsp,SCREENH/2-lsp
-			SetRotation 0
-			SetColor COL_DIAMOND_R,COL_DIAMOND_G,COL_DIAMOND_B
-			DrawString("Extra Front Shooter",SCREENW/2-100,SCREENH/2-lsp-10,3)
-
-		if counter > 250:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200+lwsp,SCREENH/2,5
-			SetBlend LIGHTBLEND
-			SetColor colr[3],colg[3],colb[3]
-			SetRotation(counter*6)
-			DrawImage whitestar,SCREENW/2-200+lwsp,SCREENH/2
-			SetRotation 0
-			SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-			DrawString("Extra Shot Speed",SCREENW/2-100,SCREENH/2-10,3)
-
-		if counter > 300:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200-lwsp,SCREENH/2+lsp,6
-			SetBlend LIGHTBLEND
-			SetColor colr[4],colg[4],colb[4]
-			SetRotation(counter*6)
-			DrawImage whitestar,SCREENW/2-200-lwsp,SCREENH/2+lsp
-			SetRotation 0
-			SetColor COL_DIAMOND_R,COL_DIAMOND_G,COL_DIAMOND_B
-			DrawString("Extra Player",SCREENW/2-100,SCREENH/2+lsp-10,3)
-
-		if counter > 350:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200+lwsp,SCREENH/2+lsp*2,8
-			SetBlend LIGHTBLEND
-			SetColor colr[5],colg[5],colb[5]
-			SetRotation(counter*6)
-			DrawImage whitestar,SCREENW/2-200+lwsp,SCREENH/2+lsp*2
-			SetRotation 0
-			SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-			DrawString("Extra Bomb",SCREENW/2-100,SCREENH/2+lsp*2-10,3)
-
-		if counter > 400:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200-lwsp,SCREENH/2+lsp*3,9
-			SetBlend LIGHTBLEND
-			SetColor colr[6],colg[6],colb[6]
-			SetRotation(counter*6)
-			DrawImage whitestar,SCREENW/2-200-lwsp,SCREENH/2+lsp*3
-			SetRotation 0
-			SetColor COL_DIAMOND_R,COL_DIAMOND_G,COL_DIAMOND_B
-			DrawString("Temporary Shield",SCREENW/2-100,SCREENH/2+lsp*3-10,3)
-
-		if counter > 450:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200+lwsp,SCREENH/2+lsp*4,7
-			SetBlend LIGHTBLEND
-			SetColor colr[6],colg[6],colb[6]
-			SetRotation(counter*6)
-			DrawImage whitestar,SCREENW/2-200+lwsp,SCREENH/2+lsp*4
-			SetRotation 0
-			SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-			DrawString("Super Shots",SCREENW/2-100,SCREENH/2+lsp*4-10,3)
-
-		if counter > 500:
-			SetAlpha 1
-			SetRotation 0
-			SetBlend LIGHTBLEND
-			SetColor 255,255,255
-			DrawImage powerimage,SCREENW/2-200-lwsp,SCREENH/2+lsp*5,10
-			SetBlend LIGHTBLEND
-			SetColor colr[7],colg[7],colb[7]
-			SetRotation(counter*6)
-			DrawImage whitestar,SCREENW/2-200-lwsp,SCREENH/2+lsp*5
-			SetRotation 0
-			SetColor COL_DIAMOND_R,COL_DIAMOND_G,COL_DIAMOND_B
-			DrawString("Bouncy Shots",SCREENW/2-100,SCREENH/2+lsp*5-10,3)
-
-
-		SetColor 255,255,0
-		if counter % 50 > 25:
-			DrawString("Press BOMB Button to Start",SCREENW/2-250,SCREENH-32,4)
-
-
-#		DrawLine 0,0,SCREENW,0
-#		DrawLine 0,0,0,SCREENH
-#		DrawLine SCREENW-1,0,SCREENW-1,SCREENH-1
-#		DrawLine 0,SCREENH-1,SCREENW-1,SCREENH-1
-
-		Flip 1
-		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0:
-			sleep(20-tim)
-
-		counter = counter+1
-		bombtime = bombtime - 1
-		if bombtime < 0:
-			bombtime = 0
-
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
-			if Options(False):
-				return True
-
-		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
-			counter = 1000
-			playgame = True
-
-	return False
-
-
-
-
-
-
-def ShowEnemies(f: int = -1) -> int:
-	counter: int = 0
-	i: int
-	Local tim: int
-	Local lsp: int = 50
-	Local lwsp: int = 0
-
-	FlushKeys()
-	bombtime = 20
-
-	while (counter < 900):
-		Cls
-		tim = MilliSecs()
-		if (SCREENH<600):
-			lsp = 32
-			lwsp = 32
-		else:
-			lsp = 50;lwsp = 0
-
-		SetColor 255,0,0
-		DrawString("Know Your Enemies",SCREENW/2-4.5*5*18/2-32,10,4.5)
-
-		if counter > 50:
-			SetColor 255,255,255
-			SetRotation(counter*4)
-			DrawImage pinkpinwheel,SCREENW/2-200-lwsp,SCREENH/2-lsp*4
-			SetRotation(0)
-			SetColor COL_PIN_R,COL_PIN_G,COL_PIN_B
-			DrawString("Paul the Pinwheel (25 pts)",SCREENW/2-120,SCREENH/2-lsp*4-10,3)
-			SetColor 255,255,255
-
-		if counter > 100:
-			Local sc%,scy: float, scx: float
-			sc = counter % (256)
-			if sc > 127:
-				scy = sc-127
-				if sc > 127+63:
-					scy = 255-sc
-				scx = 0
-			else:
-				scx = sc
-				if sc > 63:
-					scx = 127-sc
-				scy = 0
-
-			SetScale 1+scx/80.0,1+scy/80.0
-			DrawImage bluediamond,SCREENW/2-200+lwsp,SCREENH/2-lsp*3
-			SetScale 1,1
-			SetColor COL_DIAMOND_R,COL_DIAMOND_G,COL_DIAMOND_B
-			DrawString("Dimmy the Diamond (50 pts)",SCREENW/2-120,SCREENH/2-lsp*3-10,3)
-			SetColor 255,255,255
-
-		if counter > 150:
-			SetRotation(counter*2)
-			DrawImage greensquare,SCREENW/2-200-lwsp,SCREENH/2-lsp*2
-			SetRotation(0)
-			SetColor COL_SQUARE_R,COL_SQUARE_G,COL_SQUARE_B
-			DrawString("Shy the Square (100 pts)",SCREENW/2-120,SCREENH/2-lsp*2-10,3)
-			SetColor 255,255,255
-
-		if counter > 200:
-			SetRotation(-counter*2.5+90)
-			DrawImage purplesquare1,SCREENW/2-200+lwsp,SCREENH/2-lsp
-			SetRotation(0)
-			SetColor COL_CUBE_R,COL_CUBE_G,COL_CUBE_B
-			DrawString("Cubie the Cube (50/100 pts)",SCREENW/2-120,SCREENH/2-lsp-10,3)
-			SetColor 255,255,255
-
-		if counter > 250:
-			DrawImage bluecircle,SCREENW/2-200-lwsp,SCREENH/2
-			SetColor COL_SEEKER_R,COL_SEEKER_G,COL_SEEKER_B
-			DrawString("Sammy the Seeker (10 pts)",SCREENW/2-120,SCREENH/2-10,3)
-			SetColor 255,255,255
-
-		if counter > 300:
-			SetScale .75+Sin(counter*8)*.25,.75+Sin(counter*8)*.25
-			DrawImage redcircle,SCREENW/2-200+lwsp,SCREENH/2+lsp
-			SetScale 1,1
-			SetColor COL_SUN_R,COL_SUN_G,COL_SUN_B
-			DrawString("Dwight the Black Hole (150 pts)",SCREENW/2-120,SCREENH/2+lsp-10,3)
-			SetColor 255,255,255
-
-		if counter > 350:
-			for Local tt: int = 0 To 23
-				SetRotation 90-Cos(tt*30+counter)*20
-				if tt == 0:
-					DrawImage snakehead,SCREENW/2-200+lwsp+45-tt*13,SCREENH/2+lsp*2+Sin(tt*30+counter)*16
-				else:
-					DrawImage snaketail,SCREENW/2-200+lwsp+45-tt*13,SCREENH/2+lsp*2+Sin(tt*30+counter)*16,24-tt
-
-
-			SetRotation 0
-			SetColor COL_SNAKE_R,COL_SNAKE_G,COL_SNAKE_B
-			DrawString("Selena the Snake (100 pts)",SCREENW/2-120,SCREENH/2+lsp*2-10,3)
-			SetColor 255,255,255
-
-		if counter > 400:
-			SetRotation(counter)
-			DrawImage redclone,SCREENW/2-200-lwsp,SCREENH/2+lsp*3
-			SetRotation(0)
-			SetColor COL_CLONE_R,COL_CLONE_G,COL_CLONE_B
-			DrawString("Ivan the Interceptor (100 pts)",SCREENW/2-120,SCREENH/2+lsp*3-10,3)
-			SetColor 255,255,255
-
-		if counter > 450:
-			SetRotation(-counter*3)
-			DrawImage orangetriangle,SCREENW/2-200+lwsp,SCREENH/2+lsp*4
-			SetRotation(0)
-			SetColor COL_TRIANGLE_R,COL_TRIANGLE_G,COL_TRIANGLE_B
-			DrawString("Trish the Triangle (150 pts)",SCREENW/2-120,SCREENH/2+lsp*4-10,3)
-			SetColor 255,255,255
-
-		if counter > 500:
-			SetRotation(counter*4)
-			DrawImage indigotriangle,SCREENW/2-200-lwsp,SCREENH/2+lsp*5
-			SetRotation(0)
-			SetColor COL_BUTTER_R,COL_BUTTER_G,COL_BUTTER_B
-			DrawString("Indy the Butterfly (10 pts)",SCREENW/2-120,SCREENH/2+lsp*5-10,3)
-			SetColor 255,255,255
-
-
-		if randint(0,100) > 94 and counter < 850:
-			part.CreateFireworks(1)
-
-		part.UpdateParticles(1)
-		part.DrawParticles()
-		SetColor 255,255,0
-		if counter % 50 > 25:
-			DrawString("Press BOMB Button to Start",SCREENW/2-250,SCREENH-32,4)
-
-		Flip 1
-		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0:
-			sleep(20-tim)
-
-		counter = counter+1
-		bombtime -= 1
-		if bombtime < 0:
-			bombtime = 0
-
-		if KeyHit(KEY_ESCAPE) or \
-			(JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or \
-			(JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
-			if Options(False):
-				return True
-
-		if KeyHit(k_bomb) or MouseHit(m_bomb) or \
-			(JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or \
-			(JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
-			counter = 1000
-			playgame = True
-
-
-	return False
-
-
-
-
-def ShowScores(f: int=-1) -> int:
-	Local counter: int = 0, i: int
-	Local ptime: str = GetPlayTime$(gcount)
-	Local t: int, kol: int
-	Local tim: int,s: str,spc: int
-	Local d: int
-
-	Local colr: int[10]
-	Local colg: int[10]
-	Local colb: int[10]
-
-	for i: int = 9 To 0 Step -1:
-		CycleColours()
-		CycleColours()
-		colr[i] = rcol
-		colg[i] = gcol
-		colb[i] = bcol
-
-	FlushKeys()
-	bombtime = 20
-	while (counter < 750):
-		Cls
-		tim = MilliSecs()
-		d = counter/250
-		if f != -1:
-			d = laststartingdifficulty
-		CycleColours()
-		CycleColours()
-		colr[9] = rcol
-		colg[9] = gcol
-		colb[9] = bcol
-		if counter % 4 == 0:
-			for i= 1 To 9:
-				colr[i-1] = colr[i]
-				colg[i-1] = colg[i]
-				colb[i-1] = colb[i]
-
-
-		SetColor 0,0,240
-		DrawString("TOP SCORES - "+difficulty$[d],SCREENW/2-200,SCREENH/2-220,4)
-		SetColor 64,240,64
-		DrawString("SCORE",SCREENW/2-250,SCREENH/2-180,3)
-		DrawString("NAME",SCREENW/2-100,SCREENH/2-180,3)
-		DrawString("TIME",SCREENW/2+130,SCREENH/2-180,3)
-
-		for t = 0 To 9:
-			SetColor colr[9-t],colg[9-t],colb[9-t]
-			if t = f and d = laststartingdifficulty:
-				SetColor 255,255,0
-
-			if KeyDown(KEY_P):
-				s: str = scores[t,d]
-				spc= Len(s$)
-				DrawString(s$,SCREENW/2-180-spc*14,SCREENH/2-150+t*32,2)
-				DrawString(names[t,d],SCREENW/2-120,SCREENH/2-150+t*32,2)
-				DrawString((playtimes[t,d]),SCREENW/2+64,SCREENH/2-150+t*32,2)
-				s: str = scoresetting[t,d]
-				DrawString(s$,SCREENW/2-180-spc*14,SCREENH/2-150+t*32+16,2)
-			else:
-				s: str = scores[t,d]
-				spc= Len(s$)
-				DrawString(s$,SCREENW/2-180-spc*14,SCREENH/2-150+t*30,3)
-				DrawString(names[t,d],SCREENW/2-120,SCREENH/2-150+t*30,3)
-				DrawString((playtimes[t,d]),SCREENW/2+64,SCREENH/2-150+t*30,3)
-
-
-		if f = -20:
-			s: str = pscore
-			spc= Len(s$)
-			SetColor 255,0,0
-			DrawString(s$,SCREENW/2-180+32-spc*14,SCREENH/2-150+11*30,3)
-			DrawString(ptime$,SCREENW/2+64-32,SCREENH/2-150+11*30,3)
-
-		if randint(0,100) > 90 and counter < 700:
-			part.CreateFireworks(1)
-		part.UpdateParticles(1)
-		part.DrawParticles()
-		SetColor 255,255,0
-		if counter % 50 > 25:
-			DrawString("Press BOMB Button to Start",SCREENW/2-250,SCREENH-32,4)
-
-		Flip 1
-		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0:
-			sleep(20-tim)
-
-		counter = counter+1
-		bombtime -= 1
-		if bombtime < 0:
-			bombtime = 0
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
-			if Options(False):
-				return True
-			bombtime = 20
-
-		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
-			counter = 1000
-			playgame = True
-			bombtime = 20
-
-	return False
-
-
-
-def ShowTitle() -> int:
-
-	Local counter: int,kol: int,sc: float,st: str,ln: int,xd: int,yd: int,z: int,cc: int,zz: float,b: int
-	Local tim: int
-	Local shrink: float = (SCREENW/1024.0)
-
-	nme5.createdisplayeffect(SCREENW/2+randint(-100,100),SCREENH/2+randint(-100,100),randint(12,50))
-	nme5.createdisplayeffect(SCREENW/2+randint(-100,100),SCREENH/2+randint(-100,100),randint(12,50))
-
-	SetViewport 0,0,SCREENW,SCREENH
-	gxoff = 0
-	gyoff = 0
-
-	FlushKeys()
-
-	bombtime = 20
-	counter = 0
-
-	st: str = "GridWars 2"
-	ln = Len(st$)-1
-
-	while (counter < 900):
-		SetLineWidth 2.0
-		SetBlend lightblend
-		SetAlpha 1
-		shrink: float = (SCREENW / 1024.0)
-		gcount += 1
-		Cls
-		tim = MilliSecs()
-		CycleColours()
-		if tcounter > 350:
-			if randint(0,100) > 90 and counter < 850:
-				part.CreateFireworks(0)
-			part.UpdateParticles(1)
-			part.DrawParticles()
-			BlackholeParticles()
-			#red circles
-			for Local n5 in nme5_list:
-				n5.UpdateDisplayEffect()
-
-		kol = 128+tcounter/3
-		if kol > 255:
-			kol = 255
-		SetColor 0,0,kol
-		sc: float = tcounter/24.0
-			if sc > 20:
-				sc = 20
-		for z = 0 To tcounter/25:
-			SetColor rcol,gcol,bcol
-			xd = (SCREENW-ln*sc*shrink*5.5)/2+Cos(z*20+counter*2)*(2+tcounter/60)
-			yd = (SCREENH-18*sc*shrink)/2-50+Sin(z*20+counter*2)*(2+tcounter/60)+600/8-tcounter/8
-			DrawString(st$,xd,yd,sc*shrink)
-
-
-		SetColor 64,180,64
-		DrawString("Programmed In Blitzmax",SCREENW/2-22/2*5*3.2*shrink,SCREENH-280,3.2*shrink)
-		DrawString("By Mark Incitti",SCREENW/2-15/2*5*3.2*shrink,SCREENH-240,3.2*shrink)
-		if counter % 200 > 99:
-			DrawString(version$,SCREENW/2-25/2*5*3*shrink,SCREENH-200,3*shrink)
-		else:
-			DrawString(advert$,SCREENW/2-36/2*5*3*shrink,SCREENH-200,3.1*shrink)
-
-
-		SetColor 240,32,200
-		DrawString("Special Thanks To",SCREENW/2-17/2*5*3.2*shrink,SCREENH-160,3.2*shrink)
-		SetColor 200,32,240
-		DrawString("Svrman, taumel - Gfx & Effects, Swith - Music, RiK - Mac",SCREENW/2-56/2*5*3.2*shrink,SCREENH-120,3.2*shrink)
-
-		SetColor 255,255,0
-		if counter % 60 > 29:
-			DrawString("Press BOMB Button to Start",SCREENW/2-26/2*5*4*shrink,SCREENH-32,4*shrink)
-
-		Flip 1
-		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0:
-			sleep(20-tim)
-
-		counter = counter + 1
-		bombtime -= 1
-		if bombtime < 0:
-			bombtime = 0
-
-		tcounter = tcounter+1
-		if tcounter > 600:
-			tcounter = 600
-
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
-			if Options(False):
-				return True
-
-		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
-			counter = 1000
-			playgame = True
-
-	tcounter = 600
-	return False
 
 
 
@@ -776,11 +192,11 @@ def GetReady() -> int:
 	count = 0
 	while count < 60 and not KeyDown(KEY_ESCAPE):
 		Cls
-		tim = MilliSecs()
+		tim = time()
 
 		gridpoint.UpdateGrid()
 		UpdateAll()
-		drawall()
+		DrawAll()
 #		if KeyDown(KEY_TAB): End
 #		if not KeyDown(KEY_F8)
 			SetColor 0,55+abs(Sin(count))*200,0
@@ -788,7 +204,7 @@ def GetReady() -> int:
 #			DrawString("GET READY", SCREENW/2+60-abs(Sin(count))*SCREENW/2,SCREENH/2-abs(Sin(count))*100,abs(Sin(count))*20)
 
 		Flip
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0:
 			sleep(20-tim)
 
@@ -800,11 +216,11 @@ def GetReady() -> int:
 	count = 0
 	while count < 40 and not KeyDown(KEY_ESCAPE):
 		Cls
-		tim = MilliSecs()
+		tim = time()
 
 		gridpoint.UpdateGrid()
 		UpdateAll()
-		drawall()
+		DrawAll()
 		# if KeyDown(KEY_TAB): End
 		# if not KeyDown(KEY_F8)
 		SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
@@ -815,7 +231,7 @@ def GetReady() -> int:
 		DrawCircle(SCREENW/2,SCREENH/2,300-count*12)
 
 		Flip
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0:
 			sleep(20-tim)
 
@@ -860,23 +276,23 @@ def KillPlayer() -> int:
 		shot_list.remove(s)
 
 
-	removeall(False) #remove all but the killer
+	remove_all(False) #remove all but the killer
 	Local count: int = 0
 	while (count < 100) and not KeyDown(KEY_ESCAPE):
 		Cls
-		tim = MilliSecs()
+		tim = time()
 
 		#gridpoint.UpdateGrid()
 		UpdateAll(count)
-		drawall()
+		DrawAll()
 		Flip
-		tim = MilliSecs() - tim
+		tim = time() - tim
 		if tim < 20 and tim > 0:
 			sleep(20-tim)
 
 		count += 1
 
-	removeall(True) #remove killer too
+	remove_all(True) #remove killer too
 
 	# reset to center
 	numplayers = numplayers - 1
@@ -908,7 +324,7 @@ def KillPlayer() -> int:
 
 
 
-def RemoveAll(all: bool=False)
+def remove_all(all: bool=False):
 
 	Local n:nme
 	Local n1:nme1
@@ -934,8 +350,8 @@ def RemoveAll(all: bool=False)
 		shot_list.Remove(s)
 
 
-	for sc in score_list:
-		score_list.Remove(sc)
+	for sc in SCORE_LIST:
+		SCORE_LIST.Remove(sc)
 
 
 	if all:
@@ -943,51 +359,51 @@ def RemoveAll(all: bool=False)
 
 	StopLoopingSounds()
 
-	for n in nme_list:
-		if all or n.killer = False nme_LIST.Remove(n)
+	for n in NME_LIST:
+		if all or n.killer = False NME_LIST.Remove(n)
 
-	for n1 in nme1_list:
+	for n1 in NME1_LIST:
 		if all or n1.killer is False:
-			nme1_LIST.Remove(n1)
+			NME1_LIST.Remove(n1)
 
-	for n2 in nme2_list:
+	for n2 in NME2_LIST:
 		if all or n2.killer is False:
-			nme2_LIST.Remove(n2)
+			NME2_LIST.Remove(n2)
 
-	for n3 in nme3_list:
+	for n3 in NME3_LIST:
 		if all or n3.killer is False:
-			nme3_LIST.Remove(n3)
+			NME3_LIST.Remove(n3)
 
-	for n4 in nme4_list:
+	for n4 in NME4_LIST:
 		if all or n4.killer is False:
-			nme4_LIST.Remove(n4)
+			NME4_LIST.Remove(n4)
 
-	for n5 in nme5_list:
+	for n5 in NME5_LIST:
 		if all or n5.killer is False:
-			nme5_LIST.Remove(n5)
+			NME5_LIST.Remove(n5)
 
-	for ll in le_list:
+	for ll in LINEEND_LIST:
 		if all or ll.killer is False:
-			le_LIST.Remove(ll)
+			LINEEND_LIST.Remove(ll)
 
-	for g in ge_list:
+	for g in GENERATOR_LIST:
 		if all or g.killer is False:
-			ge_list.Remove(g)
+			GENERATOR_LIST.Remove(g)
 
-	for po in pu_list:
-		pu_list.Remove(po)
+	for po in POWERUP_LIST:
+		POWERUP_LIST.Remove(po)
 
-	for n6 in nme6_list:
+	for n6 in NME6_LIST:
 		if all or n6.killer is False:
-			nme6_LIST.Remove(n6)
+			NME6_LIST.Remove(n6)
 
-	for n7 in nme7_list:
+	for n7 in NME7_LIST:
 		if all or n7.killer is False:
-			nme7_LIST.Remove(n7)
+			NME7_LIST.Remove(n7)
 
-	for n8 in nme8_list:
+	for n8 in NME8_LIST:
 		if all or n8.killer is False:
-			nme8_LIST.Remove(n8)
+			NME8_LIST.Remove(n8)
 
 	if all:
 		gridpoint.ResetAll()
@@ -1000,52 +416,39 @@ def RemoveAll(all: bool=False)
 
 
 
-def DestroyAll()
-	Local n:nme
-	Local n1:nme1
-	Local n2:nme2
-	Local n3:nme3
-	Local n4:nme4
-	Local n5:nme5
-	Local n6:nme6
-	Local n7:nme7
-	Local n8:nme8
-	Local g:ge
-	Local ll:le
-	Local po:pu
-
-	for n:nme = EachIn nme_list
+def DestroyAll():
+	for n in NME_LIST:
 		n.kill(False)
 
-	for n1 in nme1_list:
+	for n1 in NME1_LIST:
 		n1.kill(False)
 
-	for n2 in nme2_list:
+	for n2 in NME2_LIST:
 		n2.kill(False)
 
-	for n3 in nme3_list:
+	for n3 in NME3_LIST:
 		n3.kill(False)
 
-	for n4 in nme4_list:
+	for n4 in NME4_LIST:
 		n4.kill(False)
 
-	for n5 in nme5_list:
+	for n5 in NME5_LIST:
 		n5.kill(False)
 
-	for n6 in nme6_list:
+	for n6 in NME6_LIST:
 		if n6.ishead:
 			n6.kill(False)
 
-	for n7 in nme7_list:
+	for n7 in NME7_LIST:
 		n7.kill(False)
 
-	for n8 in nme8_list:
+	for n8 in NME8_LIST:
 		n8.kill(False)
 
-	for ll in le_list:
+	for ll in LINEEND_LIST:
 		ll.kill(False,0,0)
 
-	for g in ge_list:
+	for g in GENERATOR_LIST:
 		g.kill(False)
 
 
@@ -1153,60 +556,25 @@ def ResetGame()
 
 
 
-def EnemyType(cnt: int) -> int:
-
-	Local t: int
-	Local sel: int = cnt/1100
-	if sel > 8:
-		sel = 8
-
-	Select sel
-		Case 0
-			t = 0
-		Case 1
-			t = randint(0,1)
-		Case 2
-			t = randint(0,2)
-		Case 3
-			t = randint(0,3)
-		Case 4
-			t = randint(0,4)
-		Case 5
-			t = randint(0,5)
-		Case 6
-			t = randint(0,6)
-		Case 7
-			t = randint(0,7)
-		Case 8
-			t = randint(0,9)
-
-	return t
+def enemy_type(cnt: int) -> int:
+    sel = cnt // 1100  # Integer division
+    return randint(0, sel if sel < 8 else 9)
 
 
 
 
 def Spawn(cnt: int):
-
-Rem
-	if cnt % 40 = 0
-		CreateEnemy(randint(1,2),20, randint(0,12))
-
-	if cnt % 40 = 0
-		CreateEnemy(5,20, randint(0,12))
-
-	return
-End Rem
 	Local gk: int,sz: int,rate: int
 
 	#single enemy
 	if (cnt/350) % 2 == 0:
 		if cnt % 33 == 0:
-			CreateEnemy(EnemyType(cnt),30, randint(0,12))
+			CreateEnemy(enemy_type(cnt),30, randint(0,12))
 
 
 	#single generator
 	if cnt % 444 == 0:
-		gk = EnemyType(cnt/3+500)+1
+		gk = enemy_type(cnt/3+500)+1
 		sz = Min(randint(16+cnt/2000),32)
 		rate = 80+randint(60)-cnt/1000
 		if rate < 60:
@@ -1222,7 +590,7 @@ End Rem
 	#whole bunch
 	if cnt % 777 == 0:
 		sp_c = randint(0,12)
-		sp_x = EnemyType(cnt/3)
+		sp_x = enemy_type(cnt/3)
 		sp_t = randint(15,24+(cnt/750))*2
 		if sp_t > 100:
 			sp_t = 100
@@ -1233,7 +601,7 @@ End Rem
 	if cnt % 1850 == 0:
 		#whole bunch
 		sp_c2 = randint(0,12)
-		sp_x2 = EnemyType(cnt/2)
+		sp_x2 = enemy_type(cnt/2)
 		sp_t2 = randint(15,24+(cnt/750))*2
 		if sp_t2 > 175:
 			sp_t2 = 175
@@ -1244,7 +612,7 @@ End Rem
 	if cnt % 2900  == 0:
 		#whole bunch
 		sp_c3 = 5 #all 4 corners
-		sp_x3 = EnemyType(cnt/2)
+		sp_x3 = enemy_type(cnt/2)
 		sp_t3 = randint(20,40+(cnt/750))*3
 		if sp_t3 > 100*3:
 			sp_t3 = 100*3
@@ -1255,7 +623,7 @@ End Rem
 	if ((cnt/4000) % 2 = 1) and (cnt % 3333 = 0):
 		#whole bunch
 		sp_c4 = randint(0,11) #any corner/s
-		sp_x4 = EnemyType(cnt/2)
+		sp_x4 = enemy_type(cnt/2)
 		sp_t4 = randint(20,40+(cnt/750))*3
 		if sp_t4 > 100*3:
 			sp_t4 = 100*3
@@ -2082,7 +1450,7 @@ if cheat:
 
 	# check triangle bond lines
 	Local ll:le
-	for ll:le = EachIn le_list
+	for ll:le = EachIn LINEEND_LIST
 		if ll.attached is True:
 			if ll.checked == False:
 				ll.checked = True
@@ -2098,7 +1466,7 @@ if cheat:
 
 	# sucked into blackholes
 	Local n5:nme5
-	for n5 in nme5_list:
+	for n5 in NME5_LIST:
 		Local ddx: float = n5.x-px
 		Local ddy: float = n5.y-py
 		Local dist: float = sqrt(ddx*ddx + ddy*ddy)
@@ -2123,7 +1491,7 @@ def BlackholeParticles()
 	Local p:part
 	Local t: int
 	Local n5:nme5
-	for n5 in nme5_list:
+	for n5 in NME5_LIST:
 		if n5.active:
 			for t = st To numparticles-1 Step 2
 				p:part = partarray[t]
@@ -2197,51 +1565,51 @@ def UpdateAll(cnt: int = 0):
 
 	if not dying:
 		#generators
-		for g in ge_list:
+		for g in GENERATOR_LIST:
 			g.Update()
 
 		#green squares
-		for n in nme_list:
+		for n in NME_LIST:
 			n.Update()
 
 		#pink pinwheel
-		for n1 in nme1_list:
+		for n1 in NME1_LIST:
 			n1.Update()
 
 		#cyan diamonds
-		for n2 in nme2_list:
+		for n2 in NME2_LIST:
 			n2.Update()
 
 		#purple cubes
-		for n3 in nme3_list:
+		for n3 in NME3_LIST:
 			n3.Update()
 
 		#blue circles
-		for n4 in nme4_list:
+		for n4 in NME4_LIST:
 			n4.Update()
 
 		# purple snakes
-		for n6 in nme6_list:
+		for n6 in NME6_LIST:
 			n6.Update()
 
 		# red clone
-		for n7 in nme7_list:
+		for n7 in NME7_LIST:
 			n7.Update()
 
 		# blue butterfly
-		for n8 in nme8_list:
+		for n8 in NME8_LIST:
 			n8.Update()
 
 		#orange triangles
-		for ll in le_list:
+		for ll in LINEEND_LIST:
 			ll.Update()
 
 		#powerups
-		for pow in pu_list:
+		for pow in POWERUP_LIST:
 			pow.Update()
 
 		#red circles
-		for n5 in nme5_list:
+		for n5 in NME5_LIST:
 			n5.Update()
 
 		#shots
@@ -2264,7 +1632,7 @@ def DrawMessage():
 
 
 
-def Drawall():
+def DrawAll():
 #if KeyDown(KEY_TAB): End
 #if KeyDown(KEY_F8): return
 
@@ -2301,64 +1669,64 @@ def Drawall():
 
 	SetLineWidth 2
 
-	for g in ge_list:
+	for g in GENERATOR_LIST:
 		g.Draw()
 
 	#green squares
 	SetColor COL_SQUARE_R,COL_SQUARE_G,COL_SQUARE_B
-	for n in nme_list:
+	for n in NME_LIST:
 		n.Draw()
 
 	#pink pinwheel
 	SetColor COL_PIN_R,COL_PIN_G,COL_PIN_B
-	for n1 in nme1_list:
+	for n1 in NME1_LIST:
 		n1.Draw()
 
 	#cyan diamonds
 	SetColor COL_DIAMOND_R,COL_DIAMOND_G,COL_DIAMOND_B
-	for n2 in nme2_list:
+	for n2 in NME2_LIST:
 		n2.Draw()
 
 	#purple cubes
 	SetColor COL_CUBE_R,COL_CUBE_G,COL_CUBE_B
-	for n3 in nme3_list:
+	for n3 in NME3_LIST:
 		n3.Draw()
 
 	#blue circles
 	SetColor COL_SEEKER_R,COL_SEEKER_G,COL_SEEKER_B
-	for n4 in nme4_list:
+	for n4 in NME4_LIST:
 		n4.Draw()
 
 	#red circles
 	SetColor COL_SUN_R,COL_SUN_G,COL_SUN_B
-	for n5 in nme5_list:
+	for n5 in NME5_LIST:
 		n5.Draw()
 
 	#snake
-	for n6 in nme6_list:
+	for n6 in NME6_LIST:
 		n6.Draw()
 
 	#red clone
 	SetColor COL_CLONE_R,COL_CLONE_G,COL_CLONE_B
-	for n7 in nme7_list:
+	for n7 in NME7_LIST:
 		n7.Draw()
 
 	#blue butterflies
 	SetColor COL_BUTTER_R,COL_BUTTER_G,COL_BUTTER_B
-	for n8 in nme8_list:
+	for n8 in NME8_LIST:
 		n8.Draw()
 
 	#orange triangles
 	SetColor COL_TRIANGLE_R,COL_TRIANGLE_G,COL_TRIANGLE_B
-	for ll in le_list:
+	for ll in LINEEND_LIST:
 		ll.Draw()
 
 	# bonds (orange to green)
-	for ll in le_list:
+	for ll in LINEEND_LIST:
 		ll.DrawBond()
 
 	#powerups
-	for pow in pu_list:
+	for pow in POWERUP_LIST:
 		pow.Draw()
 
 	SetScale 1,1
@@ -2512,7 +1880,9 @@ def setup():
 	SetupKeyTable()
 	SetUp()
 	LoadSounds()
-	SeedRnd(MilliSecs())
+
+	# SeedRnd(time())
+	seed( time() )
 
 	score.LoadScores()
 	HideMouse()
@@ -2560,7 +1930,7 @@ def main():
 				nokillme = False
 
 			StopMusic()
-			RemoveAll(True)
+			remove_all(True)
 			ResetGame()
 			dying = True
 			done = GetReady()
@@ -2568,13 +1938,13 @@ def main():
 			Cls
 
 			while gameover is not True or playgame is False:
-				tim = MilliSecs()
+				tim = time()
 				Spawn(gcount)
 				UpdatePlayer()
 				UpdateAll()
-				tim2: int = MilliSecs()-tim
+				tim2: int = time()-tim
 				DrawAll()
-				tim3: int = MilliSecs()-tim
+				tim3: int = time()-tim
 
 				if gameover:
 					StopMusic()
@@ -2609,7 +1979,7 @@ def main():
 
 					bombtime = 20
 
-				tim4: int = MilliSecs() - tim
+				tim4: int = time() - tim
 				if tim4 < 20 and tim4 > 0:
 					sleep(20-tim4)
 
@@ -2617,7 +1987,7 @@ def main():
 			# Until gameover = True or playgame = False
 
 
-			RemoveAll(True) # in case some sounds still playing and we quit
+			remove_all(True) # in case some sounds still playing and we quit
 			if done == False:
 				gxoff = 0
 				gyoff = 0
@@ -2631,8 +2001,3 @@ def main():
 					if pscore > 0:
 						StartMusic(0);
 						done = ShowScores(-20)
-
-
-
-if __name__ == '__main__':
-	main()

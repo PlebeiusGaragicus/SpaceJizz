@@ -7,15 +7,15 @@ class score:
 		sc.y = y
 		sc.s$ = s$
 		sc.life = 30+l*20
-		score_list.AddLast( sc )
+		SCORE_LIST.AddLast( sc )
 
 
 	def UpdatePoints(self):
 		Local sc:score
-		for sc:score = EachIn score_list
+		for sc:score = EachIn SCORE_LIST
 			sc.life:-1
 			if sc.life <= 0:
-				score_LIST.Remove(sc)
+				SCORE_LIST.Remove(sc)
 
 
 
@@ -26,7 +26,7 @@ class score:
 		SetScale 1,1
 		SetAlpha 1
 		SetLineWidth 2.0
-		for sc:score = EachIn score_list
+		for sc:score = EachIn SCORE_LIST
 			Local cc%
 			cc = 75 + sc.life * 10
 			if cc > 255:
@@ -134,7 +134,7 @@ class score:
 		FlushMouse()
 		while done = False
 			Cls
-			tim = MilliSecs()
+			tim = time()
 
 			jdfy = GetJoyByAxis(joyport, axis_fire_y, axis_fire_y_inv, axis_fire_y_sc, axis_fire_y_center )
 			jdmy = GetJoyByAxis(joyport, axis_move_y, axis_move_y_inv, axis_move_y_sc, axis_move_y_center )
@@ -287,7 +287,7 @@ class score:
 			part.UpdateParticles()
 			part.DrawParticles()
 			Flip 1
-			tim = MilliSecs() - tim
+			tim = time() - tim
 			if tim < 20 and tim > 0
 				Delay 20-tim
 

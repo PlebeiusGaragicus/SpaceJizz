@@ -5,7 +5,7 @@ Type nme3
 	Field move:Int
 
 	def Create:nme3( x#, y#, size:Int, freeze:Int, close:Int=0 )
-		if CountList(nme3_list) > 100 Then return Null
+		if CountList(NME3_LIST) > 100 Then return Null
 		if size <> 0 Or close <> 0
 			SafeXY(x,y,px,py,40,1)		
 		else:
@@ -27,7 +27,7 @@ Type nme3
 		n.dx = Cos(dir)*mag
 		n.dy = Sin(dir)*mag
 		n.move = freeze
-		nme3_list.AddLast( n )	
+		NME3_LIST.AddLast( n )	
 		return n
 	
 	
@@ -59,7 +59,7 @@ Type nme3
 		Endif 
 		Toward(px,py,PLAYFIELDW)
 		blackhole()
-		for othern3:nme3 = EachIn nme3_list
+		for othern3:nme3 = EachIn NME3_LIST
 			if othern3 <> Self
 				distx# = othern3.x-x
 				disty# = othern3.y-y
@@ -82,13 +82,13 @@ Type nme3
 		dist# = (distx * distx + disty * disty)
 		if dist < (12-sz)*(12-sz) + 12*12
 			killer = True
-			if KillPlayer() Then nme3_LIST.Remove(Self)
+			if KillPlayer() Then NME3_LIST.Remove(Self)
 					
 	
 	
 	def Blackhole()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			if n5.active			
 				Local ddx# = n5.x-x
 				Local ddy# = n5.y-y 
@@ -139,7 +139,7 @@ Type nme3
 			part.Create(x,y,3 ,COL_CUBE_R,COL_CUBE_G,COL_CUBE_B,r)	
 		
 		gridpoint.Shockwave(x,y)
-		nme3_LIST.Remove(Self)				
+		NME3_LIST.Remove(Self)				
 	
 
 	def Draw()

@@ -79,7 +79,7 @@ class nme:
 		self.dx = cos(dir) * mag
 		self.dy = sin(dir) * mag
 		self.move = freeze
-		nme_LIST.AddLast( self )
+		NME_LIST.AddLast( self )
 		# return n
 
 
@@ -113,7 +113,7 @@ class nme:
 		self.toward(px,py,PLAYFIELDW)
 		self.blackHole()
 
-		for othernme in nme_LIST:
+		for othernme in NME_LIST:
 			if othern != self:
 				distx: float = othern.x-x
 				disty: float = othern.y-y
@@ -134,12 +134,12 @@ class nme:
 		if dist < 24 * 24:
 			killer = True
 			if self.KillPlayer():
-				nme_LIST.Remove( self )
+				NME_LIST.Remove( self )
 
 	
 	def blackhole(self):
 		n5:nme5
-		for n5 in nme5_LIST:
+		for n5 in NME5_LIST:
 			if n5.active:
 				ddx: float = n5.x-x
 				ddy: float = n5.y-y 
@@ -197,7 +197,7 @@ class nme:
 			part.Create(self.x, self.y, 6, COL_SQUARE_R, COL_SQUARE_G, COL_SQUARE_B)
 
 		gridpoint.Shockwave(self.x, self.y)
-		nme_LIST.remove( self )
+		NME_LIST.remove( self )
 
 
 	def draw(self):

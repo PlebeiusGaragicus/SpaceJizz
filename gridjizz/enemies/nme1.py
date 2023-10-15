@@ -23,7 +23,7 @@ Type nme1
 		n.dx = Cos(dir)*mag
 		n.dy = Sin(dir)*mag
 		n.move = freeze
-		nme1_list.AddLast( n )	
+		NME1_LIST.AddLast( n )	
 		return n
 
 	
@@ -54,7 +54,7 @@ Type nme1
 		Endif 
 		#Toward(px,py,400)
 		BlackHole()
-		for othern:nme1 = EachIn nme1_list
+		for othern:nme1 = EachIn NME1_LIST
 			if othern <> Self
 				distx# = othern.x-x
 				disty# = othern.y-y
@@ -76,13 +76,13 @@ Type nme1
 		dist# = (distx * distx + disty * disty)
 		if dist < 24*24
 			killer = True
-			if KillPlayer() Then nme1_LIST.Remove(Self)
+			if KillPlayer() Then NME1_LIST.Remove(Self)
 					
 	
 
 	def blackhole()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			if n5.active
 				Local ddx# = n5.x-x
 				Local ddy# = n5.y-y 
@@ -121,7 +121,7 @@ Type nme1
 			part.Create(x,y,6 ,COL_PIN_R,COL_PIN_G,COL_PIN_B,r)	
 		
 		gridpoint.Shockwave(x,y)
-		nme1_LIST.Remove(Self)				
+		NME1_LIST.Remove(Self)				
 	
 
 	def Draw()		

@@ -26,7 +26,7 @@ class le:
 		n.attached = False
 		n.le2 = Null
 		n.move = freeze
-		le_list.AddLast( n )
+		LINEEND_LIST.AddLast( n )
 		return n
 
 
@@ -42,7 +42,7 @@ class le:
 		checked = False
 		r = r + 2
 		Local ll:le
-		for ll:le = EachIn le_list
+		for ll:le = EachIn LINEEND_LIST
 			if ll <> Self
 				if attached = False
 					distx# = x-ll.x
@@ -105,7 +105,7 @@ class le:
 				le2 = Null
 				attached = False
 				resist = False
-				le_LIST.Remove(Self)
+				LINEEND_LIST.Remove(Self)
 			else:
 				killer = False
 
@@ -114,7 +114,7 @@ class le:
 
 	def Blackhole()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			if n5.active
 				Local ddx# = n5.x-x
 				Local ddy# = n5.y-y
@@ -134,7 +134,7 @@ class le:
 
 	def Blackhole2()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			# it gets pulled in, partner spins around
 			if le2 <> Null Then le2.resist = True else: Exit
 			Toward(n5.x,n5.y,100+n5.sz*10)
@@ -152,7 +152,7 @@ class le:
 					attached = False
 					resist = False
 					strength = 0
-					le_LIST.Remove(Self)
+					LINEEND_LIST.Remove(Self)
 					n5.Grow(1)
 					Exit
 				#else:
@@ -230,7 +230,7 @@ class le:
 			for t = 0 To 31
 				part.Create(x,y, 8 ,COL_TRIANGLE_R,COL_TRIANGLE_G,COL_TRIANGLE_B)
 
-			le_LIST.Remove(Self)
+			LINEEND_LIST.Remove(Self)
 
 
 

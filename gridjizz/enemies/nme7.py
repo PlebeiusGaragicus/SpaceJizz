@@ -13,8 +13,8 @@ class nme7
 		else:
 			SafeXY(x,y,px,py,40,1)		
 				
-		if CountList(nme7_list) > 3 and Rand(0,100) > 50 Then return
-		if CountList(nme7_list) > 7 Then return
+		if CountList(NME7_LIST) > 3 and Rand(0,100) > 50 Then return
+		if CountList(NME7_LIST) > 7 Then return
 		Local pan# = (x-px)/PLAYFIELDW
 		Local vol# = (1 - abs(pan)/10) * (1 - (abs(y-py)/PLAYFIELDH)/10)
 		PlaySound2(nme7_born_snd, 1, pan, vol)	
@@ -34,7 +34,7 @@ class nme7
 		if abs(n.rotdir) < 16
 			n.rotdir = 16
 		
-		nme7_list.AddLast( n )	
+		NME7_LIST.AddLast( n )	
 		return
 	
 	
@@ -89,7 +89,7 @@ class nme7
 		
 		#Toward(px,py,400)
 		BlackHole()
-		for Local othern7:nme7 = EachIn nme7_list
+		for Local othern7:nme7 = EachIn NME7_LIST
 			if othern7 <> Self
 				distx# = othern7.x-x
 				disty# = othern7.y-y
@@ -110,13 +110,13 @@ class nme7
 		dist# = (distx * distx + disty * disty)
 		if dist < 24*24
 			killer = True
-			if KillPlayer() Then nme7_LIST.Remove(Self)
+			if KillPlayer() Then NME7_LIST.Remove(Self)
 					
 	
 
 	def Blackhole()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			if n5.active			
 				Local ddx# = n5.x-x
 				Local ddy# = n5.y-y 
@@ -156,7 +156,7 @@ class nme7
 			part.Create(x,y,6 ,COL_CLONE_R,COL_CLONE_G,COL_CLONE_B)	
 		
 		gridpoint.Shockwave(x,y)
-		nme7_LIST.Remove(Self)
+		NME7_LIST.Remove(Self)
 	
 
 	def Draw()

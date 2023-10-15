@@ -18,7 +18,7 @@ class pu:
 		n.dx = Cos(dir)*mag
 		n.dy = Sin(dir)*mag
 		n.move = freeze
-		pu_list.AddLast( n )	
+		POWERUP_LIST.AddLast( n )	
 	
 	
 	def Update()
@@ -62,7 +62,7 @@ class pu:
 		if Rand(0,100) > 96 Then Toward(px,py,PLAYFIELDW)
 		if life > 10*20
 			if kind > 1
-				for otherpu:pu  = EachIn pu_list
+				for otherpu:pu  = EachIn POWERUP_LIST
 					if otherpu<> Self and otherpu.kind > 1
 						distx# = otherpu.x-x
 						disty# = otherpu.y-y
@@ -77,7 +77,7 @@ class pu:
 						if dist < 16*16 + 16*16
 							#merge
 							#otherpu.move = 200
-							pu_list.Remove(otherpu)
+							POWERUP_LIST.Remove(otherpu)
 							die = True
 							ge.Create( x, y, 10, 20, 20, 20)
 							for t = 0 To 7
@@ -103,12 +103,12 @@ class pu:
 			dy = dy/speed*4
 		
 			
-		if die Then pu_LIST.Remove(Self)
+		if die Then POWERUP_LIST.Remove(Self)
 	
 
 	def Blackhole()
 		Local n5:nme5
-		for n5:nme5 = EachIn nme5_list
+		for n5:nme5 = EachIn NME5_LIST
 			if n5.active			
 				Local ddx# = n5.x-x
 				Local ddy# = n5.y-y 
@@ -140,7 +140,7 @@ class pu:
 		for Local t:Int = 0 To 14
 			part.Create(x,y, 2 ,COL_POWERUP_R,COL_POWERUP_G,COL_POWERUP_B,t*24+r)	
 		
-		pu_LIST.Remove(Self)				
+		POWERUP_LIST.Remove(Self)				
 	
 
 	def Draw()
