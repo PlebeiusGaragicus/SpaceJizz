@@ -149,19 +149,18 @@ def DoGameOver() -> int:
 		Cls
 		tim = MilliSecs()
 		drawall()
-#		if KeyDown(KEY_TAB) Then End
-#		if not KeyDown(KEY_F8)
-			SetColor 0,55+abs(Sin(looper/2))*200,0
-			DrawString("GAME OVER", SCREENW/2-abs(Sin(looper/2))*19*5*9*.5, SCREENH/2-abs(Sin(looper/2))*100, abs(Sin(looper/2))*20)
+		# if KeyDown(KEY_TAB): End
+		# if not KeyDown(KEY_F8)
+		SetColor 0,55+abs(Sin(looper/2))*200,0
+		DrawString("GAME OVER", SCREENW/2-abs(Sin(looper/2))*19*5*9*.5, SCREENH/2-abs(Sin(looper/2))*100, abs(Sin(looper/2))*20)
 
 		Flip 1
 		tim = MilliSecs() - tim
+
 		if tim < 20 and tim > 0:
 			sleep(20-tim)
 
-		if KeyHit(KEY_ESCAPE) or \
-			(JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or \
-			(JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
 			if Options(True):
 				return True
 
@@ -193,17 +192,26 @@ def ShowFriends(f: int = -1) -> int:
 		Cls
 		gcount += 1
 		tim = MilliSecs()
-		if randint(0,100) > 94 and counter < 850 Then part.CreateFireworks(1)
+		if randint(0,100) > 94 and counter < 850:
+			part.CreateFireworks(1)
+
 		part.UpdateParticles(1)
 		part.DrawParticles()
 		BlackholeParticles()
+
 		#red circles
-		for Local n5:nme5 = EachIn nme5_list
+		for n5 in nme5_list:
 			n5.UpdateDisplayEffect()
 
 
 		SetColor 255,255,0
-		if (SCREENH<600) Then lsp = 32;lwsp = 32 else: lsp = 50;lwsp = 0
+		if (SCREENH<600):
+			lsp = 32
+			lwsp = 32
+		else:
+			lsp = 50
+			lwsp = 0
+
 		DrawString("Know Your Friends",SCREENW/2-4.5*5*18/2-32,10,4.5)
 
 		CycleColours()
@@ -371,9 +379,10 @@ def ShowFriends(f: int = -1) -> int:
 
 		counter = counter+1
 		bombtime = bombtime - 1
-		if bombtime < 0 Then bombtime = 0
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0)
+		if bombtime < 0:
+			bombtime = 0
 
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
 			if Options(False):
 				return True
 
@@ -690,9 +699,13 @@ def ShowTitle() -> int:
 			for Local n5 in nme5_list:
 				n5.UpdateDisplayEffect()
 
-		kol = 128+tcounter/3 ; if kol > 255 Then kol = 255
+		kol = 128+tcounter/3
+		if kol > 255:
+			kol = 255
 		SetColor 0,0,kol
-		sc: float = tcounter/24.0;if sc# > 20 Then sc#=20
+		sc: float = tcounter/24.0
+			if sc > 20:
+				sc = 20
 		for z = 0 To tcounter/25:
 			SetColor rcol,gcol,bcol
 			xd = (SCREENW-ln*sc*shrink*5.5)/2+Cos(z*20+counter*2)*(2+tcounter/60)
@@ -728,13 +741,15 @@ def ShowTitle() -> int:
 		if bombtime < 0:
 			bombtime = 0
 
-		tcounter = tcounter+1;if tcounter > 600 Then tcounter = 600
+		tcounter = tcounter+1
+		if tcounter > 600:
+			tcounter = 600
 
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0)
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
 			if Options(False):
 				return True
 
-		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0)
+		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
 			counter = 1000
 			playgame = True
 
@@ -768,7 +783,7 @@ def GetReady() -> int:
 		gridpoint.UpdateGrid()
 		UpdateAll()
 		drawall()
-#		if KeyDown(KEY_TAB) Then End
+#		if KeyDown(KEY_TAB): End
 #		if not KeyDown(KEY_F8)
 			SetColor 0,55+abs(Sin(count))*200,0
 			DrawString("GET READY", SCREENW/2-abs(Sin(count))*19*5*9*.5, SCREENH/2-abs(Sin(count))*100, abs(Sin(count))*20)
@@ -792,15 +807,15 @@ def GetReady() -> int:
 		gridpoint.UpdateGrid()
 		UpdateAll()
 		drawall()
-#		if KeyDown(KEY_TAB) Then End
-#		if not KeyDown(KEY_F8)
-			SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-			if count > 10:
-				DrawPlayer(px,py,pr)
-			DrawCircle(SCREENW/2,SCREENH/2,300-count*6)
-			DrawCircle(SCREENW/2,SCREENH/2,300-count*8)
-			DrawCircle(SCREENW/2,SCREENH/2,300-count*12)
-#
+		# if KeyDown(KEY_TAB): End
+		# if not KeyDown(KEY_F8)
+		SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
+		if count > 10:
+			DrawPlayer(px,py,pr)
+		DrawCircle(SCREENW/2,SCREENH/2,300-count*6)
+		DrawCircle(SCREENW/2,SCREENH/2,300-count*8)
+		DrawCircle(SCREENW/2,SCREENH/2,300-count*12)
+
 		Flip
 		tim = MilliSecs() - tim
 		if tim < 20 and tim > 0:
@@ -823,7 +838,7 @@ def GetReady() -> int:
 def KillPlayer() -> int:
 	Local tim: int
 
-	if nokillme or player_shield> 0:
+	if nokillme or player_shield > 0:
 		return False
 
 	#only killed once per update
@@ -1461,8 +1476,8 @@ def Updateplayer()
 			#move
 			jdmx = GetJoyByAxis(joyport, axis_move_x,axis_move_x_inv,axis_move_x_sc,axis_move_x_center )
 			jdmy = GetJoyByAxis(joyport, axis_move_y,axis_move_y_inv,axis_move_y_sc,axis_move_y_center )
-#			if abs(jdmx) < axis_move_x_dz Then jdmx = 0
-#			if abs(jdmy) < axis_move_y_dz Then jdmy = 0
+			# if abs(jdmx) < axis_move_x_dz: jdmx = 0
+			# if abs(jdmy) < axis_move_y_dz: jdmy = 0
 			if abs(jdmx) < axis_move_x_dz and abs(jdmy) < axis_move_y_dz:
 				jdmx = 0
 				jdmy = 0
@@ -1471,8 +1486,8 @@ def Updateplayer()
 			#fire
 			jdfx = GetJoyByAxis(joyport, axis_fire_x,axis_fire_x_inv,axis_fire_x_sc,axis_fire_x_center )
 			jdfy = GetJoyByAxis(joyport, axis_fire_y,axis_fire_y_inv,axis_fire_y_sc,axis_fire_y_center )
-#			if abs(jdfx) < axis_fire_x_dz Then jdfx = 0
-#			if abs(jdfy) < axis_fire_y_dz Then jdfy = 0
+			# if abs(jdfx) < axis_fire_x_dz: jdfx = 0
+			# if abs(jdfy) < axis_fire_y_dz: jdfy = 0
 			if abs(jdfx) < axis_fire_x_dz and abs(jdfy) < axis_fire_y_dz:
 				jdfx = 0
 				jdfy = 0
@@ -1735,8 +1750,10 @@ def Updateplayer()
 						jdfy = myaim
 
 					if KeyDown(k_fire_left):
-						if mxaim > -1 Then mxaim = mxaim -.1
-						if myaim != 0 Then myaim = myaim*.8
+						if mxaim > -1:
+							mxaim = mxaim -.1
+						if myaim != 0:
+							myaim = myaim*.8
 						jdfx = mxaim
 						jdfy = myaim
 
@@ -2247,8 +2264,8 @@ def DrawMessage():
 
 
 def Drawall():
-#if KeyDown(KEY_TAB) Then End
-#if KeyDown(KEY_F8) Then return
+#if KeyDown(KEY_TAB): End
+#if KeyDown(KEY_F8): return
 
 	#Local p:part
 	Local n:nme
@@ -2427,10 +2444,14 @@ def SafeXY(x# Var,y# Var, plx: int,ply: int,range: int, close: int = 0)
 
 	Local dx: float, dy: float, dist: float
 
-	if x < 20 Then x = 20
-	if y < 20 Then y = 20
-	if x > PLAYFIELDW-20 Then x = PLAYFIELDW-20
-	if y > PLAYFIELDH-20 Then y = PLAYFIELDH-20
+	if x < 20:
+		x = 20
+	if y < 20:
+		y = 20
+	if x > PLAYFIELDW-20:
+		x = PLAYFIELDW-20
+	if y > PLAYFIELDH-20:
+		y = PLAYFIELDH-20
 
 	if close == 1:
 		dx: float = plx-x
@@ -2458,10 +2479,14 @@ def SafeXY(x# Var,y# Var, plx: int,ply: int,range: int, close: int = 0)
 			Local dir: float = randint(0,360*8)/8.0
 			x = plx + Sin(dir)*range
 			y = ply + Cos(dir)*range
-			if x < 20 Then x = 20
-			if y < 20 Then y = 20
-			if x > PLAYFIELDW-20 Then x = PLAYFIELDW-20
-			if y > PLAYFIELDH-20 Then y = PLAYFIELDH-20
+			if x < 20:
+				x = 20
+			if y < 20:
+				y = 20
+			if x > PLAYFIELDW-20:
+				x = PLAYFIELDW-20
+			if y > PLAYFIELDH-20:
+				y = PLAYFIELDH-20
 			dx = plx-x
 			dy = ply-y
 			dist = (dx*dx + dy*dy)
@@ -2509,27 +2534,30 @@ def main():
 	tim4: int
 
 	looper: int
-	done: int,f: int
+	f: int
+	done: bool = False
 
 	part.CreateAll()
 
 	FlushKeys()
-	done = False
 
 	while not done:
-		while playgame == False and done == False:
+		while playgame is False and done is False:
 			StartMusic(0)
-			if playgame == False and done == False:
+			if playgame is False and done is False:
 				done = ShowTitle()
-			if playgame == False and done == False:
+			if playgame is False and done is False:
 				done = ShowScores()
-			if playgame == False and done == False:
+			if playgame is False and done is False:
 				done = ShowFriends()
-			if playgame == False and done == False:
+			if playgame is False and done is False:
 				done = ShowEnemies()
 
 		if playgame and not done:
-			if not cheat Then valid = True;nokillme = False
+			if not cheat:
+				valid = True
+				nokillme = False
+
 			StopMusic()
 			RemoveAll(True)
 			ResetGame()
@@ -2559,11 +2587,10 @@ def main():
 					Flip 1
 					if KeyDown(KEY_P):
 						pause: bool = True
-						while pause
+						while pause:
 							sleep(100)
 							if KeyHit(KEY_O):
 								pause = False
-
 				else:
 					Flip 1
 
@@ -2603,7 +2630,6 @@ def main():
 					if pscore > 0:
 						StartMusic(0);
 						done = ShowScores(-20)
-
 
 
 
