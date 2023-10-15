@@ -1,6 +1,6 @@
 import os
 import sys
-import time
+from time import sleep
 from math import sin, cos, sqrt, atan2
 from random import randint, uniform
 
@@ -150,18 +150,14 @@ def DoGameOver() -> int:
 		tim = MilliSecs()
 		drawall()
 #		if KeyDown(KEY_TAB) Then End
-#		if Not KeyDown(KEY_F8)
+#		if not KeyDown(KEY_F8)
 			SetColor 0,55+abs(Sin(looper/2))*200,0
-			DrawString("GAME OVER",..
-			  SCREENW/2-abs(Sin(looper/2))*19*5*9*.5,..
-			  SCREENH/2-abs(Sin(looper/2))*100,..
-			  abs(Sin(looper/2))*20)
+			DrawString("GAME OVER", SCREENW/2-abs(Sin(looper/2))*19*5*9*.5, SCREENH/2-abs(Sin(looper/2))*100, abs(Sin(looper/2))*20)
 
 		Flip 1
 		tim = MilliSecs() - tim
 		if tim < 20 and tim > 0:
-			# Delay 20-tim
-			time.sleep(20-tim)
+			sleep(20-tim)
 
 		if KeyHit(KEY_ESCAPE) or \
 			(JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or \
@@ -169,10 +165,10 @@ def DoGameOver() -> int:
 			if Options(True):
 				return True
 
-		if KeyHit(k_bomb) Or MouseHit(m_bomb)
+		if KeyHit(k_bomb) or MouseHit(m_bomb)
 			looper = 360
 
-		looper :+2
+		looper  += 2
 
 	return False
 
@@ -195,7 +191,7 @@ def ShowFriends(f: int = -1) -> int:
 
 	while (counter < 900):
 		Cls
-		gcount:+1
+		gcount += 1
 		tim = MilliSecs()
 		if randint(0,100) > 94 and counter < 850 Then part.CreateFireworks(1)
 		part.UpdateParticles(1)
@@ -371,21 +367,17 @@ def ShowFriends(f: int = -1) -> int:
 		Flip 1
 		tim = MilliSecs() - tim
 		if tim < 20 and tim > 0:
-			# Delay 20-tim
-			time.sleep(20-tim)
+			sleep(20-tim)
 
 		counter = counter+1
 		bombtime = bombtime - 1
 		if bombtime < 0 Then bombtime = 0
-		if KeyHit(KEY_ESCAPE) Or ..
-			(JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) Or ..
-			(JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0)
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0)
 
-			if Options(False) Then return True
+			if Options(False):
+				return True
 
-		if KeyHit(k_bomb) Or MouseHit(m_bomb) or \
-			(JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or \
-			(JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
 			counter = 1000
 			playgame = True
 
@@ -409,7 +401,11 @@ def ShowEnemies(f: int = -1) -> int:
 	while (counter < 900):
 		Cls
 		tim = MilliSecs()
-		if (SCREENH<600) Then lsp = 32;lwsp = 32 else: lsp = 50;lwsp = 0
+		if (SCREENH<600):
+			lsp = 32
+			lwsp = 32
+		else:
+			lsp = 50;lwsp = 0
 
 		SetColor 255,0,0
 		DrawString("Know Your Enemies",SCREENW/2-4.5*5*18/2-32,10,4.5)
@@ -426,7 +422,7 @@ def ShowEnemies(f: int = -1) -> int:
 		if counter > 100:
 			Local sc%,scy: float, scx: float
 			sc = counter % (256)
-			if sc > 127
+			if sc > 127:
 				scy = sc-127
 				if sc > 127+63:
 					scy = 255-sc
@@ -525,11 +521,10 @@ def ShowEnemies(f: int = -1) -> int:
 		Flip 1
 		tim = MilliSecs() - tim
 		if tim < 20 and tim > 0:
-			# Delay 20-tim
-			time.sleep(20-tim)
+			sleep(20-tim)
 
 		counter = counter+1
-		bombtime:-1
+		bombtime -= 1
 		if bombtime < 0:
 			bombtime = 0
 
@@ -539,7 +534,7 @@ def ShowEnemies(f: int = -1) -> int:
 			if Options(False):
 				return True
 
-		if KeyHit(k_bomb) Or MouseHit(m_bomb) or \
+		if KeyHit(k_bomb) or MouseHit(m_bomb) or \
 			(JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or \
 			(JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
 			counter = 1000
@@ -562,7 +557,7 @@ def ShowScores(f: int=-1) -> int:
 	Local colg: int[10]
 	Local colb: int[10]
 
-	for i: int = 9 To 0 Step -1
+	for i: int = 9 To 0 Step -1:
 		CycleColours()
 		CycleColours()
 		colr[i] = rcol
@@ -571,18 +566,19 @@ def ShowScores(f: int=-1) -> int:
 
 	FlushKeys()
 	bombtime = 20
-	while (counter < 750)
+	while (counter < 750):
 		Cls
 		tim = MilliSecs()
 		d = counter/250
-		if f <> -1 Then d = laststartingdifficulty
+		if f != -1:
+			d = laststartingdifficulty
 		CycleColours()
 		CycleColours()
 		colr[9] = rcol
 		colg[9] = gcol
 		colb[9] = bcol
-		if counter % 4 = 0
-			for i= 1 To 9
+		if counter % 4 == 0:
+			for i= 1 To 9:
 				colr[i-1] = colr[i]
 				colg[i-1] = colg[i]
 				colb[i-1] = colb[i]
@@ -595,12 +591,12 @@ def ShowScores(f: int=-1) -> int:
 		DrawString("NAME",SCREENW/2-100,SCREENH/2-180,3)
 		DrawString("TIME",SCREENW/2+130,SCREENH/2-180,3)
 
-		for t = 0 To 9
+		for t = 0 To 9:
 			SetColor colr[9-t],colg[9-t],colb[9-t]
-			if t = f and d = laststartingdifficulty
+			if t = f and d = laststartingdifficulty:
 				SetColor 255,255,0
 
-			if KeyDown(KEY_P)
+			if KeyDown(KEY_P):
 				s: str = scores[t,d]
 				spc= Len(s$)
 				DrawString(s$,SCREENW/2-180-spc*14,SCREENH/2-150+t*32,2)
@@ -616,44 +612,41 @@ def ShowScores(f: int=-1) -> int:
 				DrawString((playtimes[t,d]),SCREENW/2+64,SCREENH/2-150+t*30,3)
 
 
-		if f = -20
+		if f = -20:
 			s: str = pscore
 			spc= Len(s$)
 			SetColor 255,0,0
 			DrawString(s$,SCREENW/2-180+32-spc*14,SCREENH/2-150+11*30,3)
 			DrawString(ptime$,SCREENW/2+64-32,SCREENH/2-150+11*30,3)
 
-		if randint(0,100) > 90 and counter < 700 Then part.CreateFireworks(1)
+		if randint(0,100) > 90 and counter < 700:
+			part.CreateFireworks(1)
 		part.UpdateParticles(1)
 		part.DrawParticles()
 		SetColor 255,255,0
-		if counter % 50 > 25
+		if counter % 50 > 25:
 			DrawString("Press BOMB Button to Start",SCREENW/2-250,SCREENH-32,4)
 
 		Flip 1
 		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0
-			Delay 20-tim
+		if tim < 20 and tim > 0:
+			sleep(20-tim)
 
 		counter = counter+1
-		bombtime:-1
-		if bombtime < 0 Then bombtime = 0
-		if KeyHit(KEY_ESCAPE) Or ..
-			(JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) Or ..
-			(JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0)
-			if Options(False) Then return True
+		bombtime -= 1
+		if bombtime < 0:
+			bombtime = 0
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
+			if Options(False):
+				return True
 			bombtime = 20
 
-		if KeyHit(k_bomb) Or MouseHit(m_bomb) Or ..
-			(JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) Or ..
-			(JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0)
+		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
 			counter = 1000
 			playgame = True
 			bombtime = 20
 
-
 	return False
-
 
 
 
@@ -669,35 +662,38 @@ def ShowTitle() -> int:
 	SetViewport 0,0,SCREENW,SCREENH
 	gxoff = 0
 	gyoff = 0
+
 	FlushKeys()
+
 	bombtime = 20
 	counter = 0
+
 	st: str = "GridWars 2"
 	ln = Len(st$)-1
-	while (counter < 900)
+
+	while (counter < 900):
 		SetLineWidth 2.0
 		SetBlend lightblend
 		SetAlpha 1
 		shrink: float = (SCREENW / 1024.0)
-		gcount:+1
+		gcount += 1
 		Cls
 		tim = MilliSecs()
 		CycleColours()
-		if tcounter > 350
-			if randint(0,100) > 90 and counter < 850 Then part.CreateFireworks(0)
+		if tcounter > 350:
+			if randint(0,100) > 90 and counter < 850:
+				part.CreateFireworks(0)
 			part.UpdateParticles(1)
 			part.DrawParticles()
 			BlackholeParticles()
 			#red circles
-			for Local n5:nme5 = EachIn nme5_list
+			for Local n5 in nme5_list:
 				n5.UpdateDisplayEffect()
-
-
 
 		kol = 128+tcounter/3 ; if kol > 255 Then kol = 255
 		SetColor 0,0,kol
 		sc: float = tcounter/24.0;if sc# > 20 Then sc#=20
-		for z = 0 To tcounter/25
+		for z = 0 To tcounter/25:
 			SetColor rcol,gcol,bcol
 			xd = (SCREENW-ln*sc*shrink*5.5)/2+Cos(z*20+counter*2)*(2+tcounter/60)
 			yd = (SCREENH-18*sc*shrink)/2-50+Sin(z*20+counter*2)*(2+tcounter/60)+600/8-tcounter/8
@@ -707,7 +703,7 @@ def ShowTitle() -> int:
 		SetColor 64,180,64
 		DrawString("Programmed In Blitzmax",SCREENW/2-22/2*5*3.2*shrink,SCREENH-280,3.2*shrink)
 		DrawString("By Mark Incitti",SCREENW/2-15/2*5*3.2*shrink,SCREENH-240,3.2*shrink)
-		if counter % 200 > 99
+		if counter % 200 > 99:
 			DrawString(version$,SCREENW/2-25/2*5*3*shrink,SCREENH-200,3*shrink)
 		else:
 			DrawString(advert$,SCREENW/2-36/2*5*3*shrink,SCREENH-200,3.1*shrink)
@@ -719,48 +715,31 @@ def ShowTitle() -> int:
 		DrawString("Svrman, taumel - Gfx & Effects, Swith - Music, RiK - Mac",SCREENW/2-56/2*5*3.2*shrink,SCREENH-120,3.2*shrink)
 
 		SetColor 255,255,0
-		if counter % 60 > 29
+		if counter % 60 > 29:
 			DrawString("Press BOMB Button to Start",SCREENW/2-26/2*5*4*shrink,SCREENH-32,4*shrink)
 
 		Flip 1
 		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0
-			Delay 20-tim
+		if tim < 20 and tim > 0:
+			sleep(20-tim)
 
-		counter = counter+1
-		bombtime:-1
-		if bombtime < 0 Then bombtime = 0
+		counter = counter + 1
+		bombtime -= 1
+		if bombtime < 0:
+			bombtime = 0
+
 		tcounter = tcounter+1;if tcounter > 600 Then tcounter = 600
 
-		if KeyHit(KEY_ESCAPE) Or ..
-			(JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) Or ..
-			(JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0)
-			if Options(False) Then return True
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0)
+			if Options(False):
+				return True
 
-		if KeyHit(k_bomb) Or MouseHit(m_bomb) Or ..
-			(JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) Or ..
-			(JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0)
+		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0)
 			counter = 1000
 			playgame = True
 
-
 	tcounter = 600
 	return False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -770,9 +749,6 @@ def CenterPlayer()
 	py = PLAYFIELDH/2
 	gxoff = (PLAYFIELDW-SCREENW)/2
 	gyoff = (PLAYFIELDH-SCREENH)/2
-
-
-
 
 
 def GetReady() -> int:
@@ -785,7 +761,7 @@ def GetReady() -> int:
 
 	PlaySound2(get_ready_snd)
 	count = 0
-	while count < 60 and Not KeyDown(KEY_ESCAPE)
+	while count < 60 and not KeyDown(KEY_ESCAPE):
 		Cls
 		tim = MilliSecs()
 
@@ -793,29 +769,23 @@ def GetReady() -> int:
 		UpdateAll()
 		drawall()
 #		if KeyDown(KEY_TAB) Then End
-#		if Not KeyDown(KEY_F8)
+#		if not KeyDown(KEY_F8)
 			SetColor 0,55+abs(Sin(count))*200,0
-			DrawString("GET READY",..
-			  SCREENW/2-abs(Sin(count))*19*5*9*.5,..
-			  SCREENH/2-abs(Sin(count))*100,..
-			  abs(Sin(count))*20)
-
+			DrawString("GET READY", SCREENW/2-abs(Sin(count))*19*5*9*.5, SCREENH/2-abs(Sin(count))*100, abs(Sin(count))*20)
 #			DrawString("GET READY", SCREENW/2+60-abs(Sin(count))*SCREENW/2,SCREENH/2-abs(Sin(count))*100,abs(Sin(count))*20)
-#
+
 		Flip
 		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0
-			Delay 20-tim
+		if tim < 20 and tim > 0:
+			sleep(20-tim)
 
-
-		count:+1
-		if KeyHit(k_bomb) Or MouseHit(m_bomb)
+		count += 1
+		if KeyHit(k_bomb) or MouseHit(m_bomb)
 			count = 60
-
 
 	gridpoint.Pull(px,py,20,20)
 	count = 0
-	while count < 40 and Not KeyDown(KEY_ESCAPE)
+	while count < 40 and not KeyDown(KEY_ESCAPE):
 		Cls
 		tim = MilliSecs()
 
@@ -823,23 +793,22 @@ def GetReady() -> int:
 		UpdateAll()
 		drawall()
 #		if KeyDown(KEY_TAB) Then End
-#		if Not KeyDown(KEY_F8)
+#		if not KeyDown(KEY_F8)
 			SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-			if count > 10 Then DrawPlayer(px,py,pr)
+			if count > 10:
+				DrawPlayer(px,py,pr)
 			DrawCircle(SCREENW/2,SCREENH/2,300-count*6)
 			DrawCircle(SCREENW/2,SCREENH/2,300-count*8)
 			DrawCircle(SCREENW/2,SCREENH/2,300-count*12)
 #
 		Flip
 		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0
-			Delay 20-tim
+		if tim < 20 and tim > 0:
+			sleep(20-tim)
 
-
-		count:+1
-		if KeyHit(k_bomb) Or MouseHit(m_bomb)
+		count += 1
+		if KeyHit(k_bomb) or MouseHit(m_bomb)
 			count = 40
-
 
 	player_shield = 80
 	messtime = 0
@@ -851,15 +820,15 @@ def GetReady() -> int:
 
 
 
-
-
 def KillPlayer() -> int:
 	Local tim: int
 
-	if nokillme Or player_shield> 0 Then return False
+	if nokillme or player_shield> 0:
+		return False
 
 	#only killed once per update
-	if dying Then return False
+	if dying:
+		return False
 
 	dying = True
 	StopMusic()
@@ -874,13 +843,13 @@ def KillPlayer() -> int:
 	gridpoint.Pull(px,py,32,64)
 
 	Local s:shot
-	for s:shot = EachIn shot_list
+	for s in shot_list:
 		shot_list.remove(s)
 
 
 	removeall(False) #remove all but the killer
 	Local count: int = 0
-	while (count < 100)  and Not KeyDown(KEY_ESCAPE)
+	while (count < 100) and not KeyDown(KEY_ESCAPE):
 		Cls
 		tim = MilliSecs()
 
@@ -889,10 +858,10 @@ def KillPlayer() -> int:
 		drawall()
 		Flip
 		tim = MilliSecs() - tim
-		if tim < 20 and tim > 0
-			Delay 20-tim
+		if tim < 20 and tim > 0:
+			sleep(20-tim)
 
-		count:+1
+		count += 1
 
 	removeall(True) #remove killer too
 
@@ -901,13 +870,15 @@ def KillPlayer() -> int:
 	CenterPlayer()
 	gridpoint.ResetAll()
 
-	if numplayers = 0
+	if numplayers == 0:
 		gameover = True
 		PlaySound2(game_over_snd)
 	else:
 		# take away a shot, speed and return to forward shooting
-		if numshots > 2 Then numshots:-1
-		if shotspeed > 3 Then shotspeed:-1
+		if numshots > 2:
+			numshots -= 1
+		if shotspeed > 3:
+			shotspeed -= 1
 		shot_back = 0
 		shot_side = 0
 		supershots = 0
@@ -918,17 +889,13 @@ def KillPlayer() -> int:
 		score.ResetMultiplier()
 		GetReady()
 
-
 	dying = False
 	Cls
 	return True
 
 
 
-
-
-
-def RemoveAll(all: int=False)
+def RemoveAll(all: bool=False)
 
 	Local n:nme
 	Local n1:nme1
@@ -946,69 +913,77 @@ def RemoveAll(all: int=False)
 	Local s:shot
 	Local tr:trail
 
-	for tr:trail = EachIn trail_list
+	for tr in trail_list:
 		trail_list.Remove(tr)
 
 
-	for s:shot = EachIn shot_list
+	for s in shot_list:
 		shot_list.Remove(s)
 
 
-	for sc:score = EachIn score_list
+	for sc in score_list:
 		score_list.Remove(sc)
 
 
-	if all Then part.ResetAll()
+	if all:
+		part.ResetAll()
 
 	StopLoopingSounds()
 
-	for n:nme = EachIn nme_list
-		if all Or n.killer = False nme_LIST.Remove(n)
+	for n in nme_list:
+		if all or n.killer = False nme_LIST.Remove(n)
 
-	for n1:nme1 = EachIn nme1_list
-		if all Or n1.killer = False nme1_LIST.Remove(n1)
+	for n1 in nme1_list:
+		if all or n1.killer is False:
+			nme1_LIST.Remove(n1)
 
-	for n2:nme2 = EachIn nme2_list
-		if all Or n2.killer = False nme2_LIST.Remove(n2)
+	for n2 in nme2_list:
+		if all or n2.killer is False:
+			nme2_LIST.Remove(n2)
 
-	for n3:nme3 = EachIn nme3_list
-		if all Or n3.killer = False nme3_LIST.Remove(n3)
+	for n3 in nme3_list:
+		if all or n3.killer is False:
+			nme3_LIST.Remove(n3)
 
-	for n4:nme4 = EachIn nme4_list
-		if all Or n4.killer = False nme4_LIST.Remove(n4)
+	for n4 in nme4_list:
+		if all or n4.killer is False:
+			nme4_LIST.Remove(n4)
 
-	for n5:nme5 = EachIn nme5_list
-		if all Or n5.killer = False nme5_LIST.Remove(n5)
+	for n5 in nme5_list:
+		if all or n5.killer is False:
+			nme5_LIST.Remove(n5)
 
-	for ll:le = EachIn le_list
-		if all Or ll.killer = False le_LIST.Remove(ll)
+	for ll in le_list:
+		if all or ll.killer is False:
+			le_LIST.Remove(ll)
 
-	for g:ge = EachIn ge_list
-		if all Or g.killer = False ge_list.Remove(g)
+	for g in ge_list:
+		if all or g.killer is False:
+			ge_list.Remove(g)
 
-	for po:pu = EachIn pu_list
+	for po in pu_list:
 		pu_list.Remove(po)
 
-	for n6:nme6 = EachIn nme6_list
-		if all Or n6.killer = False nme6_LIST.Remove(n6)
+	for n6 in nme6_list:
+		if all or n6.killer is False:
+			nme6_LIST.Remove(n6)
 
-	for n7:nme7 = EachIn nme7_list
-		if all Or n7.killer = False nme7_LIST.Remove(n7)
+	for n7 in nme7_list:
+		if all or n7.killer is False:
+			nme7_LIST.Remove(n7)
 
-	for n8:nme8 = EachIn nme8_list
-		if all Or n8.killer = False nme8_LIST.Remove(n8)
+	for n8 in nme8_list:
+		if all or n8.killer is False:
+			nme8_LIST.Remove(n8)
 
-
-	if all Then gridpoint.ResetAll()
+	if all:
+		gridpoint.ResetAll()
 
 	# reset the spawn counters
 	sp_t = 0
 	sp_t2 = 0
 	sp_t3 = 0
 	sp_t4 = 0
-
-
-
 
 
 
@@ -1029,39 +1004,36 @@ def DestroyAll()
 	for n:nme = EachIn nme_list
 		n.kill(False)
 
-	for n1:nme1 = EachIn nme1_list
+	for n1 in nme1_list:
 		n1.kill(False)
 
-	for n2:nme2 = EachIn nme2_list
+	for n2 in nme2_list:
 		n2.kill(False)
 
-	for n3:nme3 = EachIn nme3_list
+	for n3 in nme3_list:
 		n3.kill(False)
 
-	for n4:nme4 = EachIn nme4_list
+	for n4 in nme4_list:
 		n4.kill(False)
 
-	for n5:nme5 = EachIn nme5_list
+	for n5 in nme5_list:
 		n5.kill(False)
 
-	for n6:nme6 = EachIn nme6_list
-		if n6.ishead
+	for n6 in nme6_list:
+		if n6.ishead:
 			n6.kill(False)
 
-
-	for n7:nme7 = EachIn nme7_list
+	for n7 in nme7_list:
 		n7.kill(False)
 
-	for n8:nme8 = EachIn nme8_list
+	for n8 in nme8_list:
 		n8.kill(False)
 
-	for ll:le = EachIn le_list
+	for ll in le_list:
 		ll.kill(False,0,0)
 
-	for g:ge = EachIn ge_list
+	for g in ge_list:
 		g.kill(False)
-
-
 
 
 
@@ -1165,10 +1137,6 @@ def ResetGame()
 
 	score.ResetScore()
 	score.ResetMultiplier()
-
-
-
-
 
 
 
@@ -1276,38 +1244,41 @@ End Rem
 		sp_c4 = randint(0,11) #any corner/s
 		sp_x4 = EnemyType(cnt/2)
 		sp_t4 = randint(20,40+(cnt/750))*3
-		if sp_t4 > 100*3 Then sp_t4 = 100*3
-		if sp_x4 = 5
-			sp_t4 = 3*8
+		if sp_t4 > 100*3:
+			sp_t4 = 100*3
+		if sp_x4 == 5:
+			sp_t4 = 3 * 8
 
 
 	#keep placing the whole bunch
 	if sp_t > 0:
-		sp_t:-1
-		if sp_t % 2 = 0:
+		sp_t -= 1
+		if sp_t % 2 == 0:
 			CreateEnemy(sp_x,24,sp_c)
 
 
 	#keep placing the whole bunch
 	if sp_t2 > 0:
-		sp_t2:-1
+		sp_t2 -= 1
 		if sp_t2 % 2 == 0:
 			CreateEnemy(sp_x2,24,sp_c2)
 
 
 	#keep placing the whole bunch
 	if sp_t3 > 0:
-		sp_t3:-1
+		sp_t3 -= 1
 		if sp_t3 % 3 == 0:
-			if sp_x3 = 9 Then CreateEnemy(sp_x3,20,sp_c3) # 2X more indigo triangles
+			if sp_x3 = 9:
+				CreateEnemy(sp_x3,20,sp_c3) # 2X more indigo triangles
 			CreateEnemy(sp_x3,20,sp_c3)
 
 
 	#keep placing the whole bunch
 	if sp_t4 > 0:
-		sp_t4:-1
+		sp_t4 -= 1
 		if sp_t4 % 3 == 0:
-			if sp_x4 = 9 Then CreateEnemy(sp_x4,20,sp_c4) # 2X more indigo triangles
+			if sp_x4 = 9:
+				CreateEnemy(sp_x4,20,sp_c4) # 2X more indigo triangles
 			CreateEnemy(sp_x4,20,sp_c4)
 
 
@@ -1327,13 +1298,14 @@ End Rem
 
 
 
-
-
 def CreateEnemy(kind: int,freeze: int,corner: int=0,rate: int=100,gkind: int=1,size: int=20)
 
-	if bombtime > 0 Then return
+	if bombtime > 0:
+		return
+
 	Local x: int,y: int,k: int,sz: int
-	if corner > 4
+
+	if corner > 4:
 		Select corner
 			Case 5
 				corner = randint(1,4)
@@ -1343,15 +1315,30 @@ def CreateEnemy(kind: int,freeze: int,corner: int=0,rate: int=100,gkind: int=1,s
 				else:
 					corner = 2
 			Case 7
-				if randint(1,10) > 5 Then corner = 2 else: corner = 3
+				if randint(1,10) > 5:
+					corner = 2
+				else:
+					corner = 3
 			Case 8
-				if randint(1,10) > 5 Then corner = 3 else: corner = 4
+				if randint(1,10) > 5:
+					corner = 3
+				else:
+					corner = 4
 			Case 9
-				if randint(1,10) > 5 Then corner = 1 else: corner = 3
+				if randint(1,10) > 5:
+					corner = 1
+				else:
+					corner = 3
 			Case 10
-				if randint(1,10) > 5 Then corner = 1 else: corner = 4
+				if randint(1,10) > 5:
+					corner = 1
+				else:
+					corner = 4
 			Case 11
-				if randint(1,10) > 5 Then corner = 2 else: corner = 4
+				if randint(1,10) > 5:
+					corner = 2
+				else:
+					corner = 4
 
 
 	Select corner
@@ -1415,9 +1402,11 @@ def Updateplayer()
 			#bombs
 			jb = 0
 			bombtime = bombtime - 1
-			if bombtime < 0 Then bombtime = 0
+			if bombtime < 0:
+				bombtime = 0
 			jb = KeyDown(k_bomb) + MouseDown(m_bomb)
-			if jb and bombtime = 0 Then shot.SuperBomb()
+			if jb and bombtime == 0:
+				shot.SuperBomb()
 
 			#move
 			xx = (MouseX()-SCREENW/2)
@@ -1426,7 +1415,7 @@ def Updateplayer()
 
 			jdmx = xx/128*(1+m_sensitivity*5)
 			jdmy = yy/128*(1+m_sensitivity*5)
-#			xy = Sqr(jdmx*jdmx+jdmy*jdmy)
+#			xy = sqrt(jdmx*jdmx+jdmy*jdmy)
 
 #			if xy > 10
 #				jdmx = jdmx/xy*10
@@ -1434,26 +1423,26 @@ def Updateplayer()
 #
 
 			#fire
-			if MouseDown(m_fire)
+			if MouseDown(m_fire):
 				#change fire direction
 				xy = (jdmx*jdmx+jdmy*jdmy)
-				if xy > 0
+				if xy > 0:
 					jdfx = xx/16
 					jdfy = yy/16
 
 			else:
-				if Not autofire
+				if not autofire
 					jdfx = 0
 					jdfy = 0
 
 
-			oldmx:*inertia
-			oldmy:*inertia
-			jdmx:+oldmx
-			jdmy:+oldmy
+			oldmx *= inertia
+			oldmy *= inertia
+			jdmx += oldmx
+			jdmy += oldmy
 			# stay within screen
-			speed: float = Sqr(jdmx*jdmx + jdmy*jdmy)
-			if speed > (1+m_sensitivity*10)
+			speed: float = sqrt(jdmx*jdmx + jdmy*jdmy)
+			if speed > (1+m_sensitivity*10):
 				jdmx = jdmx/(1+m_sensitivity*10)
 				jdmy = jdmy/(1+m_sensitivity*10)
 
@@ -1463,16 +1452,18 @@ def Updateplayer()
 			#bombs
 			jb = 0
 			bombtime = bombtime - 1
-			if bombtime < 0 Then bombtime = 0
+			if bombtime < 0:
+				bombtime = 0
 			jb = JoyDown(j_d_bomb,joyport)
-			if jb and bombtime = 0 Then shot.SuperBomb()
+			if jb and bombtime = 0:
+				shot.SuperBomb()
 
 			#move
 			jdmx = GetJoyByAxis(joyport, axis_move_x,axis_move_x_inv,axis_move_x_sc,axis_move_x_center )
 			jdmy = GetJoyByAxis(joyport, axis_move_y,axis_move_y_inv,axis_move_y_sc,axis_move_y_center )
 #			if abs(jdmx) < axis_move_x_dz Then jdmx = 0
 #			if abs(jdmy) < axis_move_y_dz Then jdmy = 0
-			if abs(jdmx) < axis_move_x_dz and abs(jdmy) < axis_move_y_dz Then
+			if abs(jdmx) < axis_move_x_dz and abs(jdmy) < axis_move_y_dz:
 				jdmx = 0
 				jdmy = 0
 
@@ -1482,17 +1473,17 @@ def Updateplayer()
 			jdfy = GetJoyByAxis(joyport, axis_fire_y,axis_fire_y_inv,axis_fire_y_sc,axis_fire_y_center )
 #			if abs(jdfx) < axis_fire_x_dz Then jdfx = 0
 #			if abs(jdfy) < axis_fire_y_dz Then jdfy = 0
-			if abs(jdfx) < axis_fire_x_dz and abs(jdfy) < axis_fire_y_dz Then
+			if abs(jdfx) < axis_fire_x_dz and abs(jdfy) < axis_fire_y_dz:
 				jdfx = 0
 				jdfy = 0
 
-			oldmx:*inertia
-			oldmy:*inertia
-			jdmx:+oldmx
-			jdmy:+oldmy
+			oldmx *= inertia
+			oldmy *= inertia
+			jdmx += oldmx
+			jdmy += oldmy
 			# stay within screen
-			speed: float = Sqr(jdmx*jdmx + jdmy*jdmy)
-			if speed > 1
+			speed: float = sqrt(jdmx*jdmx + jdmy*jdmy)
+			if speed > 1:
 				jdmx = jdmx/speed
 				jdmy = jdmy/speed
 
@@ -1503,28 +1494,30 @@ def Updateplayer()
 			#bombs
 			jb = KeyDown(k_bomb)
 			bombtime = bombtime - 1
-			if bombtime < 0 Then bombtime = 0
-			if jb and bombtime = 0 Then shot.SuperBomb()
+			if bombtime < 0:
+				bombtime = 0
+			if jb and bombtime == 0:
+				shot.SuperBomb()
 
 			#move
 			jdmx = KeyDown(k_move_right) - KeyDown(k_move_left)
 			jdmy = KeyDown(k_move_down) - KeyDown(k_move_up)
 
 			#fire
-			if autofire
-				if KeyDown(k_fire_right)
+			if autofire:
+				if KeyDown(k_fire_right):
 					jdfx = 1
 					jdfy = KeyDown(k_fire_down) - KeyDown(k_fire_up)
 
-				if KeyDown(k_fire_left)
+				if KeyDown(k_fire_left):
 					jdfx = -1
 					jdfy = KeyDown(k_fire_down) - KeyDown(k_fire_up)
 
-				if KeyDown(k_fire_down)
+				if KeyDown(k_fire_down):
 					jdfy = 1
 					jdfx = KeyDown(k_fire_right) - KeyDown(k_fire_left)
 
-				if KeyDown(k_fire_up)
+				if KeyDown(k_fire_up):
 					jdfy = -1
 					jdfx = KeyDown(k_fire_right) - KeyDown(k_fire_left)
 
@@ -1532,13 +1525,13 @@ def Updateplayer()
 				jdfx = KeyDown(k_fire_right) - KeyDown(k_fire_left)
 				jdfy = KeyDown(k_fire_down) - KeyDown(k_fire_up)
 
-			oldmx:*inertia
-			oldmy:*inertia
-			jdmx:+oldmx
-			jdmy:+oldmy
+			oldmx *= inertia
+			oldmy *= inertia
+			jdmx += oldmx
+			jdmy += oldmy
 			# stay within screen
-			speed: float = Sqr(jdmx*jdmx + jdmy*jdmy)
-			if speed > 1
+			speed: float = sqrt(jdmx*jdmx + jdmy*jdmy)
+			if speed > 1:
 				jdmx = jdmx/speed
 				jdmy = jdmy/speed
 
@@ -1548,9 +1541,11 @@ def Updateplayer()
 			#bombs
 			jb = 0
 			bombtime = bombtime - 1
-			if bombtime < 0 Then bombtime = 0
+			if bombtime < 0:
+				bombtime = 0
 			jb = JoyDown(j_pad_bomb,joyport)
-			if jb and bombtime = 0 Then shot.SuperBomb()
+			if jb and bombtime == 0:
+				shot.SuperBomb()
 
 			Select j_config
 				Case 0
@@ -1571,18 +1566,22 @@ def Updateplayer()
 					jdfx = JoyX()
 					jdfy = JoyY()
 
-			if abs(jdmx) < 0.5 Then jdmx = 0
-			if abs(jdmy) < 0.5 Then jdmy = 0
-			if abs(jdfx) < 0.5 Then jdfx = 0
-			if abs(jdfy) < 0.5 Then jdfy = 0
+			if abs(jdmx) < 0.5:
+				jdmx = 0
+			if abs(jdmy) < 0.5:
+				jdmy = 0
+			if abs(jdfx) < 0.5:
+				jdfx = 0
+			if abs(jdfy) < 0.5:
+				jdfy = 0
 
-			oldmx:*inertia
-			oldmy:*inertia
-			jdmx:+oldmx
-			jdmy:+oldmy
+			oldmx *= inertia
+			oldmy *= inertia
+			jdmx += oldmx
+			jdmy += oldmy
 			# stay within screen
-			speed: float = Sqr(jdmx*jdmx + jdmy*jdmy)
-			if speed > 1
+			speed: float = sqrt(jdmx*jdmx + jdmy*jdmy)
+			if speed > 1:
 				jdmx = jdmx/speed
 				jdmy = jdmy/speed
 
@@ -1592,8 +1591,10 @@ def Updateplayer()
 			#bombs
 			jb = KeyDown(k_bomb) + MouseDown(m_bomb)
 			bombtime = bombtime - 1
-			if bombtime < 0 Then bombtime = 0
-			if jb and bombtime = 0 Then shot.SuperBomb()
+			if bombtime < 0:
+				bombtime = 0
+			if jb and bombtime == 0:
+				shot.SuperBomb()
 
 			Select h_config
 				Case 0
@@ -1605,29 +1606,29 @@ def Updateplayer()
 					myaim= MouseY()
 					xx = mxaim-(px-gxoff)
 					yy = myaim-(py-gyoff)
-					xy = Sqr(xx*xx+yy*yy)
-					if xy < 1 Then xy = 1
+					xy = sqrt(xx*xx+yy*yy)
+					if xy < 1:
+						xy = 1
 
 					#fire
-					if MouseDown(m_fire)
+					if MouseDown(m_fire):
 						jdfx = xx/xy
 						jdfy = yy/xy
 					else:
-						if Not autofire
+						if not autofire:
 							jdfx = 0
 							jdfy = 0
 
 
-
 					#Draw target
 					DrawTarget(mxaim,myaim,gcount)
-					oldmx:*inertia
-					oldmy:*inertia
-					jdmx:+oldmx
-					jdmy:+oldmy
+					oldmx *= inertia
+					oldmy *= inertia
+					jdmx += oldmx
+					jdmy += oldmy
 					# stay within screen
-					speed: float = Sqr(jdmx*jdmx + jdmy*jdmy)
-					if speed > 1
+					speed: float = sqrt(jdmx*jdmx + jdmy*jdmy)
+					if speed > 1:
 						jdmx = jdmx/speed
 						jdmy = jdmy/speed
 
@@ -1643,20 +1644,20 @@ def Updateplayer()
 					jdmy = yy/128*(1+m_sensitivity*5)
 
 					#fire
-					if autofire
-						if KeyDown(k_fire_right)
+					if autofire:
+						if KeyDown(k_fire_right):
 							jdfx = 1
 							jdfy = KeyDown(k_fire_down) - KeyDown(k_fire_up)
 
-						if KeyDown(k_fire_left)
+						if KeyDown(k_fire_left):
 							jdfx = -1
 							jdfy = KeyDown(k_fire_down) - KeyDown(k_fire_up)
 
-						if KeyDown(k_fire_down)
+						if KeyDown(k_fire_down):
 							jdfy = 1
 							jdfx = KeyDown(k_fire_right) - KeyDown(k_fire_left)
 
-						if KeyDown(k_fire_up)
+						if KeyDown(k_fire_up):
 							jdfy = -1
 							jdfx = KeyDown(k_fire_right) - KeyDown(k_fire_left)
 
@@ -1664,13 +1665,13 @@ def Updateplayer()
 						jdfx = KeyDown(k_fire_right) - KeyDown(k_fire_left)
 						jdfy = KeyDown(k_fire_down) - KeyDown(k_fire_up)
 
-					oldmx:*inertia
-					oldmy:*inertia
-					jdmx:+oldmx
-					jdmy:+oldmy
+					oldmx *= inertia
+					oldmy *= inertia
+					jdmx += oldmx
+					jdmy += oldmy
 					# stay within screen
-					speed: float = Sqr(jdmx*jdmx + jdmy*jdmy)
-					if speed > (1+m_sensitivity*10)
+					speed: float = sqrt(jdmx*jdmx + jdmy*jdmy)
+					if speed > (1+m_sensitivity*10):
 						jdmx = jdmx/(1+m_sensitivity*10)
 						jdmy = jdmy/(1+m_sensitivity*10)
 
@@ -1685,10 +1686,10 @@ def Updateplayer()
 					yy = (MouseY()-SCREENH/2)
 
 					#fire
-					if Not autofire
-						if MouseDown(m_fire)
-							xy = Sqr(xx*xx+yy*yy)
-							if xy > 1
+					if not autofire:
+						if MouseDown(m_fire):
+							xy = sqrt(xx*xx+yy*yy)
+							if xy > 1:
 								mxaim = xx/xy
 								myaim = yy/xy
 
@@ -1700,8 +1701,8 @@ def Updateplayer()
 							jdfy = 0
 
 					else:
-						xy = Sqr(xx*xx+yy*yy)
-						if xy > 1
+						xy = sqrt(xx*xx+yy*yy)
+						if xy > 1:
 							mxaim = xx/xy
 							myaim = yy/xy
 
@@ -1709,39 +1710,45 @@ def Updateplayer()
 						jdfy = myaim
 
 
-					if KeyDown(k_fire_up)
-						if myaim > -1 Then myaim = myaim -.1
-						if mxaim <> 0 Then mxaim = mxaim*.8
+					if KeyDown(k_fire_up):
+						if myaim > -1:
+							myaim = myaim -.1
+						if mxaim != 0:
+							mxaim = mxaim*.8
 						jdfx = mxaim
 						jdfy = myaim
 
-					if KeyDown(k_fire_down)
-						if myaim < 1 Then myaim = myaim +.1
-						if mxaim <> 0 Then mxaim = mxaim*.8
+					if KeyDown(k_fire_down):
+						if myaim < 1:
+							myaim = myaim +.1
+						if mxaim != 0:
+							mxaim = mxaim*.8
 						jdfx = mxaim
 						jdfy = myaim
 
-					if KeyDown(k_fire_right)
-						if mxaim < 1 Then mxaim = mxaim +.1
-						if myaim <> 0 Then myaim = myaim*.8
+					if KeyDown(k_fire_right):
+						if mxaim < 1:
+							mxaim = mxaim +.1
+						if myaim != 0:
+							myaim = myaim*.8
 						jdfx = mxaim
 						jdfy = myaim
 
-					if KeyDown(k_fire_left)
+					if KeyDown(k_fire_left):
 						if mxaim > -1 Then mxaim = mxaim -.1
-						if myaim <> 0 Then myaim = myaim*.8
+						if myaim != 0 Then myaim = myaim*.8
 						jdfx = mxaim
 						jdfy = myaim
 
 					#Draw target
 					DrawTarget(px+mxaim*80-gxoff,py+myaim*80-gyoff,gcount)
-					oldmx:*inertia
-					oldmy:*inertia
-					jdmx:+oldmx
-					jdmy:+oldmy
+					oldmx *= inertia
+					oldmy *= inertia
+					jdmx += oldmx
+					jdmy += oldmy
 					# stay within screen
-					speed: float = Sqr(jdmx*jdmx + jdmy*jdmy)
-					if speed > 1
+					speed: float = sqrt(jdmx*jdmx + jdmy*jdmy)
+					if speed > 1:
 						jdmx = jdmx/speed
 						jdmy = jdmy/speed
 
@@ -1751,21 +1758,21 @@ def Updateplayer()
 
 
 	px = px + jdmx*MAXPLAYERSPEED
-	if px < 16 Or px > PLAYFIELDW-16
+	if px < 16 or px > PLAYFIELDW-16
 		px = px - jdmx*MAXPLAYERSPEED
 		oldmx = -oldmx
 
 	py = py + jdmy*MAXPLAYERSPEED
-	if py < 16 Or py > PLAYFIELDH-16
+	if py < 16 or py > PLAYFIELDH-16
 		py = py - jdmy*MAXPLAYERSPEED
 		oldmy = -oldmy
 
-	if jdmy <> 0 Or jdmx <> 0
+	if jdmy != 0 or jdmx != 0
 		pr = ATan2(jdmy,jdmx)-90
 
 
 	# create player trail
-	if abs(jdmx) > 0.1 Or abs(jdmy) > 0.1
+	if abs(jdmx) > 0.1 or abs(jdmy) > 0.1
 		for Local tt: int = 0 To 2
 			trail.create(..
 			px-jdmx*12+Sin(gcount*12+tt*45)*8,..
@@ -1776,64 +1783,69 @@ def Updateplayer()
 
 
 
-	if scroll
+	if scroll:
 		# scroll the playfield
 		Local scr: int
 		scr = px-gxoff
-		if scr < 500
-			gxoff:-2*(5-scr/100)
-			if gxoff < -80
+		if scr < 500:
+			gxoff -= 2*(5-scr/100)
+			if gxoff < -80:
 				gxoff = -80
 
 
 		scr = py-gyoff
-		if scr < 500
-			gyoff:-2*(5-scr/100)
-			if gyoff < -80
+		if scr < 500:
+			gyoff -= 2*(5-scr/100)
+			if gyoff < -80:
 				gyoff = -80
 
 
 		scr = px-gxoff-SCREENW
 		if scr > -500
-			gxoff:+2*(5-abs(scr)/100)
+			gxoff += 2*(5-abs(scr)/100)
 			if gxoff > (PLAYFIELDW-SCREENW)+80
 				gxoff = (PLAYFIELDW-SCREENW)+80
 
 
 		scr = py-gyoff-SCREENH
-		if scr > -500
-			gyoff:+2*(5-abs(scr)/100)
-			if gyoff > (PLAYFIELDH-SCREENH)+80
+		if scr > -500:
+			gyoff += 2*(5-abs(scr)/100)
+			if gyoff > (PLAYFIELDH-SCREENH)+80:
 				gyoff = (PLAYFIELDH-SCREENH)+80
 
 
 
 
-if KeyHit(KEY_F3)
-	g_style:+1
-	if g_style > numgridstyles Then g_style = 0
+if KeyHit(KEY_F3):
+	g_style += 1
+	if g_style > numgridstyles:
+		g_style = 0:
 	score.create("Grid Style ="+g_style,px-100,py-64,2)
 
-if KeyHit(KEY_F4)
-	showstars:+100
-	if showstars > MAXSTARS Then showstars = 0
+if KeyHit(KEY_F4):
+	showstars += 100
+	if showstars > MAXSTARS:
+		showstars = 0
 	score.create("Number of Stars ="+showstars,px-100,py-64,2)
 
-if KeyHit(KEY_F5)
+if KeyHit(KEY_F5):
 	gravityparticles = 1-gravityparticles
-	if gravityparticles
+	if gravityparticles:
 		score.create("Particle Gravity ON",px-100,py-64,2)
 	else:
 		score.create("Particle Gravity OFF",px-100,py-64,2)
 
 
-if KeyHit(KEY_F6)
-	particlestyle:+1;if particlestyle > numparticlestyles Then particlestyle = 0
+if KeyHit(KEY_F6):
+	particlestyle += 1
+	if particlestyle > numparticlestyles:
+		 particlestyle = 0
 	score.create("Particle - Style "+particlestyle,px-100,py-64,2)
 
-if KeyHit(KEY_F7)
-	debug = 1-debug
-	if debug
+if KeyHit(KEY_F7):
+	# debug = 1-debug # TODO - make this consistent
+	debug = not debug
+	if debug:
 		score.create("Debug ON",px-100,py-64,2)
 	else:
 		score.create("Debug OFF",px-100,py-64,2)
@@ -1841,26 +1853,39 @@ if KeyHit(KEY_F7)
 
 
 # cheat stuff
-if KeyHit(KEY_F1)
+if KeyHit(KEY_F1):
 	valid = False
-	cheat = 1-cheat
-	if cheat
+	# cheat = 1-cheat #
+	cheat = not cheat # TODO here too
+	if cheat:
 		score.create("Cheatmode ON",px-100,py-64,2)
 	else:
 		score.create("Cheatmode OFF",px-100,py-64,2)
 
 
-if cheat
-	if KeyHit(KEY_1) Then shot_back:+ 15*30
-	if KeyHit(KEY_2) Then shot_side:+ 15*30
-	if KeyHit(KEY_3) Then supershots:+ 15*30
-	if KeyHit(KEY_4) Then bouncyshots:+ 15*30
-	if KeyHit(KEY_X) Then numshots:+1;if numshots > 4 Then numshots = 4
-	if KeyHit(KEY_Z) Then shotspeed:+1;if shotspeed > 5 Then shotspeed = 5
-	if KeyHit(KEY_S) Then pu.MakePowerup(6)
-	if KeyHit(KEY_F2)
-		nokillme = 1-nokillme
-		if nokillme
+if cheat:
+	if KeyHit(KEY_1):
+		shot_back +=  15*30
+	if KeyHit(KEY_2):
+		shot_side +=  15*30
+	if KeyHit(KEY_3):
+		supershots +=  15*30
+	if KeyHit(KEY_4):
+		bouncyshots +=  15*30
+	if KeyHit(KEY_X):
+		numshots += 1
+		if numshots > 4:
+			numshots = 4
+	if KeyHit(KEY_Z):
+		shotspeed += 1
+		if shotspeed > 5:
+			shotspeed = 5
+	if KeyHit(KEY_S):
+		pu.MakePowerup(6)
+	if KeyHit(KEY_F2):
+		# nokillme = 1-nokillme
+		nokillme = not nokillme
+		if nokillme:
 			score.create("God %e ON",px-100,py-64,2)
 		else:
 			score.create("God %e OFF",px-100,py-64,2)
@@ -1868,49 +1893,53 @@ if cheat
 
 
 	# timed upgrades
-	if shot_back > 0
-		shot_back:-1
+	if shot_back > 0:
+		shot_back -= 1
 
-	if shot_side > 0
-		shot_side:-1
+	if shot_side > 0:
+		shot_side -= 1
 
 	if player_shield > 0
-		player_shield:-1
-		if player_shield = 100 Or player_shield = 70 Or player_shield = 40
+		player_shield -= 1
+		if player_shield = 100 or player_shield = 70 or player_shield = 40
 			playsound2(shieldwarningsnd)
 
 
 	if supershots > 0
-		supershots :-1
+		supershots  -= 1
 
 	if bouncyshots> 0
-		bouncyshots:-1
+		bouncyshots -= 1
 
 
 	# fire!
-	shottimer:-1
-	if shottimer < 0 Then shottimer = 0
-	if shottimer = 0
-		if debug
+	shottimer -= 1
+	if shottimer < 0:
+		shottimer = 0
+	if shottimer = 0:
+		if debug:
 			shottimer = 4
 			# evil!
-			if numshots = 2 Then shottimer = 8   #4,4,6,6
-			if numshots = 3 Then shottimer = 10
-			if numshots = 4 Then shottimer = 8
-			if jdfx <> 0 Or jdfy <> 0
+			if numshots = 2:
+				shottimer = 8   #4,4,6,6
+			if numshots = 3:
+				shottimer = 10
+			if numshots = 4:
+				shottimer = 8
+			if jdfx != 0 or jdfy != 0:
 				Local xr: float
 				Local yr: float
-				speed: float = Sqr(jdfx*jdfx+jdfy*jdfy)
+				speed: float = sqrt(jdfx*jdfx+jdfy*jdfy)
 				jdfx = jdfx/speed
 				jdfy = jdfy/speed
 				#Local dir2: float = ATan2(jdfy,jdfx)
-				if numshots = 1
+				if numshots = 1:
 					xr: float = jdfx*shotspeed*2
 					yr: float = jdfy*shotspeed*2
 					#TFormR(0,0,0, xr ,yr )
 					shot.create(px,py,xr,yr,shotspeed*2)
 
-				if numshots = 2
+				if numshots = 2:
 					xr: float = jdfx*shotspeed*2
 					yr: float = jdfy*shotspeed*2
 					TFormR(0,0,12, xr ,yr )
@@ -1920,7 +1949,7 @@ if cheat
 					TFormR(0,0,-12, xr ,yr )
 					shot.create(px+25*xr,py+25*yr,xr,yr,shotspeed*2)
 
-				if numshots = 3
+				if numshots = 3:
 					xr: float = jdfx*shotspeed*2
 					yr: float = jdfy*shotspeed*2
 					TFormR(0,0,3, xr ,yr )
@@ -1942,7 +1971,7 @@ if cheat
 					TFormR(0,0,-3, xr ,yr )
 					shot.create(px,py,xr,yr,shotspeed*2)
 
-				if numshots = 4
+				if numshots = 4:
 					xr: float = jdfx*shotspeed*2
 					yr: float = jdfy*shotspeed*2
 					TFormR(0,0,-2, xr ,yr )
@@ -1956,7 +1985,7 @@ if cheat
 					TFormR(0,0,2, xr ,yr )
 					shot.create(px,py,xr,yr,shotspeed*2)
 
-				if shot_back > 0
+				if shot_back > 0:
 					xr: float = jdfx*shotspeed*2
 					yr: float = jdfy*shotspeed*2
 					TFormR(0,0,-180, xr ,yr )
@@ -1977,20 +2006,21 @@ if cheat
 
 		else:
 			shottimer = 4 + numshots/2
-			if jdfx <> 0 Or jdfy <> 0
+			if jdfx != 0 or jdfy != 0:
 				Local xr: float
 				Local yr: float
-				speed: float = Sqr(jdfx*jdfx+jdfy*jdfy)
+				speed: float = sqrt(jdfx*jdfx+jdfy*jdfy)
 				jdfx = jdfx/speed
 				jdfy = jdfy/speed
-				if numshots % 2 = 1
+				if numshots % 2 = 1:
 					xr: float = jdfx*shotspeed*3.2
 					yr: float = jdfy*shotspeed*3.2
 					TFormR(0,0,0, xr ,yr )
 					shot.create(px,py,xr,yr,shotspeed*3.2)
 
-				if numshots > 1
-					if numshots % 2 = 0 Then r = 2 else: r = 4
+				if numshots > 1:
+					if numshots % 2 = 0:
+						r = 2 else: r = 4
 					xr: float = jdfx*shotspeed*3.15
 					yr: float = jdfy*shotspeed*3.15
 					TFormR(0,0,r, xr ,yr )
@@ -2000,8 +2030,11 @@ if cheat
 					TFormR(0,0,-r, xr ,yr )
 					shot.create(px,py,xr,yr,shotspeed*3.15)
 
-				if numshots > 3
-					if numshots=4 Then r = 5 else: r = 5
+				if numshots > 3:
+					if numshots == 4: # TODO WTF?
+						r = 5
+					else:
+						r = 5
 					xr: float = jdfx*shotspeed*3.1
 					yr: float = jdfy*shotspeed*3.1
 					TFormR(0,0,r, xr ,yr )
@@ -2011,13 +2044,13 @@ if cheat
 					TFormR(0,0,-r, xr ,yr )
 					shot.create(px,py,xr,yr,shotspeed*3.1)
 
-				if shot_back > 0
+				if shot_back > 0:
 					xr: float = jdfx*shotspeed*3
 					yr: float = jdfy*shotspeed*3
 					TFormR(0,0,-180, xr ,yr )
 					shot.create(px,py,xr,yr,shotspeed*3)
 
-				if shot_side > 0
+				if shot_side > 0:
 					xr: float = jdfx*shotspeed*3
 					yr: float = jdfy*shotspeed*3
 					TFormR(0,0,90, xr ,yr )
@@ -2035,13 +2068,13 @@ if cheat
 	# check triangle bond lines
 	Local ll:le
 	for ll:le = EachIn le_list
-		if ll.attached = True
-			if ll.checked = False
+		if ll.attached is True:
+			if ll.checked == False:
 				ll.checked = True
-				if ll.le2 <> Null
+				if ll.le2 != None:
 					ll.le2.checked = True
 
-				if linecollide2(ll.x,ll.y,ll.le2.x,ll.le2.y,px,py,12)
+				if linecollide2(ll.x,ll.y,ll.le2.x,ll.le2.y,px,py,12):
 					Killplayer()
 					Exit
 
@@ -2050,11 +2083,11 @@ if cheat
 
 	# sucked into blackholes
 	Local n5:nme5
-	for n5:nme5 = EachIn nme5_list
+	for n5 in nme5_list:
 		Local ddx: float = n5.x-px
 		Local ddy: float = n5.y-py
-		Local dist: float = Sqr(ddx*ddx + ddy*ddy)
-		if dist < n5.sz*10  #effect from 4*10 upto 64*10
+		Local dist: float = sqrt(ddx*ddx + ddy*ddy)
+		if dist < n5.sz * 10:  #effect from 4*10 upto 64*10
 			ddx: float = ddx/dist/30*n5.sz # pull from 0 to 2.5
 			ddy: float = ddy/dist/30*n5.sz # pull from 0 to 2.5
 			px = px + ddx
@@ -2067,21 +2100,22 @@ if cheat
 def BlackholeParticles()
 	Local st: int = gcount % 2
 	Local spin: float = 3
-	if st = 0 Then spin = -3
+	if st == 0:
+		spin = -3
 	Local p:part
 	Local t: int
 	Local n5:nme5
-	for n5:nme5 = EachIn nme5_list
-		if n5.active
+	for n5 in nme5_list:
+		if n5.active:
 			for t = st To numparticles-1 Step 2
 				p:part = partarray[t]
-				if p.active > 0
+				if p.active > 0:
 					Local ddx: float = n5.x-p.x
 					Local ddy: float = n5.y-p.y
-					Local dist: float = Sqr(ddx * ddx + ddy * ddy)
-					if dist < n5.sz * 8 and dist > 8
+					Local dist: float = sqrt(ddx * ddx + ddy * ddy)
+					if dist < n5.sz * 8 and dist > 8:
 						#towards the gcenter
-						if dist < n5.sz / 4
+						if dist < n5.sz / 4:
 							ddx: float = - ddx / dist
 							ddy: float = - ddy / dist
 							p.dx = p.dx + ddx / 2#.75
@@ -2089,7 +2123,7 @@ def BlackholeParticles()
 							p.dx = p.dx + ddy / spin#.75# / dist/4
 							p.dy = p.dy - ddx / spin#.75# / dist/4
 						else:
-							p.active:+ 3
+							p.active +=  3
 							ddx: float = ddx / dist
 							ddy: float = ddy / dist
 							p.dx = p.dx + ddx / 2#.75
@@ -2098,8 +2132,8 @@ def BlackholeParticles()
 							p.dy = p.dy + ddx / spin#.75# / dist/4
 
 						Local speed: float = (p.dx*p.dx+ p.dy*p.dy)
-						if speed > 12*12
-							Local sproot: float = Sqr(speed)
+						if speed > 12*12:
+							Local sproot: float = sqrt(speed)
 							p.dx = p.dx/sproot
 							p.dy = p.dy/sproot
 
@@ -2107,7 +2141,7 @@ def BlackholeParticles()
 
 
 
-def UpdateAll(cnt: int = 0)
+def UpdateAll(cnt: int = 0):
 
 	Local n:nme
 	Local n1:nme1
@@ -2123,7 +2157,8 @@ def UpdateAll(cnt: int = 0)
 	Local s:shot
 	Local pow:pu
 
-	if gravityparticles Then BlackholeParticles()
+	if gravityparticles:
+		BlackholeParticles()
 
 	CycleColours()
 	CycleColours()
@@ -2134,75 +2169,75 @@ def UpdateAll(cnt: int = 0)
 
 	gridpoint.UpdateGrid()
 
-	if cnt = 0
+	if cnt == 0:
 		part.UpdateParticles()
 	else:
-		if cnt % 2 = 0
+		if cnt % 2 == 0:
 			part.UpdateParticles()
 
 
 
-	if Not dying
+	if not dying:
 		#generators
-		for g:ge = EachIn ge_list
+		for g in ge_list:
 			g.Update()
 
 		#green squares
-		for n:nme = EachIn nme_list
+		for n in nme_list:
 			n.Update()
 
 		#pink pinwheel
-		for n1:nme1 = EachIn nme1_list
+		for n1 in nme1_list:
 			n1.Update()
 
 		#cyan diamonds
-		for n2:nme2 = EachIn nme2_list
+		for n2 in nme2_list:
 			n2.Update()
 
 		#purple cubes
-		for n3:nme3 = EachIn nme3_list
+		for n3 in nme3_list:
 			n3.Update()
 
 		#blue circles
-		for n4:nme4 = EachIn nme4_list
+		for n4 in nme4_list:
 			n4.Update()
 
 		# purple snakes
-		for n6:nme6 = EachIn nme6_list
+		for n6 in nme6_list:
 			n6.Update()
 
 		# red clone
-		for n7:nme7 = EachIn nme7_list
+		for n7 in nme7_list:
 			n7.Update()
 
 		# blue butterfly
-		for n8:nme8 = EachIn nme8_list
+		for n8 in nme8_list:
 			n8.Update()
 
 		#orange triangles
-		for ll:le = EachIn le_list
+		for ll in le_list:
 			ll.Update()
 
 		#powerups
-		for pow:pu = EachIn pu_list
+		for pow in pu_list:
 			pow.Update()
 
 		#red circles
-		for n5:nme5 = EachIn nme5_list
+		for n5 in nme5_list:
 			n5.Update()
 
 		#shots
-		for s:shot = EachIn SHOT_list
+		for s in SHOT_list:
 			s.Update()
 
 
 
 
-def DrawMessage()
+def DrawMessage():
 	#DrawString(powerupscore, 10,30,3)
-	if messtime > 0
-		messtime:-1
-		if messtime = 90
+	if messtime > 0:
+		messtime -= 1
+		if messtime == 90:
 			mess: str = "Power Up at "+ powerupscore
 			mlen = Len(mess$)
 
@@ -2211,7 +2246,7 @@ def DrawMessage()
 
 
 
-def Drawall()
+def Drawall():
 #if KeyDown(KEY_TAB) Then End
 #if KeyDown(KEY_F8) Then return
 
@@ -2248,116 +2283,103 @@ def Drawall()
 
 	SetLineWidth 2
 
-	for g:ge = EachIn ge_list
+	for g in ge_list:
 		g.Draw()
-
 
 	#green squares
 	SetColor COL_SQUARE_R,COL_SQUARE_G,COL_SQUARE_B
-	for n:nme = EachIn nme_list
+	for n in nme_list:
 		n.Draw()
-
 
 	#pink pinwheel
 	SetColor COL_PIN_R,COL_PIN_G,COL_PIN_B
-	for n1:nme1 = EachIn nme1_list
+	for n1 in nme1_list:
 		n1.Draw()
-
 
 	#cyan diamonds
 	SetColor COL_DIAMOND_R,COL_DIAMOND_G,COL_DIAMOND_B
-	for n2:nme2 = EachIn nme2_list
+	for n2 in nme2_list:
 		n2.Draw()
-
 
 	#purple cubes
 	SetColor COL_CUBE_R,COL_CUBE_G,COL_CUBE_B
-	for n3:nme3 = EachIn nme3_list
+	for n3 in nme3_list:
 		n3.Draw()
-
 
 	#blue circles
 	SetColor COL_SEEKER_R,COL_SEEKER_G,COL_SEEKER_B
-	for n4:nme4 = EachIn nme4_list
+	for n4 in nme4_list:
 		n4.Draw()
-
 
 	#red circles
 	SetColor COL_SUN_R,COL_SUN_G,COL_SUN_B
-	for n5:nme5 = EachIn nme5_list
+	for n5 in nme5_list:
 		n5.Draw()
 
-
 	#snake
-	for n6:nme6 = EachIn nme6_list
+	for n6 in nme6_list:
 		n6.Draw()
-
 
 	#red clone
 	SetColor COL_CLONE_R,COL_CLONE_G,COL_CLONE_B
-	for n7:nme7 = EachIn nme7_list
+	for n7 in nme7_list:
 		n7.Draw()
-
 
 	#blue butterflies
 	SetColor COL_BUTTER_R,COL_BUTTER_G,COL_BUTTER_B
-	for n8:nme8 = EachIn nme8_list
+	for n8 in nme8_list:
 		n8.Draw()
-
 
 	#orange triangles
 	SetColor COL_TRIANGLE_R,COL_TRIANGLE_G,COL_TRIANGLE_B
-	for ll:le = EachIn le_list
+	for ll in le_list:
 		ll.Draw()
 
-
 	# bonds (orange to green)
-	for ll:le = EachIn le_list
+	for ll in le_list:
 		ll.DrawBond()
 
-
 	#powerups
-	for pow:pu = EachIn pu_list
+	for pow in pu_list:
 		pow.Draw()
-
 
 	SetScale 1,1
 	SetLineWidth 2
 
-
 	# draw player & men left yellow
-	if py < 80
+	if py < 80:
 		SetAlpha .5+Float(py)/400.0
 	else:
 		SetAlpha .80
 
-	if numplayers > 1
+	if numplayers > 1:
 		SetColor 255,255,255
 		DrawImage iconimage,SCREENW/2-16,19,0
 		SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-		if numplayers > 2 Then drawstring(numplayers-1,SCREENW/2-48,10,3)
+		if numplayers > 2:
+			drawstring(numplayers-1,SCREENW/2-48,10,3)
 
-	if numbombs > 0
+	if numbombs > 0:
 		SetColor 255,255,255
 		DrawImage iconimage,SCREENW/2+16,19,1
 		SetColor COL_PLAYER_R,COL_PLAYER_G,COL_PLAYER_B
-		if numbombs > 1 Then drawstring(numbombs,SCREENW/2+32,10,3)
+		if numbombs > 1:
+			drawstring(numbombs,SCREENW/2+32,10,3)
 
 
 	score.DrawScore()
 
-	if py > SCREENH-80
+	if py > SCREENH-80:
 		SetAlpha 1-Float(py-(SCREENH-80))/400.0
 	else:
 		SetAlpha .80
 
 	drawmessage()
 
-	if Not dying
+	if not dying:
 		DrawPlayer(px,py,pr)
 		# draw shots
 		shot.DrawAllShots()
-
 
 	SetScale 1,1
 	SetAlpha 1
@@ -2373,11 +2395,10 @@ def Drawall()
 
 
 
-
-def DrawPlayer(x: int,y: int,r: int)
+def DrawPlayer(x: int,y: int,r: int):
 
 	Local sc: float
-	if player_shield > 60 Or ((player_shield) % 15 > 7)
+	if player_shield > 60 or ((player_shield) % 15 > 7)
 		SetAlpha 0.48
 		sc = 2.75 + Float(player_shield)/128
 		SetScale sc,sc
@@ -2414,19 +2435,19 @@ def SafeXY(x# Var,y# Var, plx: int,ply: int,range: int, close: int = 0)
 	if close == 1:
 		dx: float = plx-x
 		dy: float = ply-y
-		dist: float = Sqr(dx*dx + dy*dy) + 0.001
+		dist: float = sqrt(dx*dx + dy*dy) + 0.001
 		while dist < range:
 			x = x - dx/dist*10
 			y = y - dy/dist*10
 			dx = plx-x
 			dy = ply-y
-			dist = Sqr(dx*dx + dy*dy)
+			dist = sqrt(dx*dx + dy*dy)
 			if dist < 0.001
 				x = plx + randint(10,20)*(1-2*randint(10)>5)
 				y = ply + randint(10,20)*(1-2*randint(10)>5)
 				dx = plx-x
 				dy = ply-y
-				dist = Sqr(dx*dx + dy*dy)
+				dist = sqrt(dx*dx + dy*dy)
 
 
 	else:
@@ -2508,7 +2529,7 @@ def main():
 				done = ShowEnemies()
 
 		if playgame and not done:
-			if Not cheat Then valid = True;nokillme = False
+			if not cheat Then valid = True;nokillme = False
 			StopMusic()
 			RemoveAll(True)
 			ResetGame()
@@ -2539,7 +2560,7 @@ def main():
 					if KeyDown(KEY_P):
 						pause: bool = True
 						while pause
-							time.sleep(100)
+							sleep(100)
 							if KeyHit(KEY_O):
 								pause = False
 
@@ -2562,10 +2583,10 @@ def main():
 
 				tim4: int = MilliSecs() - tim
 				if tim4 < 20 and tim4 > 0:
-					Delay 20-tim4
+					sleep(20-tim4)
 
 				Cls
-			# Until gameover = True Or playgame = False
+			# Until gameover = True or playgame = False
 
 
 			RemoveAll(True) # in case some sounds still playing and we quit
