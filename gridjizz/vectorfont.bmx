@@ -48,7 +48,7 @@ End Rem
 Function SetUpVectorFont()
 
 	RestoreData letterdata
-	
+
 	Local np,t,s
 	
 	For t = 0 To 127

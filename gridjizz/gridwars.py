@@ -160,7 +160,7 @@ def DoGameOver() -> int:
 		if tim < 20 and tim > 0:
 			sleep(20-tim)
 
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0)) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
 			if Options(True):
 				return True
 
