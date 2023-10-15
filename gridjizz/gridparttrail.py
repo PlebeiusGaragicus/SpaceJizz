@@ -140,7 +140,7 @@ playfieldsizes = [
 numplayfieldsizes: int = 34   #0-33
 
 DefData "USER",   1024, 768
-DefData "BWMac",  512,  384 
+DefData "BWMac",  512,  384
 DefData "VGA",	640,  480
 DefData "????",   720,  400
 DefData "NTSCDVD",720,  480
@@ -192,7 +192,7 @@ def GetGfxModes():
 		gfxmodearr[cnt] = g
 
 	 #  set first entry to what the user has in config
-	gfxmodearr[0].w = screensizew 
+	gfxmodearr[0].w = screensizew
 	gfxmodearr[0].h = screensizeh
 
 
@@ -202,14 +202,14 @@ def FindSetting():
 
 	screensize = 0  #  pick first one
 	playsize = 0  #  use the defaul/file settings
-	playfieldsizes[0] = playsizew 
+	playfieldsizes[0] = playsizew
 	playfieldsizes[1] = playsizeh
-	
+
 	for Local t = 0 To numgfxmodes
-		 #  or find the one that matches file 
+		 #  or find the one that matches file
 		if gfxmodearr[t].w = screensizew And gfxmodearr[t].h = screensizeh
 			screensize = t
-		
+
 
 
 
@@ -217,14 +217,14 @@ def SetDimensions():
 
 	SCREENW = gfxmodearr[screensize].w
 	SCREENH = gfxmodearr[screensize].h
-				
+
 	PLAYFIELDW = playfieldsizes[playsize*2]
 	PLAYFIELDH = playfieldsizes[playsize*2+1]
-	
-	screensizew = gfxmodearr[screensize].w 
-	screensizeh = gfxmodearr[screensize].h 
-	
-	playsizew = PLAYFIELDW 
+
+	screensizew = gfxmodearr[screensize].w
+	screensizeh = gfxmodearr[screensize].h
+
+	playsizew = PLAYFIELDW
 	playsizeh = PLAYFIELDH
 
 
@@ -232,18 +232,18 @@ def SetDimensions():
 def SetUp() -> int:
 
 	Local ret: int = True
-	
+
 	SetDimensions()
 
-	if windowed 
+	if windowed
 		if GraphicsModeExists( SCREENW,SCREENH )
 			Graphics(SCREENW, SCREENH, 0)
 		else:
 			Local fh:TStream = WriteFile("errors.txt")
 			WriteLine(fh,"Can not set graphics mode: Windowed - "+SCREENW+"X"+SCREENH)
-			CloseFile fh 
+			CloseFile fh
 			ret = False
-		
+
 	else:
 		Local sucess: bool = False
 		for Local dep: int = 32 To 16 Step -8
@@ -251,47 +251,47 @@ def SetUp() -> int:
 				Graphics(SCREENW, SCREENH, dep, 60)
 				sucess = True
 				Exit
-			
+
 
 		if not sucess:
 			Local fh:TStream = WriteFile("errors.txt")
 			WriteLine(fh,"Could not set graphics mode: Fullscreen - "+SCREENW+"X"+SCREENH)
-			CloseFile fh 
-			ret = False 
-				
-	
+			CloseFile fh
+			ret = False
+
+
 
 	if ret == True:
 		Select gridsize
 			Case 0
 				GRIDWIDTH = 4
-				GRIDHEIGHT = 4 
+				GRIDHEIGHT = 4
 			Case 1
 				GRIDWIDTH = 8
-				GRIDHEIGHT = 8 
+				GRIDHEIGHT = 8
 			Case 2
 				GRIDWIDTH = 16
-				GRIDHEIGHT = 16 
+				GRIDHEIGHT = 16
 			Case 3
 				GRIDWIDTH = 32
-				GRIDHEIGHT = 32 
+				GRIDHEIGHT = 32
 
-			
+
 		NUMGPOINTSW = PLAYFIELDW/GRIDWIDTH
 		NUMGPOINTSH = PLAYFIELDH/GRIDHEIGHT
 		gridpoint.ResetAll()
-	
+
 		LoadImages()
 		if PLAYFIELDW > SCREENW Or PLAYFIELDH > SCREENH Then scroll = True
  # 		if PLAYFIELDW <= SCREENW And PLAYFIELDH <= SCREENH Then scroll = False
 		gxoff = 0
 		gyoff = 0
-		
+
 		capturedimg:TImage = CreateImage(SCREENW,SCREENH)
 		SetLineWidth 2
-		glEnable GL_LINE_SMOOTH; glHint GL_LINE_SMOOTH, GL_NICEST	
-		
-		CreateStars() 
+		glEnable GL_LINE_SMOOTH; glHint GL_LINE_SMOOTH, GL_NICEST
+
+		CreateStars()
 
 	return ret
 
@@ -304,29 +304,29 @@ class gridpoint:
 
 	Field ox#,oy#
 	Field x#
-	Field y#	
+	Field y#
 	Field dx#,dy#
  # 	Field fx#,fy#
-	
+
 	def Update(self, xx: float, yy: float):
-	
+
 		if abs(xx-x) > 2:
-			dx:+ Sgn(xx-x) 
+			dx:+ Sgn(xx-x)
 		if abs(yy-y) > 2:
-			dy:+ Sgn(yy-y) 
-					
+			dy:+ Sgn(yy-y)
+
 		if abs(ox-x) > 1:
 			x = x + Sgn(ox-x)
-			dx:+ Sgn(ox-x)/2 	
+			dx:+ Sgn(ox-x)/2
 		else:
 			x = ox
-		
+
 		if abs(oy-y) > 1:
 			y = y + Sgn(oy-y)
-			dy:+ Sgn(oy-y)/2 
+			dy:+ Sgn(oy-y)/2
 		else:
 			y = oy
-		
+
 
 		dx = dx *.899  # .89
 		dy = dy *.899  # .89
@@ -361,7 +361,7 @@ class gridpoint:
 				dx = dx/speed*128
 				dy = dy/speed*128
 
-	
+
 	def Pull(self, x1: float, y1: float, sz: int = 4, amnt = 4):
 
 		Local a: int = x1/GRIDWIDTH
@@ -386,7 +386,7 @@ class gridpoint:
 	# 									grid[a+xx,b+yy].fx = - diffx/dist*(1-(dist*dist)/(sz*sz*4*256))
 	# 									grid[a+xx,b+yy].fy = - diffy/dist*(1-(dist*dist)/(sz*sz*4*256))
 
-							
+
 
 
 	def Push(self, x1: float, y1: self, sz: int = 4, amnt=1):
@@ -404,7 +404,7 @@ class gridpoint:
 								Local diffx# = grid[a+xx,b+yy].ox-x1
 								Local diffy# = grid[a+xx,b+yy].oy-y1
 								Local diffxo# = grid[a+xx,b+yy].ox-grid[a+xx,b+yy].x
-								Local diffyo# = grid[a+xx,b+yy].oy-grid[a+xx,b+yy].y								
+								Local diffyo# = grid[a+xx,b+yy].oy-grid[a+xx,b+yy].y
 								Local dist# = diffy*diffy+diffx*diffx
 								Local disto# = diffyo*diffyo+diffxo*diffxo
 								if dist > 1 and disto < 400:
@@ -413,7 +413,7 @@ class gridpoint:
 										grid[a+xx,b+yy].dy:+ diffy*amnt  # /dist*amnt
 
 
-		
+
 	def UpdateGrid(self):
 
 		for Local a: int = 1 To NUMGPOINTSW-1
@@ -424,19 +424,19 @@ class gridpoint:
 				xx:+ grid[a,b+1].x
 				xx:+ grid[a+1,b].x
 				xx = xx / 4
-	
+
 				Local yy# = 0
 				yy:+ grid[a-1,b].y
 				yy:+ grid[a,b-1].y
 				yy:+ grid[a,b+1].y
 				yy:+ grid[a+1,b].y
 				yy = yy / 4
-				
+
 				grid[a,b].update(xx,yy)
 
 
 
-	 #  evil!	
+	 #  evil!
 	def BombShockwave(self, x: int,y: int):
 		Local a: int = x/GRIDWIDTH
 		Local b: int = y/GRIDHEIGHT
@@ -448,7 +448,7 @@ class gridpoint:
 						if b+yy > 0:
 							if b+yy <= NUMGPOINTSH:
 								grid[a+xx,b+yy].disrupt(.6*(grid[a+xx,b+yy].x-x),.6*(grid[a+xx,b+yy].y-y))
-	 #  /evil	
+	 #  /evil
 
 
 	def Shockwave(self, x: int,y: int):
@@ -463,7 +463,7 @@ class gridpoint:
 					if a+xx <= NUMGPOINTSW: # -1
 						if b+yy > 0:
 							if b + yy <= NUMGPOINTSH: # -1
-								grid[a+xx,b+yy].disrupt(4*(grid[a+xx,b+yy].x-x),4*(grid[a+xx,b+yy].y-y))								
+								grid[a+xx,b+yy].disrupt(4*(grid[a+xx,b+yy].x-x),4*(grid[a+xx,b+yy].y-y))
 
 
 
@@ -483,7 +483,7 @@ class gridpoint:
 				gwhi = Min(gwlow+(SCREENW/GRIDWIDTH)+GRIDHILIGHT,NUMGPOINTSW)
 				ghlow = Max(gyoff/GRIDHEIGHT,0)
 				ghhi = Min(ghlow+(SCREENH/GRIDHEIGHT)+GRIDHILIGHT,NUMGPOINTSH)
-		
+
 		if small:
 				gxoff = -SCREENW/8
 				gyoff = -SCREENH/8
@@ -491,7 +491,7 @@ class gridpoint:
 				gwhi = -gxoff/GRIDWIDTH*6
 				ghlow = 0
 				ghhi = -gyoff/GRIDHEIGHT*6
-		
+
 		Select style
 			Case 0
 					# points, 1 colour
@@ -500,12 +500,12 @@ class gridpoint:
 					SetBlend LIGHTBLEND
 					DrawGridPoints()
 			Case 1
-					# points, rainbow 
+					# points, rainbow
 					SetAlpha abs(g_opacity)
 					SetColor rcol,gcol,bcol  #cycled colours
 					SetBlend LIGHTBLEND
 					DrawGridPoints()
-			
+
 			Case 2
 					# points(bigger), solid
 					SetAlpha abs(g_opacity)
@@ -517,8 +517,8 @@ class gridpoint:
 					SetAlpha abs(g_opacity)
 					SetColor rcol,gcol,bcol  #cycled colours
 					SetBlend LIGHTBLEND
-					DrawGridPointsC(g_opacity)		
-			
+					DrawGridPointsC(g_opacity)
+
 			Case 4
 					# Lines, solid
 					SetAlpha abs(g_opacity)
@@ -526,25 +526,25 @@ class gridpoint:
 					SetBlend LIGHTBLEND
 					DrawGridLines()
 			Case 5
-					# Lines, rainbow 
+					# Lines, rainbow
 					SetAlpha abs(g_opacity)
 					SetColor rcol,gcol,bcol  #cycled colours
 					SetBlend LIGHTBLEND
 					DrawGridLines()
-			
+
 			Case 6
-					# line quads, solid 
+					# line quads, solid
 					SetAlpha abs(g_opacity)
 					SetColor g_red,g_green,g_blue
 					SetBlend LIGHTBLEND
 					DrawGridLines3(g_opacity)
 			Case 7
-					# line quads, rainbow 
+					# line quads, rainbow
 					SetAlpha abs(g_opacity)
 					SetColor rcol,gcol,bcol  #cycled colours
 					SetBlend LIGHTBLEND
 					DrawGridLines3(g_opacity)
-			
+
 			Case 8
 					# dense mesh - solid
 					SetAlpha abs(g_opacity)
@@ -554,11 +554,11 @@ class gridpoint:
 			Case 9
 					# dense mesh - blue
 					SetAlpha abs(g_opacity)
-					SetColor rcol,gcol,bcol			
+					SetColor rcol,gcol,bcol
 					SetBlend LIGHTBLEND
 					DrawGridLines7()
-			
-			
+
+
 			Case 10
 					# draw lines [original,blue,stretch]
 					SetAlpha abs(g_opacity)
@@ -583,8 +583,8 @@ class gridpoint:
 					SetColor g_red,g_green,g_blue
 					SetBlend LIGHTBLEND
 					DrawGridLines3c()
-			
-			
+
+
 			Case 14
 					# solid quads, 1 colour
 					SetAlpha abs(g_opacity)
@@ -592,7 +592,7 @@ class gridpoint:
 					SetBlend LIGHTBLEND
 					DrawGridLines2b()
 			Case 15
-					# solid quads, rainbow 
+					# solid quads, rainbow
 					SetAlpha abs(g_opacity)
 					SetColor rcol,gcol,bcol  #cycled colours
 					SetBlend LIGHTBLEND
@@ -614,7 +614,7 @@ class gridpoint:
 					SetAlpha abs(g_opacity)
 					SetColor g_red,g_green,g_blue
 					SetBlend LIGHTBLEND
-					DrawGridLines8()			
+					DrawGridLines8()
 			Case 19
 					# draw line_strip [vcs like]
 					SetAlpha abs(g_opacity)
@@ -625,7 +625,7 @@ class gridpoint:
 				#no grid
 				pass
 
-		
+
 		SetScale 1,1
 		SetAlpha 1
 		SetLineWidth 2
@@ -691,22 +691,22 @@ class gridpoint:
 		Local a: int,b: int
 		Local boldw: int
 		Local boldh: int
-		
+
 		boldw = GRIDHILIGHT-(gwlow Mod GRIDHILIGHT)
 		boldh = GRIDHILIGHT-(ghlow Mod GRIDHILIGHT)
-		
+
 		SetScale 1.5,1.5
 		for a = gwlow + 1 To gwhi - 1
 			for b = ghlow + 1 To ghhi - 1
 				Local alp# = alpha
 				if (b+boldh) Mod GRIDHILIGHT = 0
 					alp:+ .25
-				
+
 				if (a+boldw) Mod GRIDHILIGHT = 0
 					alp:+ .25
-				
+
 				SetAlpha alp
-				DrawImage particleimg, grid[a , b].x - gxoff , grid[a , b].y - gyoff 
+				DrawImage particleimg, grid[a , b].x - gxoff , grid[a , b].y - gyoff
 
 		SetScale 1 , 1
 
@@ -851,18 +851,18 @@ class gridpoint:
 		Local a: int,b: int
 		Local boldw: int
 		Local boldh: int
-		
+
 		boldw = GRIDHILIGHT-(gwlow Mod GRIDHILIGHT)
 		boldh = GRIDHILIGHT-(ghlow Mod GRIDHILIGHT)
-		
+
 		SetScale 1,1
 		SetLineWidth 1
 		for a = gwlow To gwhi - 1
 			if (a+boldh) Mod GRIDHILIGHT = 0
-				SetAlpha alpha+.25		
-			else:	
+				SetAlpha alpha+.25
+			else:
 				SetAlpha alpha
-			
+
 			glBegin GL_LINE_STRIP
 			for b = ghlow To ghhi-1
 				glVertex3f(grid[a,b].x-gxoff,	 grid[a,b].y-gyoff,	 0)
@@ -872,10 +872,10 @@ class gridpoint:
 
 		for b = ghlow To ghhi - 1
 			if (b+boldw) Mod GRIDHILIGHT = 0
-				SetAlpha alpha+.25		
-			else:	
+				SetAlpha alpha+.25
+			else:
 				SetAlpha alpha
-			
+
 			glBegin GL_LINE_STRIP
 			for a = gwlow To gwhi-1
 				glVertex3f(grid[a,b].x-gxoff,	 grid[a,b].y-gyoff,	 0)
@@ -1180,7 +1180,7 @@ class gridpoint:
 						colB=1.0
 					else:
 						colB=sin(delX)
-							
+
 
 					SetColor(20+235*colB,20+100*colB,180-140*colB)
 					SetAlpha((1-colB)*.3+0.7)
@@ -1228,7 +1228,7 @@ class gridpoint:
 									   colB=1.0
 							   else:
 									   colB=sin(delX)
-							   
+
 
 							   SetColor(128+127*colB,15+105*colB,63-23*colB)
 							   SetAlpha(colB*.2+0.6)
@@ -1269,7 +1269,7 @@ class gridpoint:
 							   else:
 									   xy[6] = grid[a,b+1].x-gxoff
 									   xy[7] = grid[a,b+1].y-gyoff
-							   
+
 							   xy[2] = grid[a+1,b].x-gxoff
 							   xy[3] = grid[a+1,b].y-gyoff
 							   xy[4] = grid[a+1,b+1].x-gxoff
@@ -1287,7 +1287,7 @@ class gridpoint:
 									   xy[1] = grid[a,b].y-gyoff
 									   xy[6] = grid[a,b+1].x-gxoff
 									   xy[7] = grid[a,b+1].y-gyoff
-							   
+
 							   xy[2] = grid[a+1,b].x-gxoff
 							   xy[3] = grid[a+1,b].y-gyoff
 							   xy[4] = grid[a+1,b+1].x-gxoff
@@ -1301,7 +1301,7 @@ class gridpoint:
 									   colB=1.0
 							   else:
 									   colB=sin(delX)
-							   
+
 							   #colB=sin(Min(90,Max(0,Max(delX,delY))))
 
 							   SetColor(20+235*colB,20+100*colB,180-140*colB)
@@ -1312,15 +1312,15 @@ class gridpoint:
 											   SetAlpha(alpha)
 									   else:
 											   SetAlpha(alpha+.5)
-									   
+
 									   DrawLine(xy[2],xy[3],xy[4],xy[5],0)
-							   
+
 							   if b<ghhi-1 Then
 									   if (y Mod 4)>0 Then
 											   SetAlpha(alpha)
 									   else:
 											   SetAlpha(alpha+.5)
-									   
+
 									   DrawLine(xy[4],xy[5],xy[6],xy[7],0)
 
 
@@ -1354,7 +1354,7 @@ class gridpoint:
 								   xy[1] = grid[a,b].y-gyoff
 								   xy[6] = grid[a,b+1].x-gxoff
 								   xy[7] = grid[a,b+1].y-gyoff
-							   
+
 							   xy[2] = grid[a+1,b].x-gxoff
 							   xy[3] = grid[a+1,b].y-gyoff
 							   xy[4] = grid[a+1,b+1].x-gxoff
@@ -1365,18 +1365,18 @@ class gridpoint:
  #											  SetAlpha (alpha)
   #									 else:
    #											SetAlpha(alpha+.25)
-	#								   
+	#
 									   DrawLine(xy[2],xy[3],xy[4],xy[5],0)
-							   
+
 							   if b<ghhi-1 Then
   #									 if (y Mod 4)>0 Then
    #											SetAlpha(alpha)
 	#								   else:
 	 #										  SetAlpha(alpha+.25)
-	  #								 
+	  #
 									   DrawLine(xy[4],xy[5],xy[6],xy[7],0)
 
-	
+
 
 	   Function DrawGridLines7()
 
@@ -1409,7 +1409,7 @@ class gridpoint:
 									   xy[1] = grid[a,b].y-gyoff
 									   xy[6] = grid[a,b+1].x-gxoff
 									   xy[7] = grid[a,b+1].y-gyoff
-							   
+
 							   xy[2] = grid[a+1,b].x-gxoff
 							   xy[3] = grid[a+1,b].y-gyoff
 							   xy[4] = grid[a+1,b+1].x-gxoff
@@ -1423,7 +1423,7 @@ class gridpoint:
 									   colB=1.0
 							   else:
 									   colB=sin(delX)
-							   
+
 							   SetLineWidth(1+colB*1.0)
 
 							   glBegin GL_LINE_LOOP
@@ -1452,20 +1452,20 @@ class gridpoint:
 		SetScale 1,1
 		Local boldw: int
 		Local boldh: int
-		
+
 		boldw = 2-(gwlow Mod 2)
 		boldh = 2-(ghlow Mod 2)
-		
+
 #		Local xy#[8]
 #		Local xold:Float=0
 #		Local dif:Float=0
-		
+
 		#Local rgbR: int=95,rgbG: int=23,rgbB: int=23
 #		Local rgbR: int=104,rgbG: int=26,rgbB: int=23
 #		Local rgbfR:Float= Float(rgbR/256),rgbfG:Float= Float(rgbG/256),rgbfB:Float= Float(rgbB/256)
-		
+
 		#glEnable GL_LINE_SMOOTH; glHint GL_LINE_SMOOTH, GL_NICEST
-		
+
 #		SetAlpha 1
 #		SetColor rgbR,rgbG,rgbB
 		glLineWidth(2)
@@ -1477,7 +1477,7 @@ class gridpoint:
 				if a>0 Then
 #					dif=Min(50,abs(grid[a,b].x-grid[a-1,b].x-16))*0.02
 #					glColor3f(rgbfR+.6*dif,rgbfG+.2*dif,rgbfB-.1*dif)
-				
+
 				glVertex2f(grid[a,b].x-gxoff,grid[a,b].y-gyoff)
 
 			glEnd
@@ -1491,7 +1491,7 @@ class gridpoint:
 #				if b>0 Then
 #					dif=Min(50,grid[a,b].y-grid[a,b-1].y-16)*0.02
 #					glColor3f(rgbfR+.2*dif,rgbfG+.6*dif,rgbfB-.1*dif)
-#				
+#
 				glVertex2f(grid[a,b].x-gxoff,grid[a,b].y-gyoff)
 
 			glEnd
@@ -1508,7 +1508,7 @@ class gridpoint:
 			else:
 				anzB=Min(ymax+1,xmax-xa)
 				xa:+1
-			
+
 			x=xa
 			y=ya
 			glBegin GL_LINE_STRIP
@@ -1529,7 +1529,7 @@ class gridpoint:
 			else:
 				anzB:-1
 				ya:+1
-			
+
 			x=xa
 			y=ya
 			glBegin GL_LINE_STRIP
@@ -1571,7 +1571,7 @@ class gridpoint:
 							   else:
 									   xy[6] = grid[a,b+1].x-gxoff
 									   xy[7] = grid[a,b+1].y-gyoff
-							   
+
 							   xy[2] = grid[a+1,b].x-gxoff
 							   xy[3] = grid[a+1,b].y-gyoff
 							   xy[4] = grid[a+1,b+1].x-gxoff
@@ -1606,7 +1606,7 @@ class part:
 
 	Field x#,y#,dx#,dy#,r: int,g: int,b: int
 	Field active: int
-	
+
 	def CreateAll(self):
 		for t in range(MAXPARTICLES-1):
 			partarray[t] = New part
@@ -1618,7 +1618,7 @@ class part:
 			partarray[t].active = 0
 			partarray[t].dx = 0
 			partarray[t].dy = 0
-			Part_list.addlast( partarray[t] )				
+			Part_list.addlast( partarray[t] )
 
 		slotcount = 0
 
@@ -1628,7 +1628,7 @@ class part:
 			p:Part
 			flag: int
 			dir: int
-		
+
 			p:Part = partarray[slotcount]
 			p.x = x
 			p.y = y
@@ -1648,7 +1648,7 @@ class part:
 					mag = 16
 					p.dx = cos(rot)*mag
 					p.dy = sin(rot)*mag
-					p.active = 24					
+					p.active = 24
 				Case 2
 					dir = rot
 					mag = 8
@@ -1657,7 +1657,7 @@ class part:
 				Case 8
 					# 3 dirs
 					dir = 120*randint(0,2)+rot
-					mag = uniform(3,10)			
+					mag = uniform(3,10)
 					p.dx = cos(dir)*mag
 					p.dy = sin(dir)*mag
 				Case 3
@@ -1674,7 +1674,7 @@ class part:
 					p.dy = sin(dir)*mag
 				Case 7
 					# any dir and speed
-					mag = uniform(.5,1)			
+					mag = uniform(.5,1)
 					p.dx = cos(rot)*mag
 					p.dy = sin(rot)*mag
 					# evil!
@@ -1689,7 +1689,7 @@ class part:
 
 
 			p.dx = p.dx*2
-			p.dy = p.dy*2			
+			p.dy = p.dy*2
 			p.x:+ p.dx*sz
 			p.y:+ p.dy*sz
 
@@ -1707,23 +1707,23 @@ class part:
 			if x =< dx:
 				dx = abs(dx)
 				x = x + dx*2
-			
+
 			if x > SCREENW-1-dx:
 				dx = -abs(dx)
 				x = x + dx*2
-			
+
 			if y <= dy:
 				dy = abs(dy)
-				y = y + dy*2			
-			
+				y = y + dy*2
+
 			if y > SCREENH-1-dy:
 				dy = -abs(dy)
-				y = y + dy*2			
-			
+				y = y + dy*2
+
 			dx = dx *particledecay
 			dy = dy *particledecay
 			active:-1
-			if active < 20		
+			if active < 20
 				if active < 10
 					r:*.8 # ;if r < 0 Then r = 0
 					g:*.8 # ;if g < 0 Then g = 0
@@ -1731,10 +1731,10 @@ class part:
 				else:
 					r:*.97 # ;if r < 0 Then r = 0
 					g:*.97 # ;if g < 0 Then g = 0
-					b:*.97 # ;if b < 0 Then b = 0				
-					
+					b:*.97 # ;if b < 0 Then b = 0
+
 			else:if active > 200
-				active = 200			
+				active = 200
 
 
 
@@ -1746,19 +1746,19 @@ class part:
 			if x <= dx:
 				dx = abs(dx)
 				x = x + dx*2
-			
+
 			if x > PLAYFIELDW-1-dx:
 				dx = -abs(dx)
 				x = x + dx*2
-			
+
 			if y <= dy:
 				dy = abs(dy)
-				y = y + dy*2			
-			
+				y = y + dy*2
+
 			if y > PLAYFIELDH-1-dy:
 				dy = -abs(dy)
-				y = y + dy*2			
-			
+				y = y + dy*2
+
 			dx = dx * particledecay
 			dy = dy * particledecay
 			active:-1
@@ -1770,13 +1770,13 @@ class part:
 				else:
 					r *= .97 # ;if r < 0 Then r = 0
 					g *= .97 # ;if g < 0 Then g = 0
-					b *= .97 # ;if b < 0 Then b = 0				
-								
+					b *= .97 # ;if b < 0 Then b = 0
+
 			elif active > 200:
-				active = 200			
+				active = 200
 
 
-		
+
 	def DrawParticles(self):
 		Local p:part
 		Local t: int
@@ -1784,7 +1784,7 @@ class part:
 		Select particlestyle
 
 			Case 0
-				SetBlend lightblend		
+				SetBlend lightblend
 				SetScale 2,2
 				SetAlpha 1
 				SetLineWidth 1.0
@@ -1797,12 +1797,12 @@ class part:
 						bb = p.b*1.25;if bb>255 Then bb = 255
 						SetColor rr,gg,bb
 						DrawLine p.x-gxoff,p.y-gyoff,p.x-gxoff+p.dx,p.y-gyoff+p.dy
-					
+
 				SetAlpha 1
 				SetLineWidth 2.0
-				SetScale 1,1						
+				SetScale 1,1
 			Case 1
-				SetBlend lightblend		
+				SetBlend lightblend
 				SetScale 2,2  # 3,3
 				SetAlpha .9
 				SetLineWidth 2
@@ -1822,7 +1822,7 @@ class part:
 				SetLineWidth 2.0
 				SetScale 1,1
 			Case 2
-				SetBlend lightblend		
+				SetBlend lightblend
 				SetScale .5,.5
 				for t in range ( numparticles-1 ):
 					p:part = partarray[t]
@@ -1835,20 +1835,20 @@ class part:
 						 # SetAlpha .7
 						 # DrawImage particleimg,p.x-gxoff,p.y-gyoff
 						SetAlpha 1  # .9
-						DrawImage particleimg,p.x-gxoff+p.dx,p.y-gyoff+p.dy	
+						DrawImage particleimg,p.x-gxoff+p.dx,p.y-gyoff+p.dy
 
 
 				SetAlpha 1
-				SetScale 1,1		
+				SetScale 1,1
 			Case 3   # bloom lines
 				Local win:Float,px:Float,py:Float # ,dx:Float,dy:Float
 				Local rr: int,gg: int,bb: int
 
-				SetBlend lightblend						
+				SetBlend lightblend
 				SetLineWidth 2
 				SetAlpha .8
 				SetTransform 0,2,2
-				
+
 				for t in range ( numparticles-1 ):
 					p:part = partarray[t]
 					if p.active > 0:
@@ -1858,7 +1858,7 @@ class part:
 						SetColor rr,gg,bb
 						px=p.x-gxoff;py=p.y-gyoff
 						DrawLine px,py,px+p.dx,py+p.dy
-					
+
 
 				for t in range ( numparticles-1 ):
 					p:part = partarray[t]
@@ -1867,20 +1867,20 @@ class part:
 						gg = p.g*1.25;if gg>255 Then gg = 255
 						bb = p.b*1.25;if bb>255 Then bb = 255
 						SetColor rr,gg,bb
-						
+
 						win=ATan(p.dy/p.dx)
-						px=p.x-gxoff;py=p.y-gyoff						
+						px=p.x-gxoff;py=p.y-gyoff
 						SetAlpha .25
 						SetTransform win,Sqr(p.dx*p.dx+p.dy*p.dy)*.4,1.2
-						DrawImage particleimg,px+p.dx*1.0,py+p.dy*1.0						
+						DrawImage particleimg,px+p.dx*1.0,py+p.dy*1.0
 
 
 				SetAlpha 1
 				SetTransform 0,1,1
 				SetLineWidth 2.0
 
-	
-	
+
+
 	def UpdateParticles(self, ww: int=0):
 		p:part
 		t: int
@@ -1908,7 +1908,7 @@ class part:
 
 		r = randint(0,3)*64
 		g = randint(0,3)*64
-		b = randint(0,3)*64	
+		b = randint(0,3)*64
 		if style == 1:
 			if randint(0,1):
 				x = randint(100,SCREENW-100)
@@ -1927,13 +1927,13 @@ class part:
 			y = SCREENH/2
 		else:
 			x = randint(100,SCREENW-100)
-			y = randint(50,SCREENH-50)		
+			y = randint(50,SCREENH-50)
 
 		for t in range(63):
 			part.Create(x,y,0,r,g,b)
 
-	
-	
+
+
 	def ResetAll(self):
 		# Local p:Part
 		# Local t: int
@@ -1989,9 +1989,9 @@ class trail:
 		if active <= 0:
 			trail_LIST.Remove( self )
 
-		
+
 	def DrawTrail(self):
-		SetBlend lightblend		
+		SetBlend lightblend
 		SetScale 2,2
 		SetAlpha .23
 
@@ -2001,18 +2001,18 @@ class trail:
 
 		for p in trail_list:
 			SetColor p.r,p.g,p.b
-			DrawImage particleimg,p.x-gxoff,p.y-gyoff	
+			DrawImage particleimg,p.x-gxoff,p.y-gyoff
 
 		SetAlpha 1
 		SetScale 1,1
 
 
-	def UpdateTrail(self):	
+	def UpdateTrail(self):
 		Local p:trail
 		for p in trail_list:
 			p.Update()
 
-	
+
 
 
 
@@ -2025,13 +2025,13 @@ def CreateStars():
 
 def DrawStars():
 	if showstars > 0:
-		SetBlend lightblend		
+		SetBlend lightblend
 		SetScale 2,2
 		SetAlpha .8
 		SetLineWidth 2.0
 
 		for t in showstars:
-			SetColor 480/stard[t],480/stard[t],480/stard[t]		
+			SetColor 480/stard[t],480/stard[t],480/stard[t]
 			DrawRect starx[t]-gxoff/stard[t],stary[t]-gyoff/stard[t],1,1
 
 		SetAlpha 1

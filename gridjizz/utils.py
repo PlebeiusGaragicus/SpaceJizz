@@ -1,8 +1,5 @@
-Strict
-
-Import BRL.Random
-Import BRL.PNGLoader
-
+# Import BRL.Random
+# Import BRL.PNGLoader
 
 
 Global rcol% = 250, rcoldelta# = -3
@@ -13,82 +10,82 @@ Global bcol% = 30,  bcoldelta# = 7
 Global keystring$[300]
 
 
-Function CycleColours(slow#=10)
+def CycleColours(slow#=10)
 	rcol = rcol + rcoldelta/10*slow
-	If rcol < 0
+	if rcol < 0
 		rcol = 0
 		rcoldelta = Rnd(1,slow)
-	ElseIf rcol > 255
+	elif rcol > 255
 		rcol = 255
 		rcoldelta = -Rnd(1,slow)
-	EndIf	
+
 	gcol = gcol + gcoldelta/10*slow
-	If gcol < 0
+	if gcol < 0
 		gcol = 0
 		gcoldelta = Rnd(1,slow)
-	ElseIf gcol > 255
+	elif gcol > 255
 		gcol = 255
 		gcoldelta = -Rnd(1,slow)
-	EndIf	
+
 	bcol = bcol + bcoldelta/10*slow
-	If bcol < 0
+	if bcol < 0
 		bcol = 0
 		bcoldelta = Rnd(1,slow)
-	ElseIf bcol > 255
+	elif bcol > 255
 		bcol = 255
 		bcoldelta = -Rnd(1,slow)
-	EndIf	
-End Function
 
 
 
 
-Function GetPlayTime$(cnt:Int)
-' cnt is 20ms each ie 50 cnts = 1 sec
+
+
+def GetPlayTime$(cnt:Int)
+# cnt is 20ms each ie 50 cnts = 1 sec
 	Local s$ = ""
-	Local secs:Int = Int(cnt/50) 
+	Local secs:Int = Int(cnt/50)
 	Local minutes:Int = Int(secs/60)
 	Local hours:Int = Int(minutes/60)
-	If hours > 0
+	if hours > 0
 		s$ = hours + " hr"
-		If hours > 1
+		if hours > 1
 			s$:+ "s, "
-		Else
-			s$:+ ", "		
-		EndIf
-	EndIf
-	If minutes > 0
+		else:
+			s$:+ ", "
+
+
+	if minutes > 0
 		s$:+ (minutes Mod 60) + " mn"
-		If minutes > 1
+		if minutes > 1
 			s$:+ "s, "
-		Else
-			s$:+ ", "		
-		EndIf
-	EndIf 
-	If secs > 0
+		else:
+			s$:+ ", "
+
+
+	if secs > 0
 		s$:+ (secs Mod 60) + " sec"
-		If secs > 1 Then s$:+ "s"
-	EndIf 
-	Return s$
-End Function
+		if secs > 1 Then s$:+ "s"
+
+	return s$
 
 
-Function FitValueToRange#( InValue#, RangeIn_Start#, RangeIn_End#, RangeOut_Start#, RangeOut_End# )
-	
+
+def FitValueToRange#( InValue#, RangeIn_Start#, RangeIn_End#, RangeOut_Start#, RangeOut_End# )
+
 	Local OldRange# = RangeIn_End# - RangeIn_Start#
-	Local NewRange# = RangeOut_End# - RangeOut_Start#	
-	
-	Local OutValue# = ((InValue#-RangeIn_Start) / OldRange#) * NewRange#	+ RangeOut_Start		
+	Local NewRange# = RangeOut_End# - RangeOut_Start#
 
-	Return OutValue#
+	Local OutValue# = ((InValue#-RangeIn_Start) / OldRange#) * NewRange#	+ RangeOut_Start
 
-End Function
+	return OutValue#
 
 
-Function DrawCircle(xCenter:Int,yCenter:Int,radius:Int)
+
+
+def DrawCircle(xCenter:Int,yCenter:Int,radius:Int)
 
 	Local p%, x%, y%
-	
+
 	x = 0
 	y = radius
 	Plot xCenter + x, yCenter + y
@@ -100,18 +97,18 @@ Function DrawCircle(xCenter:Int,yCenter:Int,radius:Int)
 	Plot xCenter + y, yCenter - x
 	Plot xCenter - y, yCenter - x
 	p = 1 - radius
-	While x < y
-		If p < 0
+	while x < y
+		if p < 0
 			x = x + 1
-		Else
+		else:
 			x = x + 1
 			y = y - 1
-		EndIf
-		If p < 0
+
+		if p < 0
 			p = p + (x Shl 1) + 1
-		Else
+		else:
 			p = p + ((x - y) Shl 1) + 1
-		EndIf
+
 		Plot xCenter + x, yCenter + y
 		Plot xCenter - x, yCenter + y
 		Plot xCenter + x, yCenter - y
@@ -120,174 +117,173 @@ Function DrawCircle(xCenter:Int,yCenter:Int,radius:Int)
 		Plot xCenter - y, yCenter + x
 		Plot xCenter + y, yCenter - x
 		Plot xCenter - y, yCenter - x
-	Wend
-
-End Function
 
 
-Function Rect(x:Int,y:Int,w:Int,h:Int,f:Int=0)
-	If f
-		'solid
+
+
+
+def Rect(x:Int,y:Int,w:Int,h:Int,f:Int=0)
+	if f
+		#solid
 		DrawRect x,y,w,h
-	Else
-		'outline
+	else:
+		#outline
 		Local x1:Int = x + w
 		Local y1:Int = y + h
 		DrawLine x,y,x,y1
 		DrawLine x,y1,x1,y1
 		DrawLine x1,y1,x1,y
 		DrawLine x1,y,x,y
-	EndIf
-End Function
 
 
 
 
 
-Function RectsOverlap:Int(x1:Int,y1:Int,w1:Int,h1:Int,x2:Int,y2:Int,w2:Int,h2:Int)
 
-	If x1 > x2+w2 
-		' rec 1 is too far right
-		Return False
-	Else
-		If x1+w1 < x2
-			' rec 1 is too far left
-			Return False
-		Else
-			' xs are overlapping - check ys
-			If y1 > y2+h2 
-				' rec 1 is too far down
-				Return False
-			Else
-				If y1+h1 < y2 
-					' rec 1 is too far above
-					Return False
-				Else
-					' overlap?
-					Return True				
-				EndIf
-			EndIf
-		EndIf
-	EndIf
 
-End Function
+def RectsOverlap:Int(x1:Int,y1:Int,w1:Int,h1:Int,x2:Int,y2:Int,w2:Int,h2:Int)
+
+	if x1 > x2+w2
+		# rec 1 is too far right
+		return False
+	else:
+		if x1+w1 < x2
+			# rec 1 is too far left
+			return False
+		else:
+			# xs are overlapping - check ys
+			if y1 > y2+h2
+				# rec 1 is too far down
+				return False
+			else:
+				if y1+h1 < y2
+					# rec 1 is too far above
+					return False
+				else:
+					# overlap?
+					return True
 
 
 
-' rotate xr,yr around xc,yc
-Function TFormR(xc#,yc#, angle:Int, xr# Var,yr# Var)
-'	xs$ = xc+" "+yc+" "+xr+" "+yr+" "+angle
-'	writedelay(xs$)		
+
+
+
+
+
+
+# rotate xr,yr around xc,yc
+def TFormR(xc#,yc#, angle:Int, xr# Var,yr# Var)
+#	xs$ = xc+" "+yc+" "+xr+" "+yr+" "+angle
+#	writedelay(xs$)
 	Local x# = (xr-xc)
 	Local y# = (yr-yc)
 	xr = Cos(angle)*x - Sin(angle)*y
 	yr = Sin(angle)*x + Cos(angle)*y
 	xr = xc+xr
 	yr = yc+yr
-'	xs$ = xc+" "+yc+" "+xr+" "+yr+" "+angle
-'	writedelay(xs$)		
-End Function
+#	xs$ = xc+" "+yc+" "+xr+" "+yr+" "+angle
+#	writedelay(xs$)
 
 
 
-Function PointInTri:Int(xo#,yo#,x1#,y1#,x2#,y2#,x3#,y3#)
-	Local c:Int = True ' point is inside 64 pixels from nme7 - is it in the force field?
-	If  (  (  (y1 <= yo) And (yo < y2)  )  Or  (  (y2 <= yo) And (yo < y1)  )  )   
-		If (y2 - y1) <> 0
-			If (xo < (x2 - x1) * (yo - y1) / (y2 - y1) + x1)
+
+def PointInTri:Int(xo#,yo#,x1#,y1#,x2#,y2#,x3#,y3#)
+	Local c:Int = True # point is inside 64 pixels from nme7 - is it in the force field?
+	if  (  (  (y1 <= yo) And (yo < y2)  )  Or  (  (y2 <= yo) And (yo < y1)  )  )
+		if (y2 - y1) <> 0
+			if (xo < (x2 - x1) * (yo - y1) / (y2 - y1) + x1)
 				c = Not c
-			EndIf
-		EndIf
-	EndIf
-	If  (  (  (y1 <= yo) And (yo < y3)  )  Or  (  (y3 <= yo) And (yo < y3)  )  )   
-		If (y2 - y1) <> 0
-			If (xo < (x3 - x1) * (yo - y1) / (y3 - y1) + x1)
+
+
+
+	if  (  (  (y1 <= yo) And (yo < y3)  )  Or  (  (y3 <= yo) And (yo < y3)  )  )
+		if (y2 - y1) <> 0
+			if (xo < (x3 - x1) * (yo - y1) / (y3 - y1) + x1)
 				c = Not c
-			EndIf
-		EndIf
-	EndIf
-	Return c
-End Function
 
 
 
-' not used
-'Function IsInTriangle:Int( px#,py#, ax#,ay#,bx#,by#,cx#,cy# ) 
-
-'	Local bc#,ca#,ab#,ap#,bp#,cp#,abc#
-
-'	bc# = bx*cy - by*cx 
-'	ca# = cx*ay - cy*ax 
-'	ab# = ax*by - ay*bx
-'	ap# = ax*py - ay*px
-'	bp# = bx*py - by*px
-'	cp# = cx*py - cy*px
-'	abc# = Sgn(bc + ca + ab)
-
-'	If (abc*(bc-bp+cp)>0) And (abc*(ca-cp+ap)>0) And (abc*(ab-ap+bp)>0) Then Return True
-'End Function
+	return c
 
 
-Function PointToPointDist#(x1#,y1#,x2#,y2#)
+
+
+# not used
+#def IsInTriangle:Int( px#,py#, ax#,ay#,bx#,by#,cx#,cy# )
+
+#	Local bc#,ca#,ab#,ap#,bp#,cp#,abc#
+
+#	bc# = bx*cy - by*cx
+#	ca# = cx*ay - cy*ax
+#	ab# = ax*by - ay*bx
+#	ap# = ax*py - ay*px
+#	bp# = bx*py - by*px
+#	cp# = cx*py - cy*px
+#	abc# = Sgn(bc + ca + ab)
+
+#	if (abc*(bc-bp+cp)>0) And (abc*(ca-cp+ap)>0) And (abc*(ab-ap+bp)>0) Then return True
+#
+
+
+def PointToPointDist#(x1#,y1#,x2#,y2#)
 	Local dx# = x1-x2
 	Local dy# = y1-y2
-	
-	Return Sqr(dx*dx + dy*dy)
 
-End Function
+	return Sqr(dx*dx + dy*dy)
 
 
-Function LineCollide2#(x1#,y1#,x2#,y2#, px#,py#,r:Int)
-	
-	If x1 = x2 And y1 = y2
-		If PointToPointDist(px,py,x1,y1) <= r Then Return True Else Return False
-	EndIf
-	
+
+def LineCollide2#(x1#,y1#,x2#,y2#, px#,py#,r:Int)
+
+	if x1 = x2 And y1 = y2
+		if PointToPointDist(px,py,x1,y1) <= r Then return True else: return False
+
+
 	Local sx# = x2-x1
 	Local sy# = y2-y1
-	
+
 	Local q# = ((px-x1) * (x2-x1) + (py - y1) * (y2-y1)) / (sx*sx + sy*sy)
-	
-	If q < 0.0 Then q = 0.0
-	If q > 1.0 Then q = 1.0
-	
-	If PointToPointDist(px,py,(1-q)*x1+q*x2,(1-q)*y1 + q*y2) <= r Then Return True Else Return False
-End Function
+
+	if q < 0.0 Then q = 0.0
+	if q > 1.0 Then q = 1.0
+
+	if PointToPointDist(px,py,(1-q)*x1+q*x2,(1-q)*y1 + q*y2) <= r Then return True else: return False
 
 
-' return -1 to -180, or 1 to 180
-Function TurnToFace:Int(x#,y#, dx#, dy#, plx#, ply#)
+
+# return -1 to -180, or 1 to 180
+def TurnToFace:Int(x#,y#, dx#, dy#, plx#, ply#)
 
 	Local angle1#, angle2#, ret:Int
-	
+
 	angle1 = ATan2(ply-y,plx-x)
 	angle2 = ATan2(dy,dx)
-	
+
 	ret = angle1-angle2
-	If ret >= 180
+	if ret >= 180
 		ret = -(360 - ret)
-	Else
-		If ret <= -180
+	else:
+		if ret <= -180
 			ret = ret + 360
-		EndIf
-	EndIf
-
-	If Abs(ret) < 6 Then ret = 0
-	
-    Return ret
-
-End Function
 
 
 
-Function SaveScreenshot(f$)
+	if Abs(ret) < 6 Then ret = 0
+
+    return ret
+
+
+
+
+
+def SaveScreenshot(f$)
 	Local img:TPixmap = GrabPixmap(0,0,GraphicsWidth(),GraphicsHeight())
 	SavePixmapPNG(img, f$)
-EndFunction
+Enddef
 
 
-'Key names  -  Falken '05
-Function SetupKeyTable()
+#Key names  -  Falken #05
+def SetupKeyTable()
 	Local tempkey$, put_index:Int
 	RestoreData key_data
 	Repeat
@@ -295,7 +291,7 @@ Function SetupKeyTable()
 		ReadData put_index
 		keystring[put_index] = tempkey
 	Until put_index=299
-End Function
+
 
 #key_data
 DefData "Mouse button (Left)",1
@@ -414,4 +410,3 @@ DefData "Comma",188
 DefData "Period",190
 DefData "Slash",191
 DefData "Hit A Key",299
-

@@ -10,26 +10,26 @@ class le:
 		if close = 0
 			SafeXY(x,y,px,py,160)
 		else:
-			SafeXY(x,y,px,py,40,1)		
-				
+			SafeXY(x,y,px,py,40,1)
+
 		Local pan# = (x-px)/PLAYFIELDW
 		Local vol# = (1 - abs(pan)/10) * (1 - (abs(y-py)/PLAYFIELDH)/10)
-		PlaySound2(le_born_snd, 1, pan, vol)	
+		PlaySound2(le_born_snd, 1, pan, vol)
 		Local n:le = New le
 		n.x = x
 		n.y = y
 		n.r = Rand(0,359)
 		Local dir:Int = Rand(0,359)
-		Local mag# = Rnd(.25,1.0)		
+		Local mag# = Rnd(.25,1.0)
 		n.dx = Cos(dir)*mag
 		n.dy = Sin(dir)*mag
 		n.attached = False
 		n.le2 = Null
 		n.move = freeze
-		le_list.AddLast( n )	
+		le_list.AddLast( n )
 		return n
-	
-	
+
+
 	def Update()
 		Local distx#
 		Local disty#
@@ -37,10 +37,11 @@ class le:
 		if move > 0
 			move:-1
 			return
-		
+
+
 		checked = False
 		r = r + 2
-		Local ll:le 
+		Local ll:le
 		for ll:le = EachIn le_list
 			if ll <> Self
 				if attached = False
@@ -55,68 +56,68 @@ class le:
 							ll.attached = True
 							ll.le2 = Self
 							ll.strength = 25
-						
-					
-				
-			
-		
+
+
+
+
+
 		if attached = True
 			TowardPartner(le2.x,le2.y)
 			if resist = False Then BlackHole2()
 		else:
 			toward(px,py,300)
 			BlackHole()
-		
-		
+
+
 		Local speed# = Sqr(dx*dx+dy*dy)
 		if speed > speed_le
 			dx = dx/speed*speed_le
 			dy = dy/speed*speed_le
-		
+
 		x = x + dx
 		y = y + dy
-		if x < 8 
+		if x < 8
 			dx = abs(dx)
 			x = x + dx
 		elif: x > PLAYFIELDW-8
 			dx = -abs(dx)
 			x = x + dx
-		
+
 		if y < 8
 			dy = abs(dy)
 			y = y + dy
 		elif: y > PLAYFIELDH-8
 			dy = -abs(dy)
 			y = y + dy
-		Endif 
-		
+		Endif
+
 		distx# = x-px
 		disty# = y-py
 		dist# = (distx * distx + disty * disty)
 		if dist < 24*24
-			killer = True		
+			killer = True
 			if KillPlayer()
 				if le2 <> Null
 					le2.attached = False
 					le2.resist = False
 					le2.le2 = Null
-				
+
 				le2 = Null
 				attached = False
 				resist = False
 				le_LIST.Remove(Self)
 			else:
 				killer = False
-			
-				
-	
-	
+
+
+
+
 	def Blackhole()
 		Local n5:nme5
 		for n5:nme5 = EachIn nme5_list
-			if n5.active			
+			if n5.active
 				Local ddx# = n5.x-x
-				Local ddy# = n5.y-y 
+				Local ddy# = n5.y-y
 				Local dist# = Sqr(ddx*ddx + ddy*ddy) + 0.001
 				if dist < 25+n5.sz*5
 					dx = dx + ddx/dist/1024*(500-dist)
@@ -125,12 +126,12 @@ class le:
 						Kill(False,0,0)
 						n5.Grow(1)
 						Exit
-					
-				
-			
-		
-	
-		
+
+
+
+
+
+
 	def Blackhole2()
 		Local n5:nme5
 		for n5:nme5 = EachIn nme5_list
@@ -155,16 +156,16 @@ class le:
 					n5.Grow(1)
 					Exit
 				#else:
-				#	strength = le2.strength				
-				
-			
-		
-		
-	
+				#	strength = le2.strength
+
+
+
+
+
 	def TowardPartner(xx#,yy#)
 		Local speed#
 		Local ddx# = xx-x
-		Local ddy# = yy-y 
+		Local ddy# = yy-y
 		Local dist# = Sqr(ddx*ddx + ddy*ddy)+0.001
 		if dist > 150
 			dx = dx + ddx/dist*32
@@ -172,18 +173,18 @@ class le:
 		elif: dist < 64
 			dx = dx -ddx/dist*32
 			dy = dy -ddy/dist*32
-		
-		
-	
-	def Toward(xx#,yy#,range:Int)	
+
+
+
+	def Toward(xx#,yy#,range:Int)
 		Local ddx# = xx-x
-		Local ddy# = yy-y 
+		Local ddy# = yy-y
 		Local dist# = Sqr(ddx*ddx + ddy*ddy)+0.001
-		if dist < range 
+		if dist < range
 			dx = dx + ddx/dist
 			dy = dy + ddy/dist
-		
-	
+
+
 
 	def Spin:Int(vx#,vy#)
 		Local t:Int
@@ -194,16 +195,16 @@ class le:
 			return True
 		else:
 			return False
-		
-	
-			
+
+
+
 	def Kill(points:Int=True,vx#,vy#)
 		Local t:Int
 		for t = 0 To 3
-			part.Create(x,y, 8 ,20+strength*4,220-strength*4,0,r)	
-		
+			part.Create(x,y, 8 ,20+strength*4,220-strength*4,0,r)
+
 		if points = False Then attached = False
-		if attached 
+		if attached
 			dx = dx - vx/16
 			dy = dy - vy/16
 			strength:-2.5
@@ -213,25 +214,25 @@ class le:
 					le2.attached = False
 					le2.le2 = Null
 					le2.strength = 0
-				
+
 				le2 = Null
 				attached = False
-			
+
 			Local pan# = (x-px)/PLAYFIELDW
 			Local vol# = (1 - abs(pan)/10) * (1 - (abs(y-py)/PLAYFIELDH)/10)
-			PlaySound2(le_hit_snd, 1, pan, vol)				
+			PlaySound2(le_hit_snd, 1, pan, vol)
 		else:
-			if points = True score.IncScore(x,y,150)		
+			if points = True score.IncScore(x,y,150)
 			gridpoint.ShockWave(x,y)
 			Local pan# = (x-px)/PLAYFIELDW
 			Local vol# = (1 - abs(pan)/10) * (1 - (abs(y-py)/PLAYFIELDH)/10)
-			PlaySound2(le_killed_snd, 1, pan, vol)	
+			PlaySound2(le_killed_snd, 1, pan, vol)
 			for t = 0 To 31
 				part.Create(x,y, 8 ,COL_TRIANGLE_R,COL_TRIANGLE_G,COL_TRIANGLE_B)
-			
+
 			le_LIST.Remove(Self)
-		
-	
+
+
 
 	def Draw()
 		Local sc#
@@ -245,25 +246,25 @@ class le:
 			SetAlpha Float(move)/40.0
 			SetScale Float(move)/5.0,Float(move)/5.0
 		else:
-			SetAlpha 0.5-sc/8		
+			SetAlpha 0.5-sc/8
 			SetScale sc,sc
-		
+
 		DrawPoly tri
 		SetColor 255,255,255
 		SetOrigin 0,0
 		SetAlpha 1
-		SetScale 1,1		
+		SetScale 1,1
 		SetBlend lightblend
 		SetRotation(r*2)
 		DrawImage orangetriangle,x-gxoff,y-gyoff
-		if attached 
-			SetRotation(r*4+180)		
+		if attached
+			SetRotation(r*4+180)
 			DrawImage orangetriangle,x-gxoff,y-gyoff
-		
-		SetRotation 0		
+
+		SetRotation 0
 		return
-	
-	
+
+
 	def DrawBond(self):
 		if attached and not killer:
 			SetColor 20+strength*8,220-strength*8,0

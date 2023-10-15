@@ -1,14 +1,16 @@
-import PUB.FreeJoy
-import sound
-import gridparttrail
-import vectorfont
+# import PUB.FreeJoy
+
+from sound import *
+from gridparttrail import *
+from vectorfont import *
 
 #### GLOBALS #############
 
 g_style: int = 0
-info$ = " "
+info: str = " "
 infotimer: int
-mx: int,my: int
+mx: int
+my: int
 ax: int
 assigning: bool = False
 assigningoption: bool = False
@@ -1209,7 +1211,7 @@ def VideoSettings:Int(showgame:Int)
 	Local old_playsize:Int = playsize
 	Local old_gfxset:Int = gfxset
 	Local old_windowed:Int = windowed
-	Local bright# = g_opacity*120
+	Local bright: float = g_opacity*120
 	Local col_pick:Int = 0
 
 	bombtime = 20
@@ -1259,8 +1261,14 @@ def VideoSettings:Int(showgame:Int)
 		gxoff = 0
 		gyoff = 0
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*2,SCREENW,5*4): sel = 6
-		if sel = 6 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*2,SCREENW,5*4):
+			sel = 6
+
+		if sel == 6:
+			SetColor 255,255,(cnt*8) % 255
+		else:
+			SetColor 0,200,0
+
 		DrawString("Number of Stars: "+showstars,SCREENW/2-280,SCREENH/2+lsp*2,4)
 
 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*3,SCREENW,5*4): sel = 7

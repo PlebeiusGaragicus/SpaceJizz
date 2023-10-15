@@ -6,14 +6,12 @@ from random import randint, uniform
 
 import pygame
 
-
-# Import BRL.Random
-# Import "vectorfont.bmx"
-# Import "colordefs.bmx"
-# Import "gridparttrail.bmx"
-# Import "sound.bmx"
-# Import "images.bmx"
-# Import "control.bmx"
+from control import *
+from images import *
+from sound import *
+from gridparttrail import *
+from colordefs import *
+from vectorfont import *
 
 
 g_v_num = "5.4"
@@ -2115,6 +2113,9 @@ if cheat:
 
 
 def BlackholeParticles()
+	"""
+	"""
+
 	Local st: int = gcount % 2
 	Local spin: float = 3
 	if st == 0:
