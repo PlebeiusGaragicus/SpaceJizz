@@ -183,12 +183,11 @@ class Nme:
 
 
 
-class nme5:
-	pass
 
 
-# green square
+
 class nme:
+	""" green square """
 	x: float
 	y: float
 	dx: float
@@ -369,7 +368,11 @@ class nme:
 		SetRotation 0
 
 
+# ...
 
+class nme5:
+	""" red circles """
+	pass
 
 
 
