@@ -16,6 +16,7 @@ assigning: bool = False
 assigningoption: bool = False
 assigningbomb: bool = False
 bombtime: int = 30
+# 
 jdmx: float = 0
 jdmy: float = 0
 jdfx: float = 0
@@ -43,34 +44,34 @@ exlife = [75000,100000,200000]
 
 
 
-Type bbjoypad
-	Field x1id: int
-	Field y1id: int
-	Field x2id: int
-	Field y2id: int
-	Field x1invert: int
-	Field y1invert: int
-	Field x2invert: int
-	Field y2invert: int
-	Field x1scale#
-	Field y1scale#
-	Field x2scale#
-	Field y2scale#
-	Field x1center#
-	Field y1center#
-	Field x2center#
-	Field y2center#
-	Field x1dz#
-	Field y1dz#
-	Field x2dz#
-	Field y2dz#
-	Field optionbutton%
-	Field bombbutton%
-End Type
+class bbjoypad:
+	x1id: int
+	y1id: int
+	x2id: int
+	y2id: int
+	x1invert: int
+	y1invert: int
+	x2invert: int
+	y2invert: int
+	x1scale#
+	y1scale#
+	x2scale#
+	y2scale#
+	x1center#
+	y1center#
+	x2center#
+	y2center#
+	x1dz#
+	y1dz#
+	x2dz#
+	y2dz#
+	optionbutton%
+	bombbutton%
+
 
 j:bbjoypad[4]
 
-for Local port: int = 0 To 3
+for port in range(4):
 	j[port] = New bbjoypad
 	j[port].x1id = 1
 	j[port].y1id = 2
@@ -123,8 +124,8 @@ control_method[4] = "Hybrid"
 
 
 #defaults
-controltype: int = 0
-deadbandadjust: int  = 0
+CONTROLTYPE: int = 0
+DEADBANDADJUST: int  = 0
 
 joyport: int = 0
 autofire: int = 0
@@ -172,15 +173,18 @@ k_fire_right: int = KEY_RIGHT
 k_fire_up: int = KEY_UP
 k_fire_down: int = KEY_DOWN
 
-m_sensitivity# = .5
+m_sensitivity: float = .5
 m_bomb: int = 2
 m_fire: int = 1
-inertia# = 0.0
+inertia: float = 0.0
 
 
 
 
 def DrawTarget(x%,y%,cnt%,sz%=7):
+	"""
+		Probably draws the currently selected menu item on screen
+	"""
 
 	if cnt % 30 > 14
 		SetColor 255,255,32
@@ -221,15 +225,15 @@ def LoadConfig() -> bool:
 
 				Case "[Control Type]"
 					if Pv.toupper() = control_method[0].toupper()
-						controltype = 0 #dual analog
+						CONTROLTYPE = 0 #dual analog
 					elif Pv.toupper() = control_method[1].toupper()
-						controltype = 1 #mouse
+						CONTROLTYPE = 1 #mouse
 					elif Pv.toupper() = control_method[2].toupper()
-						controltype = 2 #keys
+						CONTROLTYPE = 2 #keys
 					elif Pv.toupper() = control_method[3].toupper()
-						controltype = 3	#joypad
+						CONTROLTYPE = 3	#joypad
 					elif Pv.toupper() = control_method[4].toupper()
-						controltype = 4	#hybrid
+						CONTROLTYPE = 4	#hybrid
 
 				Case "[Autofire]"
 					autofire = Int(pv$)
@@ -432,187 +436,187 @@ def LoadConfig() -> bool:
 
 
 
-def SaveConfig() -> bool:
+# def SaveConfig() -> bool:
 
-	Local fh:TStream, fn$
+# 	Local fh:TStream, fn$
 
-	fn$ = "Config.txt"
-	fh = WriteFile(fn$)
-	if fh != None
-		WriteLine (fh,"[Windowed]")
-		if windowed
-			WriteLine(fh,"True")
-		else:
-			WriteLine(fh,"False")
+# 	fn$ = "Config.txt"
+# 	fh = WriteFile(fn$)
+# 	if fh != None
+# 		WriteLine (fh,"[Windowed]")
+# 		if windowed
+# 			WriteLine(fh,"True")
+# 		else:
+# 			WriteLine(fh,"False")
 
-		WriteLine(fh,"[Control Type]")
-		WriteLine(fh,control_method[controltype])
+# 		WriteLine(fh,"[Control Type]")
+# 		WriteLine(fh,control_method[CONTROLTYPE])
 
-		WriteLine(fh,"[Hybrid Config]")
-		WriteLine(fh,h_config)
+# 		WriteLine(fh,"[Hybrid Config]")
+# 		WriteLine(fh,h_config)
 
-		WriteLine(fh,"[Joypad Config]")
-		WriteLine(fh,j_config)
-		WriteLine(fh,"[Joypad Left]")
-		WriteLine(fh,j_pad_1)
-		WriteLine(fh,"[Joypad Up]")
-		WriteLine(fh,j_pad_2)
-		WriteLine(fh,"[Joypad Right]")
-		WriteLine(fh,j_pad_3)
-		WriteLine(fh,"[Joypad Down]")
-		WriteLine(fh,j_pad_4)
-		WriteLine(fh,"[Joypad Option]")
-		WriteLine(fh,j_pad_option)
-		WriteLine(fh,"[Joypad Bomb]")
-		WriteLine(fh,j_pad_bomb)
+# 		WriteLine(fh,"[Joypad Config]")
+# 		WriteLine(fh,j_config)
+# 		WriteLine(fh,"[Joypad Left]")
+# 		WriteLine(fh,j_pad_1)
+# 		WriteLine(fh,"[Joypad Up]")
+# 		WriteLine(fh,j_pad_2)
+# 		WriteLine(fh,"[Joypad Right]")
+# 		WriteLine(fh,j_pad_3)
+# 		WriteLine(fh,"[Joypad Down]")
+# 		WriteLine(fh,j_pad_4)
+# 		WriteLine(fh,"[Joypad Option]")
+# 		WriteLine(fh,j_pad_option)
+# 		WriteLine(fh,"[Joypad Bomb]")
+# 		WriteLine(fh,j_pad_bomb)
 
-		WriteLine(fh,"[Autofire]")
-		WriteLine(fh,autofire)
+# 		WriteLine(fh,"[Autofire]")
+# 		WriteLine(fh,autofire)
 
-		WriteLine(fh,"[Key Bomb]")
-		WriteLine(fh,k_bomb)
-		WriteLine(fh,"[Key Move Left]")
-		WriteLine(fh,k_move_left)
-		WriteLine(fh,"[Key Move Right]")
-		WriteLine(fh,k_move_right)
-		WriteLine(fh,"[Key Move Up]")
-		WriteLine(fh,k_move_up)
-		WriteLine(fh,"[Key Move Down]")
-		WriteLine(fh,k_move_down)
-		WriteLine(fh,"[Key Fire Left]")
-		WriteLine(fh,k_fire_left)
-		WriteLine(fh,"[Key Fire Right]")
-		WriteLine(fh,k_fire_right)
-		WriteLine(fh,"[Key Fire Up]")
-		WriteLine(fh,k_fire_up)
-		WriteLine(fh,"[Key Fire Down]")
-		WriteLine(fh,k_fire_down)
+# 		WriteLine(fh,"[Key Bomb]")
+# 		WriteLine(fh,k_bomb)
+# 		WriteLine(fh,"[Key Move Left]")
+# 		WriteLine(fh,k_move_left)
+# 		WriteLine(fh,"[Key Move Right]")
+# 		WriteLine(fh,k_move_right)
+# 		WriteLine(fh,"[Key Move Up]")
+# 		WriteLine(fh,k_move_up)
+# 		WriteLine(fh,"[Key Move Down]")
+# 		WriteLine(fh,k_move_down)
+# 		WriteLine(fh,"[Key Fire Left]")
+# 		WriteLine(fh,k_fire_left)
+# 		WriteLine(fh,"[Key Fire Right]")
+# 		WriteLine(fh,k_fire_right)
+# 		WriteLine(fh,"[Key Fire Up]")
+# 		WriteLine(fh,k_fire_up)
+# 		WriteLine(fh,"[Key Fire Down]")
+# 		WriteLine(fh,k_fire_down)
 
-		WriteLine(fh,"[SFX Volume]")
-		WriteLine(fh,Int(sfxvol#*100))
-		WriteLine(fh,"[Music Volume]")
-		WriteLine(fh,Int(musicvol#*100))
-		WriteLine(fh,"[Sound Set]")
-		WriteLine(fh,soundset)
+# 		WriteLine(fh,"[SFX Volume]")
+# 		WriteLine(fh,Int(sfxvol#*100))
+# 		WriteLine(fh,"[Music Volume]")
+# 		WriteLine(fh,Int(musicvol#*100))
+# 		WriteLine(fh,"[Sound Set]")
+# 		WriteLine(fh,soundset)
 
-		WriteLine(fh,"[Grid Style]")
-		WriteLine(fh,g_style)
+# 		WriteLine(fh,"[Grid Style]")
+# 		WriteLine(fh,g_style)
 
-		WriteLine(fh,"[Grid Red]")
-		WriteLine(fh,g_red)
-		WriteLine(fh,"[Grid Green]")
-		WriteLine(fh,g_green)
-		WriteLine(fh,"[Grid Blue]")
-		WriteLine(fh,g_blue)
-		WriteLine(fh,"[Grid Opacity]")
-		WriteLine(fh,Int(g_opacity#*100))
-		WriteLine(fh,"[Grid Spacing]")
-		WriteLine(fh,gridsize)
-		WriteLine(fh,"[Full Grid]")
-		WriteLine(fh,fullgrid)
-		WriteLine(fh,"[Gfx Set]")
-		WriteLine(fh,gfxset)
+# 		WriteLine(fh,"[Grid Red]")
+# 		WriteLine(fh,g_red)
+# 		WriteLine(fh,"[Grid Green]")
+# 		WriteLine(fh,g_green)
+# 		WriteLine(fh,"[Grid Blue]")
+# 		WriteLine(fh,g_blue)
+# 		WriteLine(fh,"[Grid Opacity]")
+# 		WriteLine(fh,Int(g_opacity#*100))
+# 		WriteLine(fh,"[Grid Spacing]")
+# 		WriteLine(fh,gridsize)
+# 		WriteLine(fh,"[Full Grid]")
+# 		WriteLine(fh,fullgrid)
+# 		WriteLine(fh,"[Gfx Set]")
+# 		WriteLine(fh,gfxset)
 
-		WriteLine(fh,"[Show Stars]")
-		WriteLine(fh,showstars)
-		WriteLine(fh,"[Scroll]")
-		WriteLine(fh,scroll)
+# 		WriteLine(fh,"[Show Stars]")
+# 		WriteLine(fh,showstars)
+# 		WriteLine(fh,"[Scroll]")
+# 		WriteLine(fh,scroll)
 
-		WriteLine(fh,"[Playfield Width]")
-		WriteLine(fh,playsizew)
-		WriteLine(fh,"[Playfield Height]")
-		WriteLine(fh,playsizeh)
-		WriteLine(fh,"[Screen Width]")
-		WriteLine(fh,screensizew)
-		WriteLine(fh,"[Screen Height]")
-		WriteLine(fh,screensizeh)
+# 		WriteLine(fh,"[Playfield Width]")
+# 		WriteLine(fh,playsizew)
+# 		WriteLine(fh,"[Playfield Height]")
+# 		WriteLine(fh,playsizeh)
+# 		WriteLine(fh,"[Screen Width]")
+# 		WriteLine(fh,screensizew)
+# 		WriteLine(fh,"[Screen Height]")
+# 		WriteLine(fh,screensizeh)
 
-		WriteLine(fh,"[Particle Count]")
-		WriteLine(fh,numparticles)
-		WriteLine(fh,"[Particle Life]")
-		WriteLine(fh,particlelife)
-		WriteLine(fh,"[Particle Gravity]")
-		WriteLine(fh,gravityparticles)
-		WriteLine(fh,"[Particle Decay]")
-		WriteLine(fh,particledecay)
-		WriteLine(fh,"[Particle Style]")
-		WriteLine(fh,particlestyle)
+# 		WriteLine(fh,"[Particle Count]")
+# 		WriteLine(fh,numparticles)
+# 		WriteLine(fh,"[Particle Life]")
+# 		WriteLine(fh,particlelife)
+# 		WriteLine(fh,"[Particle Gravity]")
+# 		WriteLine(fh,gravityparticles)
+# 		WriteLine(fh,"[Particle Decay]")
+# 		WriteLine(fh,particledecay)
+# 		WriteLine(fh,"[Particle Style]")
+# 		WriteLine(fh,particlestyle)
 
-		WriteLine(fh,"[Mouse Sensitivity]")
-		WriteLine(fh,Int(m_sensitivity#*100))
-		WriteLine(fh,"[Mouse Fire]")
-		WriteLine(fh,m_fire)
-		WriteLine(fh,"[Mouse Bomb]")
-		WriteLine(fh,m_bomb)
+# 		WriteLine(fh,"[Mouse Sensitivity]")
+# 		WriteLine(fh,Int(m_sensitivity#*100))
+# 		WriteLine(fh,"[Mouse Fire]")
+# 		WriteLine(fh,m_fire)
+# 		WriteLine(fh,"[Mouse Bomb]")
+# 		WriteLine(fh,m_bomb)
 
-		WriteLine(fh,"[Difficulty]")
-		WriteLine(fh,startingdifficulty)
+# 		WriteLine(fh,"[Difficulty]")
+# 		WriteLine(fh,startingdifficulty)
 
-		WriteLine(fh,"[Inertia]")
-		WriteLine(fh,Int(inertia#*100))
+# 		WriteLine(fh,"[Inertia]")
+# 		WriteLine(fh,Int(inertia#*100))
 
-		WriteLine(fh,"[Used Port]")
-		WriteLine(fh, joyport)
-		for Local port: int = 0 To 3
-			WriteLine(fh,"[Joy Port]")
-			WriteLine(fh, port)
-			WriteLine(fh,"[Joy Move X]")
-			WriteLine(fh,j[port].x1id)
-			WriteLine(fh,"[Joy Move Y]")
-			WriteLine(fh,j[port].y1id)
-			WriteLine(fh,"[Joy Fire X]")
-			WriteLine(fh,j[port].x2id)
-			WriteLine(fh,"[Joy Fire Y]")
-			WriteLine(fh,j[port].y2id)
+# 		WriteLine(fh,"[Used Port]")
+# 		WriteLine(fh, joyport)
+# 		for Local port: int = 0 To 3
+# 			WriteLine(fh,"[Joy Port]")
+# 			WriteLine(fh, port)
+# 			WriteLine(fh,"[Joy Move X]")
+# 			WriteLine(fh,j[port].x1id)
+# 			WriteLine(fh,"[Joy Move Y]")
+# 			WriteLine(fh,j[port].y1id)
+# 			WriteLine(fh,"[Joy Fire X]")
+# 			WriteLine(fh,j[port].x2id)
+# 			WriteLine(fh,"[Joy Fire Y]")
+# 			WriteLine(fh,j[port].y2id)
 
-			WriteLine(fh,"[Joy Move X Inverted]")
-			WriteLine(fh,j[port].x1invert)
-			WriteLine(fh,"[Joy Move Y Inverted]")
-			WriteLine(fh,j[port].y1invert)
-			WriteLine(fh,"[Joy Fire X Inverted]")
-			WriteLine(fh,j[port].x2invert)
-			WriteLine(fh,"[Joy Fire Y Inverted]")
-			WriteLine(fh,j[port].y2invert)
+# 			WriteLine(fh,"[Joy Move X Inverted]")
+# 			WriteLine(fh,j[port].x1invert)
+# 			WriteLine(fh,"[Joy Move Y Inverted]")
+# 			WriteLine(fh,j[port].y1invert)
+# 			WriteLine(fh,"[Joy Fire X Inverted]")
+# 			WriteLine(fh,j[port].x2invert)
+# 			WriteLine(fh,"[Joy Fire Y Inverted]")
+# 			WriteLine(fh,j[port].y2invert)
 
-			WriteLine(fh,"[Joy Move X Scale]")
-			WriteLine(fh,Int(j[port].x1scale))
-			WriteLine(fh,"[Joy Move Y Scale]")
-			WriteLine(fh,Int(j[port].y1scale))
-			WriteLine(fh,"[Joy Fire X Scale]")
-			WriteLine(fh,Int(j[port].x2scale))
-			WriteLine(fh,"[Joy Fire Y Scale]")
-			WriteLine(fh,Int(j[port].y2scale))
+# 			WriteLine(fh,"[Joy Move X Scale]")
+# 			WriteLine(fh,Int(j[port].x1scale))
+# 			WriteLine(fh,"[Joy Move Y Scale]")
+# 			WriteLine(fh,Int(j[port].y1scale))
+# 			WriteLine(fh,"[Joy Fire X Scale]")
+# 			WriteLine(fh,Int(j[port].x2scale))
+# 			WriteLine(fh,"[Joy Fire Y Scale]")
+# 			WriteLine(fh,Int(j[port].y2scale))
 
-			WriteLine(fh,"[Joy Move X Center]")
-			WriteLine(fh,(j[port].x1center))
-			WriteLine(fh,"[Joy Move Y Center]")
-			WriteLine(fh,(j[port].y1center))
-			WriteLine(fh,"[Joy Fire X Center]")
-			WriteLine(fh,(j[port].x2center))
-			WriteLine(fh,"[Joy Fire Y Center]")
-			WriteLine(fh,(j[port].y2center))
+# 			WriteLine(fh,"[Joy Move X Center]")
+# 			WriteLine(fh,(j[port].x1center))
+# 			WriteLine(fh,"[Joy Move Y Center]")
+# 			WriteLine(fh,(j[port].y1center))
+# 			WriteLine(fh,"[Joy Fire X Center]")
+# 			WriteLine(fh,(j[port].x2center))
+# 			WriteLine(fh,"[Joy Fire Y Center]")
+# 			WriteLine(fh,(j[port].y2center))
 
-			WriteLine(fh,"[Joy Move X Dead Zone]")
-			WriteLine(fh,j[port].x1dz)
-			WriteLine(fh,"[Joy Move Y Dead Zone]")
-			WriteLine(fh,j[port].y1dz)
-			WriteLine(fh,"[Joy Fire X Dead Zone]")
-			WriteLine(fh,j[port].x2dz)
-			WriteLine(fh,"[Joy Fire Y Dead Zone]")
-			WriteLine(fh,j[port].y2dz)
+# 			WriteLine(fh,"[Joy Move X Dead Zone]")
+# 			WriteLine(fh,j[port].x1dz)
+# 			WriteLine(fh,"[Joy Move Y Dead Zone]")
+# 			WriteLine(fh,j[port].y1dz)
+# 			WriteLine(fh,"[Joy Fire X Dead Zone]")
+# 			WriteLine(fh,j[port].x2dz)
+# 			WriteLine(fh,"[Joy Fire Y Dead Zone]")
+# 			WriteLine(fh,j[port].y2dz)
 
-			WriteLine(fh,"[Joy Option]")
-			WriteLine(fh,j[port].optionbutton)
-			WriteLine(fh,"[Joy Bomb]")
-			WriteLine(fh,j[port].bombbutton)
+# 			WriteLine(fh,"[Joy Option]")
+# 			WriteLine(fh,j[port].optionbutton)
+# 			WriteLine(fh,"[Joy Bomb]")
+# 			WriteLine(fh,j[port].bombbutton)
 
 
-		info$ = "Config file saved."
-		infotimer = 30*4
-		CloseFile fh
-		return True
-	else:
-		return False
+# 		info$ = "Config file saved."
+# 		infotimer = 30*4
+# 		CloseFile fh
+# 		return True
+# 	else:
+# 		return False
 
 
 
@@ -980,7 +984,7 @@ def Options(showgame: int) -> int:
 
 
 
-def conf:Int(showgame:Int, st$="")
+def conf(showgame: int, st: str = "") -> int:
 
 	Local xx:Int, yy:Int, cnt:Int
 	Local done:Int = False
@@ -1063,7 +1067,7 @@ def conf:Int(showgame:Int, st$="")
 
 
 
-def Settings:Int(showgame:Int)
+def Settings(showgame: int) -> int:
 
 	Local xx:Int, yy:Int, cnt:Int
 	Local ret:Int = 0
@@ -1188,305 +1192,305 @@ def Settings:Int(showgame:Int)
 
 
 
-def VideoSettings:Int(showgame:Int)
+# def VideoSettings:Int(showgame:Int)
 
-	Local xx:Int, yy:Int, cnt:Int
-	Local done:Int = False
-	Local jb:Int,i:Int
-	Local looper:Int = 0
-	Local sel:Int = 10 # done
-	Local s#,x:Int
-	Local ignorejoy:Int, ignorexjoy:Int
-	Local tim:Int
-	Local lsp:Int = 40
-	if SCREENH =< 480:
-		lsp = 32
+# 	Local xx:Int, yy:Int, cnt:Int
+# 	Local done:Int = False
+# 	Local jb:Int,i:Int
+# 	Local looper:Int = 0
+# 	Local sel:Int = 10 # done
+# 	Local s#,x:Int
+# 	Local ignorejoy:Int, ignorexjoy:Int
+# 	Local tim:Int
+# 	Local lsp:Int = 40
+# 	if SCREENH =< 480:
+# 		lsp = 32
 
-	Local old_scroll:Int = scroll
-	Local old_screensize:Int = screensize
-	Local old_playsize:Int = playsize
-	Local old_gfxset:Int = gfxset
-	Local old_windowed:Int = windowed
-	Local bright: float = g_opacity*120
-	Local col_pick:Int = 0
+# 	Local old_scroll:Int = scroll
+# 	Local old_screensize:Int = screensize
+# 	Local old_playsize:Int = playsize
+# 	Local old_gfxset:Int = gfxset
+# 	Local old_windowed:Int = windowed
+# 	Local bright: float = g_opacity*120
+# 	Local col_pick:Int = 0
 
-	bombtime = 20
-	FlushKeys()
-	FlushMouse()
-	MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*6+20)
-	while not done:
-		Cls
-		xx = MouseX()
-		yy = MouseY()
-		SetLineWidth 2
-		tim = time()
-		if showgame:
-			DrawAllStatic(.7)
-		SetColor 255,0,0
-		DrawString("Video Settings",SCREENW/2-280,SCREENH/2-lsp*6,6)
+# 	bombtime = 20
+# 	FlushKeys()
+# 	FlushMouse()
+# 	MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*6+20)
+# 	while not done:
+# 		Cls
+# 		xx = MouseX()
+# 		yy = MouseY()
+# 		SetLineWidth 2
+# 		tim = time()
+# 		if showgame:
+# 			DrawAllStatic(.7)
+# 		SetColor 255,0,0
+# 		DrawString("Video Settings",SCREENW/2-280,SCREENH/2-lsp*6,6)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp*4,SCREENW,5*4): sel = 0
-		if sel = 0 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Scroll: "+onoff$[scroll],SCREENW/2-280,SCREENH/2-lsp*4,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp*4,SCREENW,5*4): sel = 0
+# 		if sel = 0 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Scroll: "+onoff$[scroll],SCREENW/2-280,SCREENH/2-lsp*4,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp*3,SCREENW,5*4): sel = 1
-		if sel = 1 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Screen Size: "+(screensize+1)+"/"+numgfxmodes+" "+gfxmodearr[screensize].desc$+" ("+gfxmodearr[screensize].s$+")",SCREENW/2-280,SCREENH/2-lsp*3,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp*3,SCREENW,5*4): sel = 1
+# 		if sel = 1 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Screen Size: "+(screensize+1)+"/"+numgfxmodes+" "+gfxmodearr[screensize].desc$+" ("+gfxmodearr[screensize].s$+")",SCREENW/2-280,SCREENH/2-lsp*3,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp*2,SCREENW,5*4): sel = 2
-		if sel = 2 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Playfield Size: "+(playsize+1)+"/"+numplayfieldsizes+" "+playfieldsizes[playsize*2]+"X"+playfieldsizes[playsize*2+1],SCREENW/2-280,SCREENH/2-lsp*2,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp*2,SCREENW,5*4): sel = 2
+# 		if sel = 2 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Playfield Size: "+(playsize+1)+"/"+numplayfieldsizes+" "+playfieldsizes[playsize*2]+"X"+playfieldsizes[playsize*2+1],SCREENW/2-280,SCREENH/2-lsp*2,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp,SCREENW,5*4): sel = 3
-		if sel = 3 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Gfx Set: "+lowmedhigh$[gfxset],SCREENW/2-280,SCREENH/2-lsp,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp,SCREENW,5*4): sel = 3
+# 		if sel = 3 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Gfx Set: "+lowmedhigh$[gfxset],SCREENW/2-280,SCREENH/2-lsp,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*0,SCREENW,5*4): sel = 4
-		if sel = 4 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Windowed: "+onoff$[windowed],SCREENW/2-280,SCREENH/2+lsp*0,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*0,SCREENW,5*4): sel = 4
+# 		if sel = 4 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Windowed: "+onoff$[windowed],SCREENW/2-280,SCREENH/2+lsp*0,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*1,SCREENW,5*4): sel = 5
-		if sel = 5 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Grid Style: "+g_style,SCREENW/2-280,SCREENH/2+lsp*1,4)
-		if sel = 5 or sel = 7 or sel = 8 or sel = 9
-			if (cnt % 60 = 0): gridpoint.Pull(Rand(0,20)*GRIDWIDTH,Rand(0,20)*GRIDHEIGHT,8,24)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*1,SCREENW,5*4): sel = 5
+# 		if sel = 5 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Grid Style: "+g_style,SCREENW/2-280,SCREENH/2+lsp*1,4)
+# 		if sel = 5 or sel = 7 or sel = 8 or sel = 9
+# 			if (cnt % 60 = 0): gridpoint.Pull(Rand(0,20)*GRIDWIDTH,Rand(0,20)*GRIDHEIGHT,8,24)
 
-		CycleColours()
-		gridpoint.UpdateGrid()
-		gridpoint.DrawGrid(g_style, True)
-		gxoff = 0
-		gyoff = 0
+# 		CycleColours()
+# 		gridpoint.UpdateGrid()
+# 		gridpoint.DrawGrid(g_style, True)
+# 		gxoff = 0
+# 		gyoff = 0
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*2,SCREENW,5*4):
-			sel = 6
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*2,SCREENW,5*4):
+# 			sel = 6
 
-		if sel == 6:
-			SetColor 255,255,(cnt*8) % 255
-		else:
-			SetColor 0,200,0
+# 		if sel == 6:
+# 			SetColor 255,255,(cnt*8) % 255
+# 		else:
+# 			SetColor 0,200,0
 
-		DrawString("Number of Stars: "+showstars,SCREENW/2-280,SCREENH/2+lsp*2,4)
+# 		DrawString("Number of Stars: "+showstars,SCREENW/2-280,SCREENH/2+lsp*2,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*3,SCREENW,5*4): sel = 7
-		if sel = 7 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Particle Style: "+particlestyle,SCREENW/2-280,SCREENH/2+lsp*3,4)
-		if sel = 7
-			if Rand(0,100) > 94: part.CreateFireworks(2)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*3,SCREENW,5*4): sel = 7
+# 		if sel = 7 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Particle Style: "+particlestyle,SCREENW/2-280,SCREENH/2+lsp*3,4)
+# 		if sel = 7
+# 			if Rand(0,100) > 94: part.CreateFireworks(2)
 
-		part.UpdateParticles(1)
-		part.DrawParticles()
+# 		part.UpdateParticles(1)
+# 		part.DrawParticles()
 
-		SetColor 255,255,255
-		SetScale 2,2
-		DrawImage colourpick,SCREENW/2+74,SCREENH/2+lsp*4+14,1
-		DrawImage colourpick,SCREENW/2+74,SCREENH/2+lsp*5+14,0
-		SetScale 1,1
-		SetColor 100,255,100
-		DrawRect SCREENW/2+74+2-122+col_pick*2,SCREENH/2+lsp*4+20,2,8
-		DrawRect SCREENW/2+74+2-122+bright*2,SCREENH/2+lsp*5+20,2,8
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*4,SCREENW,5*4): sel = 8
-		if sel = 8 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Grid Colour:",SCREENW/2-280,SCREENH/2+lsp*4,4)
-		if sel = 8
-			SetScale 2,2
-			DrawImage colourpick,SCREENW/2+74,SCREENH/2+lsp*4+14,2
-			SetScale 1,1
-
-
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*5,SCREENW,5*4): sel = 9
-		if sel = 9 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Grid Bright:",SCREENW/2-280,SCREENH/2+lsp*5,4)
-		if sel = 9
-			SetScale 2,2
-			DrawImage colourpick,SCREENW/2+74,SCREENH/2+lsp*5+14,2
-			SetScale 1,1
+# 		SetColor 255,255,255
+# 		SetScale 2,2
+# 		DrawImage colourpick,SCREENW/2+74,SCREENH/2+lsp*4+14,1
+# 		DrawImage colourpick,SCREENW/2+74,SCREENH/2+lsp*5+14,0
+# 		SetScale 1,1
+# 		SetColor 100,255,100
+# 		DrawRect SCREENW/2+74+2-122+col_pick*2,SCREENH/2+lsp*4+20,2,8
+# 		DrawRect SCREENW/2+74+2-122+bright*2,SCREENH/2+lsp*5+20,2,8
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*4,SCREENW,5*4): sel = 8
+# 		if sel = 8 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Grid Colour:",SCREENW/2-280,SCREENH/2+lsp*4,4)
+# 		if sel = 8
+# 			SetScale 2,2
+# 			DrawImage colourpick,SCREENW/2+74,SCREENH/2+lsp*4+14,2
+# 			SetScale 1,1
 
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*6,SCREENW,5*4): sel = 10
-		if sel = 10 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Done",SCREENW/2-280,SCREENH/2+lsp*6,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*5,SCREENW,5*4): sel = 9
+# 		if sel = 9 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Grid Bright:",SCREENW/2-280,SCREENH/2+lsp*5,4)
+# 		if sel = 9
+# 			SetScale 2,2
+# 			DrawImage colourpick,SCREENW/2+74,SCREENH/2+lsp*5+14,2
+# 			SetScale 1,1
 
 
-		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
-		cnt += 1
-		Flip 1
-		tim = time() - tim
-		if tim < 20 and tim > 0
-			Delay 20-tim
-
-		jdmy = GetJoyByAxis(joyport, axis_move_y, axis_move_y_inv, axis_move_y_sc, axis_move_y_center )
-		if abs(jdmy) < 0.6: jdmy = 0
-		if jdmy = 0: ignorejoy = False
-		if ignorejoy = True
-			jdmy = 0
-
-		jdmx = GetJoyByAxis(joyport, axis_move_x, axis_move_x_inv, axis_move_x_sc, axis_move_x_center )
-		if abs(jdmx) < 0.6: jdmx = 0
-		if jdmx = 0: ignorexjoy = False
-		if ignorexjoy = True
-			jdmx = 0
-
-		if KeyHit(KEY_UP) or jdmy < 0
-			sel -= 1
-			if sel < 0: sel = 10
-			MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-4)+20)
-
-		if KeyHit(KEY_DOWN) or jdmy > 0
-			sel += 1
-			if sel > 10: sel = 0
-			MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-4)+20)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*6,SCREENW,5*4): sel = 10
+# 		if sel = 10 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Done",SCREENW/2-280,SCREENH/2+lsp*6,4)
 
 
-		if jdmy != 0: ignorejoy = True
-		if jdmx != 0: ignorexjoy = True
-		jb = 0
-		bombtime = bombtime - 1
-		if bombtime < 0: bombtime = 0
-		for i = 0 To 15
-			jb = jb + JoyDown(i,joyport)
+# 		DrawTarget(SCREENW/2-280-20,yy,cnt,4)
+# 		cnt += 1
+# 		Flip 1
+# 		tim = time() - tim
+# 		if tim < 20 and tim > 0
+# 			Delay 20-tim
 
-		if jb > 0 and bombtime = 0 and looper > 15*8: done = True;bombtime = 20
-		if KeyHit(KEY_ENTER): done = True
-		if KeyHit(KEY_ESCAPE): done = True;sel = 10;bombtime = 20
-		if (KeyDown(KEY_LEFT) or MouseDown(1)) and bombtime = 0: jdmx = -1;bombtime = 20
-		if (KeyDown(KEY_RIGHT) or MouseDown(2)) and bombtime = 0: jdmx = 1;bombtime = 20
-		Select sel
-			Case 0
-				if jdmx != 0
-					scroll = 1-scroll
+# 		jdmy = GetJoyByAxis(joyport, axis_move_y, axis_move_y_inv, axis_move_y_sc, axis_move_y_center )
+# 		if abs(jdmy) < 0.6: jdmy = 0
+# 		if jdmy = 0: ignorejoy = False
+# 		if ignorejoy = True
+# 			jdmy = 0
 
-				done = False
-			Case 1
-				if jdmx < 0
-					screensize -= 1
-					if screensize < 0: screensize = numgfxmodes
-					bombtime = 8
+# 		jdmx = GetJoyByAxis(joyport, axis_move_x, axis_move_x_inv, axis_move_x_sc, axis_move_x_center )
+# 		if abs(jdmx) < 0.6: jdmx = 0
+# 		if jdmx = 0: ignorexjoy = False
+# 		if ignorexjoy = True
+# 			jdmx = 0
 
-				if jdmx > 0
-					screensize += 1
-					if screensize > numgfxmodes: screensize = 0
-					bombtime = 8
+# 		if KeyHit(KEY_UP) or jdmy < 0
+# 			sel -= 1
+# 			if sel < 0: sel = 10
+# 			MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-4)+20)
 
-				done = False
-			Case 2
-				if jdmx < 0
-					playsize -= 1
-					if playsize < 0: playsize = numplayfieldsizes
-					bombtime = 8
-
-				if jdmx > 0
-					playsize += 1
-					if playsize > numplayfieldsizes: playsize = 0
-					bombtime = 8
-
-				done = False
-			Case 3
-				if jdmx < 0
-					gfxset -= 1
-					if gfxset < 0: gfxset = NUMGFXSETS
-
-				if jdmx > 0
-					gfxset += 1
-					if gfxset > NUMGFXSETS: gfxset = 0
-
-				done = False
-			Case 4
-				if jdmx != 0
-					windowed = 1-windowed
-
-				done = False
-			Case 5
-				if jdmx > 0
-					g_style += 1
-					if g_style > numgridstyles: g_style = 0
-
-				if jdmx < 0
-					g_style -= 1
-					if g_style < 0: g_style = numgridstyles
-
-			Case 6
-				if jdmx > 0
-					showstars += 100
-					if showstars > MAXSTARS: showstars = 0
-					bombtime = 8
-
-				if jdmx < 0
-					showstars -= 100
-					if showstars < 0: showstars = MAXSTARS
-					bombtime = 8
-
-			Case 7
-				if jdmx > 0
-					particlestyle += 1
-					if particlestyle > numparticlestyles: particlestyle = 0
-
-				if jdmx < 0
-					particlestyle -= 1
-					if particlestyle < 0: particlestyle = numparticlestyles
-
-			Case 8 # colour
-				if jdmx < 0
-					col_pick -= 1
-					if col_pick < 0: col_pick = 0
-					SetGridColours(col_pick)
-					bombtime = 2
-
-				if jdmx > 0
-					col_pick += 1
-					if col_pick > 119: col_pick = 119
-					SetGridColours(col_pick)
-					bombtime = 2
-
-				done = False
-			Case 9 # brightness
-				if jdmx < 0
-					bright -= 1
-					if bright < 0: bright= 0
-					g_opacity = bright/119
-					bombtime = 2
-
-				if jdmx > 0
-					bright += 1
-					if bright> 119: bright= 119
-					g_opacity = bright/119
-					bombtime = 2
-
-				done = False
-			Case 10
-				if jdmx != 0: done=True
-				#exit this menu
-
-		looper  += 8
-
-	if 	(old_scroll != scroll or old_screensize != screensize or old_playsize != playsize or old_gfxset != gfxset or old_windowed != windowed):
-		if conf(showgame,"Keep Changes?"):
-			# reload gfx, resize grid
-			if setup():
-				return 2
-			else:
-				# can#t set mode - reset to old
-				scroll  = old_scroll
-				screensize  = old_screensize
-				playsize  = old_playsize
-				gfxset = old_gfxset
-				windowed = old_windowed
-				SetDimensions()
-				Cls
-				SetColor 0,255,255
-				DrawString("Unable to set Gfx %e",20,64,3)
-				DrawString("Reverting to old settings: "+gfxmodearr[screensize].s$,20,64+30,3)
-				Flip 1
-				Delay 2000
-
-		else:
-			scroll  = old_scroll
-			screensize  = old_screensize
-			playsize  = old_playsize
-			gfxset = old_gfxset
-			windowed = old_windowed
+# 		if KeyHit(KEY_DOWN) or jdmy > 0
+# 			sel += 1
+# 			if sel > 10: sel = 0
+# 			MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-4)+20)
 
 
-	return False
+# 		if jdmy != 0: ignorejoy = True
+# 		if jdmx != 0: ignorexjoy = True
+# 		jb = 0
+# 		bombtime = bombtime - 1
+# 		if bombtime < 0: bombtime = 0
+# 		for i = 0 To 15
+# 			jb = jb + JoyDown(i,joyport)
+
+# 		if jb > 0 and bombtime = 0 and looper > 15*8: done = True;bombtime = 20
+# 		if KeyHit(KEY_ENTER): done = True
+# 		if KeyHit(KEY_ESCAPE): done = True;sel = 10;bombtime = 20
+# 		if (KeyDown(KEY_LEFT) or MouseDown(1)) and bombtime = 0: jdmx = -1;bombtime = 20
+# 		if (KeyDown(KEY_RIGHT) or MouseDown(2)) and bombtime = 0: jdmx = 1;bombtime = 20
+# 		Select sel
+# 			Case 0
+# 				if jdmx != 0
+# 					scroll = 1-scroll
+
+# 				done = False
+# 			Case 1
+# 				if jdmx < 0
+# 					screensize -= 1
+# 					if screensize < 0: screensize = numgfxmodes
+# 					bombtime = 8
+
+# 				if jdmx > 0
+# 					screensize += 1
+# 					if screensize > numgfxmodes: screensize = 0
+# 					bombtime = 8
+
+# 				done = False
+# 			Case 2
+# 				if jdmx < 0
+# 					playsize -= 1
+# 					if playsize < 0: playsize = numplayfieldsizes
+# 					bombtime = 8
+
+# 				if jdmx > 0
+# 					playsize += 1
+# 					if playsize > numplayfieldsizes: playsize = 0
+# 					bombtime = 8
+
+# 				done = False
+# 			Case 3
+# 				if jdmx < 0
+# 					gfxset -= 1
+# 					if gfxset < 0: gfxset = NUMGFXSETS
+
+# 				if jdmx > 0
+# 					gfxset += 1
+# 					if gfxset > NUMGFXSETS: gfxset = 0
+
+# 				done = False
+# 			Case 4
+# 				if jdmx != 0
+# 					windowed = 1-windowed
+
+# 				done = False
+# 			Case 5
+# 				if jdmx > 0
+# 					g_style += 1
+# 					if g_style > numgridstyles: g_style = 0
+
+# 				if jdmx < 0
+# 					g_style -= 1
+# 					if g_style < 0: g_style = numgridstyles
+
+# 			Case 6
+# 				if jdmx > 0
+# 					showstars += 100
+# 					if showstars > MAXSTARS: showstars = 0
+# 					bombtime = 8
+
+# 				if jdmx < 0
+# 					showstars -= 100
+# 					if showstars < 0: showstars = MAXSTARS
+# 					bombtime = 8
+
+# 			Case 7
+# 				if jdmx > 0
+# 					particlestyle += 1
+# 					if particlestyle > numparticlestyles: particlestyle = 0
+
+# 				if jdmx < 0
+# 					particlestyle -= 1
+# 					if particlestyle < 0: particlestyle = numparticlestyles
+
+# 			Case 8 # colour
+# 				if jdmx < 0
+# 					col_pick -= 1
+# 					if col_pick < 0: col_pick = 0
+# 					SetGridColours(col_pick)
+# 					bombtime = 2
+
+# 				if jdmx > 0
+# 					col_pick += 1
+# 					if col_pick > 119: col_pick = 119
+# 					SetGridColours(col_pick)
+# 					bombtime = 2
+
+# 				done = False
+# 			Case 9 # brightness
+# 				if jdmx < 0
+# 					bright -= 1
+# 					if bright < 0: bright= 0
+# 					g_opacity = bright/119
+# 					bombtime = 2
+
+# 				if jdmx > 0
+# 					bright += 1
+# 					if bright> 119: bright= 119
+# 					g_opacity = bright/119
+# 					bombtime = 2
+
+# 				done = False
+# 			Case 10
+# 				if jdmx != 0: done=True
+# 				#exit this menu
+
+# 		looper  += 8
+
+# 	if 	(old_scroll != scroll or old_screensize != screensize or old_playsize != playsize or old_gfxset != gfxset or old_windowed != windowed):
+# 		if conf(showgame,"Keep Changes?"):
+# 			# reload gfx, resize grid
+# 			if setup():
+# 				return 2
+# 			else:
+# 				# can#t set mode - reset to old
+# 				scroll  = old_scroll
+# 				screensize  = old_screensize
+# 				playsize  = old_playsize
+# 				gfxset = old_gfxset
+# 				windowed = old_windowed
+# 				SetDimensions()
+# 				Cls
+# 				SetColor 0,255,255
+# 				DrawString("Unable to set Gfx %e",20,64,3)
+# 				DrawString("Reverting to old settings: "+gfxmodearr[screensize].s$,20,64+30,3)
+# 				Flip 1
+# 				Delay 2000
+
+# 		else:
+# 			scroll  = old_scroll
+# 			screensize  = old_screensize
+# 			playsize  = old_playsize
+# 			gfxset = old_gfxset
+# 			windowed = old_windowed
+
+
+# 	return False
 
 
 
@@ -1507,7 +1511,7 @@ def SetGridColours(ind:Int)
 
 
 
-def GameSettings:Int(showgame:Int)
+def GameSettings(showgame: int) -> int:
 
 	Local xx:Int, yy:Int, cnt:Int
 	Local done:Int = False
@@ -1585,21 +1589,26 @@ def GameSettings:Int(showgame:Int)
 		if ignorexjoy = True
 			jdmx = 0
 
-		if KeyHit(KEY_UP) or jdmy < 0
+		if KeyHit(KEY_UP) or jdmy < 0:
 			sel -= 1
-			if sel < 0: sel = 5
+			if sel < 0:
+				sel = 5
 			MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-2)+20)
 
-		if KeyHit(KEY_DOWN) or jdmy > 0
+		if KeyHit(KEY_DOWN) or jdmy > 0:
 			sel += 1
-			if sel > 5: sel = 0
+			if sel > 5:
+				sel = 0
 			MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-2)+20)
 
-		if jdmy != 0: ignorejoy = True
-		if jdmx != 0: ignorexjoy = True
+		if jdmy != 0:
+			ignorejoy = True
+		if jdmx != 0:
+			ignorexjoy = True
 		jb = 0
 		bombtime = bombtime - 1
-		if bombtime < 0: bombtime = 0
+		if bombtime < 0:
+			bombtime = 0
 		for i = 0 To 15
 			jb = jb + JoyDown(i,joyport)
 
@@ -1857,7 +1866,7 @@ def ControllerSettings(showgame:Int)
 
 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2,SCREENW,5*4): sel = 0
 		if sel = 0: SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Type: "+control_method[controltype],SCREENW/2-280,SCREENH/2,4)
+		DrawString("Type: "+control_method[CONTROLTYPE],SCREENW/2-280,SCREENH/2,4)
 
 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp,SCREENW,5*4): sel = 1
 		if sel = 1: SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
@@ -1913,17 +1922,17 @@ def ControllerSettings(showgame:Int)
 		Select sel
 			Case 0 # control type
 				if jdmx < 0 or done = True
-					controltype  -=  1
-					if controltype < 0: controltype = 4
+					CONTROLTYPE  -=  1
+					if CONTROLTYPE < 0: CONTROLTYPE = 4
 					done = False
 
 				if jdmx > 0
-					controltype  +=  1
-					if controltype > 4: controltype = 0
+					CONTROLTYPE  +=  1
+					if CONTROLTYPE > 4: CONTROLTYPE = 0
 
 			Case 1 #controller config
 				if done = True or jdmx != 0
-					Select controltype
+					Select CONTROLTYPE
 						Case 0 #dual analog
 							DualAnalogControllerSettings()
 						Case 1 #mouse
@@ -2379,312 +2388,316 @@ def KeyboardControllerSettings(showgame:Int)
 
 
 
-def JoypadControllerSettings(showgame:Int)
-	Local xx:Int,yy:Int,cnt:Int
-	Local done:Int = False
-	Local jb:Int,i:Int
-	Local looper:Int = 0
-	Local sel:Int = 7
-	Local s#,x:Int
-	Local ignorejoy:Int, ignorexjoy:Int
-	Local m$,f$
-	Local tim:Int
-	Local lsp:Int = 40
+# def JoypadControllerSettings(showgame:Int)
+# 	Local xx:Int,yy:Int,cnt:Int
+# 	Local done:Int = False
+# 	Local jb:Int,i:Int
+# 	Local looper:Int = 0
+# 	Local sel:Int = 7
+# 	Local s#,x:Int
+# 	Local ignorejoy:Int, ignorexjoy:Int
+# 	Local m$,f$
+# 	Local tim:Int
+# 	Local lsp:Int = 40
 
-	if j_config = 0
-		m$ = "D Pad"
-		f$ = "4-Buttons"
-	else:
-		f$ = "D Pad"
-		m$ = "4-Buttons"
+# 	if j_config = 0
+# 		m$ = "D Pad"
+# 		f$ = "4-Buttons"
+# 	else:
+# 		f$ = "D Pad"
+# 		m$ = "4-Buttons"
 
-	bombtime = 20
-	FlushKeys()
-	FlushMouse()
-	MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*4+20)
-	while not done
-		Cls
-		xx= MouseX()
-		yy = MouseY()
+# 	bombtime = 20
+# 	FlushKeys()
+# 	FlushMouse()
+# 	MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*4+20)
+# 	while not done
+# 		Cls
+# 		xx= MouseX()
+# 		yy = MouseY()
 
-		tim = time()
-		if showgame: DrawAllStatic(.6)
-		SetColor 255,0,0
-		DrawString("Joypad Control",SCREENW/2-280,SCREENH/2-lsp*4,6)
+# 		tim = time()
+# 		if showgame: DrawAllStatic(.6)
+# 		SetColor 255,0,0
+# 		DrawString("Joypad Control",SCREENW/2-280,SCREENH/2-lsp*4,6)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp*2,SCREENW,5*4): sel = 0
-		if sel = 0 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Move: "+m$+"  Fire: "+f$,SCREENW/2-280,SCREENH/2-lsp*2,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp*2,SCREENW,5*4): sel = 0
+# 		if sel = 0 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Move: "+m$+"  Fire: "+f$,SCREENW/2-280,SCREENH/2-lsp*2,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp,SCREENW,5*4): sel = 1
-		if sel = 1 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Bomb: Button  ["+(j_pad_bomb+1)+"]",SCREENW/2-280,SCREENH/2-lsp,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2-lsp,SCREENW,5*4): sel = 1
+# 		if sel = 1 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Bomb: Button  ["+(j_pad_bomb+1)+"]",SCREENW/2-280,SCREENH/2-lsp,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2,SCREENW,5*4): sel = 2
-		if sel = 2 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Option: Button  ["+(j_pad_option+1)+"]",SCREENW/2-280,SCREENH/2,4)
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2,SCREENW,5*4): sel = 2
+# 		if sel = 2 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Option: Button  ["+(j_pad_option+1)+"]",SCREENW/2-280,SCREENH/2,4)
 
-		if RectsOverlap(xx-8,yy-8,16,16,SCREENW/2+64,SCREENH/2+lsp*1,40,30): sel = 3
-		if sel = 3 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		rect SCREENW/2+64,SCREENH/2+lsp*1,40,30,0
-		DrawString((j_pad_4+1),SCREENW/2+64+8,SCREENH/2+lsp*1+8,3)
+# 		if RectsOverlap(xx-8,yy-8,16,16,SCREENW/2+64,SCREENH/2+lsp*1,40,30): sel = 3
+# 		if sel = 3 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		rect SCREENW/2+64,SCREENH/2+lsp*1,40,30,0
+# 		DrawString((j_pad_4+1),SCREENW/2+64+8,SCREENH/2+lsp*1+8,3)
 
-		if RectsOverlap(xx-8,yy-8,16,16,SCREENW/2,SCREENH/2+lsp*2,40,30): sel = 4
-		if sel = 4 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		rect SCREENW/2,SCREENH/2+lsp*2,40,30,0
-		DrawString((j_pad_1+1),SCREENW/2+8,SCREENH/2+lsp*2+8,3)
+# 		if RectsOverlap(xx-8,yy-8,16,16,SCREENW/2,SCREENH/2+lsp*2,40,30): sel = 4
+# 		if sel = 4 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		rect SCREENW/2,SCREENH/2+lsp*2,40,30,0
+# 		DrawString((j_pad_1+1),SCREENW/2+8,SCREENH/2+lsp*2+8,3)
 
-		if RectsOverlap(xx-8,yy-8,16,16,SCREENW/2+128,SCREENH/2+lsp*2,40,30): sel = 5
-		if sel = 5 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		rect SCREENW/2+128,SCREENH/2+lsp*2,40,30,0
-		DrawString((j_pad_3+1),SCREENW/2+128+8,SCREENH/2+lsp*2+8,3)
+# 		if RectsOverlap(xx-8,yy-8,16,16,SCREENW/2+128,SCREENH/2+lsp*2,40,30): sel = 5
+# 		if sel = 5 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		rect SCREENW/2+128,SCREENH/2+lsp*2,40,30,0
+# 		DrawString((j_pad_3+1),SCREENW/2+128+8,SCREENH/2+lsp*2+8,3)
 
-		if RectsOverlap(xx-8,yy-8,16,16,SCREENW/2+64,SCREENH/2+lsp*3,40,30): sel = 6
-		if sel = 6 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		rect SCREENW/2+64,SCREENH/2+lsp*3,40,30,0
-		DrawString((j_pad_2+1),SCREENW/2+64+8,SCREENH/2+lsp*3+8,3)
+# 		if RectsOverlap(xx-8,yy-8,16,16,SCREENW/2+64,SCREENH/2+lsp*3,40,30): sel = 6
+# 		if sel = 6 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		rect SCREENW/2+64,SCREENH/2+lsp*3,40,30,0
+# 		DrawString((j_pad_2+1),SCREENW/2+64+8,SCREENH/2+lsp*3+8,3)
 
-		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*4,SCREENW,5*4): sel = 7
-		if sel = 7 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
-		DrawString("Done",SCREENW/2-280,SCREENH/2+lsp*4,4)
-		DrawTarget(xx,yy,cnt,4)
-		cnt += 1
-		Flip 1
-		tim = time() - tim
-		if tim < 20 and tim > 0
-			Delay 20-tim
+# 		if RectsOverlap(xx-8,yy-8,16,16,0,SCREENH/2+lsp*4,SCREENW,5*4): sel = 7
+# 		if sel = 7 SetColor 255,255,(cnt*8) % 255 else: SetColor 0,200,0
+# 		DrawString("Done",SCREENW/2-280,SCREENH/2+lsp*4,4)
+# 		DrawTarget(xx,yy,cnt,4)
+# 		cnt += 1
+# 		Flip 1
+# 		tim = time() - tim
+# 		if tim < 20 and tim > 0
+# 			Delay 20-tim
 
-		jdmy = GetJoyByAxis(joyport, axis_move_y, axis_move_y_inv, axis_move_y_sc, axis_move_y_center )
-		if abs(jdmy) < 0.6: jdmy = 0
-		if jdmy = 0: ignorejoy = False
-		if ignorejoy = True
-			jdmy = 0
+# 		jdmy = GetJoyByAxis(joyport, axis_move_y, axis_move_y_inv, axis_move_y_sc, axis_move_y_center )
+# 		if abs(jdmy) < 0.6: jdmy = 0
+# 		if jdmy = 0: ignorejoy = False
+# 		if ignorejoy = True
+# 			jdmy = 0
 
-		jdmx = GetJoyByAxis(joyport, axis_move_x, axis_move_x_inv, axis_move_x_sc, axis_move_x_center )
-		if abs(jdmx) < 0.6: jdmx = 0
-		if jdmx = 0: ignorexjoy = False
-		if ignorexjoy = True
-			jdmx = 0
+# 		jdmx = GetJoyByAxis(joyport, axis_move_x, axis_move_x_inv, axis_move_x_sc, axis_move_x_center )
+# 		if abs(jdmx) < 0.6: jdmx = 0
+# 		if jdmx = 0: ignorexjoy = False
+# 		if ignorexjoy = True
+# 			jdmx = 0
 
-		if jdmy != 0: ignorejoy = True
-		if jdmx != 0: ignorexjoy = True
-		if KeyHit(KEY_UP) or jdmy < 0
-			sel -= 1
-			if sel < 0: sel = 7
-			Select sel
-				Case 3
-					MoveMouse(SCREENW/2+64-20,SCREENH/2+lsp*1+20)
-				Case 4
-					MoveMouse(SCREENW/2-20,SCREENH/2+lsp*2+20)
-				Case 5
-					MoveMouse(SCREENW/2+128-20,SCREENH/2+lsp*2+20)
-				Case 6
-					MoveMouse(SCREENW/2+64-20,SCREENH/2+lsp*3+20)
-				Case 7
-					MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-3)+20)
-				Default
-					MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-2)+20)
-
-
-		if KeyHit(KEY_DOWN) or jdmy > 0
-			sel += 1
-			if sel > 7: sel = 0
-			Select sel
-				Case 3
-					MoveMouse(SCREENW/2+64-20,SCREENH/2+lsp*1+20)
-				Case 4
-					MoveMouse(SCREENW/2-20,SCREENH/2+lsp*2+20)
-				Case 5
-					MoveMouse(SCREENW/2+128-20,SCREENH/2+lsp*2+20)
-				Case 6
-					MoveMouse(SCREENW/2+64-20,SCREENH/2+lsp*3+20)
-				Case 7
-					MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-3)+20)
-				Default
-					MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-2)+20)
+# 		if jdmy != 0: ignorejoy = True
+# 		if jdmx != 0: ignorexjoy = True
+# 		if KeyHit(KEY_UP) or jdmy < 0
+# 			sel -= 1
+# 			if sel < 0: sel = 7
+# 			Select sel
+# 				Case 3
+# 					MoveMouse(SCREENW/2+64-20,SCREENH/2+lsp*1+20)
+# 				Case 4
+# 					MoveMouse(SCREENW/2-20,SCREENH/2+lsp*2+20)
+# 				Case 5
+# 					MoveMouse(SCREENW/2+128-20,SCREENH/2+lsp*2+20)
+# 				Case 6
+# 					MoveMouse(SCREENW/2+64-20,SCREENH/2+lsp*3+20)
+# 				Case 7
+# 					MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-3)+20)
+# 				Default
+# 					MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-2)+20)
 
 
-
-		jb = 0
-		bombtime = bombtime - 1
-		if bombtime < 0: bombtime = 0
-		for i = 0 To 15
-			jb = jb + JoyDown(i,joyport)
-
-		if jb > 0 and bombtime = 0 and looper > 15*8: done = True;bombtime = 20
-		if KeyHit(KEY_ESCAPE): done = True;sel=7;bombtime = 20
-		if KeyHit(KEY_LEFT) or MouseHit(1): jdmx = -1
-		if KeyHit(KEY_RIGHT) or MouseHit(2): jdmx = 1
-		if KeyHit(KEY_ENTER): jdmx = 1
-		Select sel
-			Case 0
-				if jdmx != 0 j_config = 1-j_config
-				done = False
-				if j_config = 0
-					m$ = "D Pad"
-					f$ = "4-Buttons"
-				else:
-					f$ = "D Pad"
-					m$ = "4-Buttons"
-
-			Case 1
-				if jdmx < 0
-					j_pad_bomb -= 1
-					if j_pad_bomb < 0: j_pad_bomb = 0
-				elif jdmx > 0
-					j_pad_bomb += 1
-					if j_pad_bomb > 15: j_pad_bomb = 15
-
-				for i = 0 To 15
-					if JoyDown(i,joyport): j_pad_bomb = i
-
-				done = False
-			Case 2
-				if jdmx < 0
-					j_pad_option -= 1
-					if j_pad_option < 0: j_pad_option = 0
-				elif jdmx > 0
-					j_pad_option += 1
-					if j_pad_option > 15: j_pad_option = 15
-
-				for i = 0 To 15
-					if JoyDown(i,joyport): j_pad_option = i
-
-				done = False
-			Case 3
-				if jdmx < 0:
-					j_pad_4 -= 1
-					if j_pad_4 < 0: j_pad_4 = 0
-				elif jdmx > 0:
-					j_pad_4 += 1
-					if j_pad_4 > 15:
-						j_pad_4 = 15
-
-				for i = 0 To 15:
-					if JoyDown(i,joyport):
-						j_pad_4 = i
-
-				done = False
-			Case 4
-				if jdmx < 0:
-					j_pad_1 -= 1
-					if j_pad_1 < 0: j_pad_1 = 0
-				elif jdmx > 0:
-					j_pad_1 += 1
-					if j_pad_1 > 15:
-						j_pad_1 = 15
-
-				for i = 0 To 15:
-					if JoyDown(i,joyport):
-						j_pad_1 = i
-
-				done = False
-			Case 5
-				if jdmx < 0
-					j_pad_3 -= 1
-					if j_pad_3 < 0: j_pad_3 = 0
-				elif jdmx > 0
-					j_pad_3 += 1
-					if j_pad_3 > 15: j_pad_3 = 15
-
-				for i = 0 To 15
-					if JoyDown(i,joyport): j_pad_3 = i
-
-				done = False
-			Case 6
-				if jdmx < 0:
-					j_pad_2 -= 1
-					if j_pad_2 < 0:
-						j_pad_2 = 0
-				elif jdmx > 0:
-					j_pad_2 += 1
-					if j_pad_2 > 15:
-						j_pad_2 = 15
-
-				for i = 0 To 15:
-					if JoyDown(i,joyport):
-						j_pad_2 = i
-
-				done = False
-			Case 7
-				if jdmx != 0:
-					done = True
-				#exit
-
-		looper += 8
+# 		if KeyHit(KEY_DOWN) or jdmy > 0
+# 			sel += 1
+# 			if sel > 7: sel = 0
+# 			Select sel
+# 				Case 3
+# 					MoveMouse(SCREENW/2+64-20,SCREENH/2+lsp*1+20)
+# 				Case 4
+# 					MoveMouse(SCREENW/2-20,SCREENH/2+lsp*2+20)
+# 				Case 5
+# 					MoveMouse(SCREENW/2+128-20,SCREENH/2+lsp*2+20)
+# 				Case 6
+# 					MoveMouse(SCREENW/2+64-20,SCREENH/2+lsp*3+20)
+# 				Case 7
+# 					MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-3)+20)
+# 				Default
+# 					MoveMouse(SCREENW/2-280-20,SCREENH/2+lsp*(sel-2)+20)
 
 
 
+# 		jb = 0
+# 		bombtime = bombtime - 1
+# 		if bombtime < 0: bombtime = 0
+# 		for i = 0 To 15
+# 			jb = jb + JoyDown(i,joyport)
 
-def DualAnalogControllerSettings():
+# 		if jb > 0 and bombtime = 0 and looper > 15*8: done = True;bombtime = 20
+# 		if KeyHit(KEY_ESCAPE): done = True;sel=7;bombtime = 20
+# 		if KeyHit(KEY_LEFT) or MouseHit(1): jdmx = -1
+# 		if KeyHit(KEY_RIGHT) or MouseHit(2): jdmx = 1
+# 		if KeyHit(KEY_ENTER): jdmx = 1
+# 		Select sel
+# 			Case 0
+# 				if jdmx != 0 j_config = 1-j_config
+# 				done = False
+# 				if j_config = 0
+# 					m$ = "D Pad"
+# 					f$ = "4-Buttons"
+# 				else:
+# 					f$ = "D Pad"
+# 					m$ = "4-Buttons"
 
-	Local done:Int = False
-	Local tim:Int
-	Local cnt:Int
+# 			Case 1
+# 				if jdmx < 0
+# 					j_pad_bomb -= 1
+# 					if j_pad_bomb < 0: j_pad_bomb = 0
+# 				elif jdmx > 0
+# 					j_pad_bomb += 1
+# 					if j_pad_bomb > 15: j_pad_bomb = 15
 
-	Setorigin (SCREENW-640)/2,(SCREENH-480)/2
+# 				for i = 0 To 15
+# 					if JoyDown(i,joyport): j_pad_bomb = i
 
-	while not done:
-		Cls
-		tim = time()
-		drawconfigstuff()
+# 				done = False
+# 			Case 2
+# 				if jdmx < 0
+# 					j_pad_option -= 1
+# 					if j_pad_option < 0: j_pad_option = 0
+# 				elif jdmx > 0
+# 					j_pad_option += 1
+# 					if j_pad_option > 15: j_pad_option = 15
 
-		mx = MouseX()
-		my = MouseY()
-		if mx>640:
-			mx = 640
-		if my>550:
-			my = 550
-		if assigning is False:
-			done = CheckInput(joyport)
-		else:
-			AssignAllJoyAxis(joyport)
-			if ax % 1 = 1:
-				if GetJoyAxis(joyport,1) = -1:
-					ax = ax + 1
-			if ax = 8:
-				assigning = False
+# 				for i = 0 To 15
+# 					if JoyDown(i,joyport): j_pad_option = i
+
+# 				done = False
+# 			Case 3
+# 				if jdmx < 0:
+# 					j_pad_4 -= 1
+# 					if j_pad_4 < 0: j_pad_4 = 0
+# 				elif jdmx > 0:
+# 					j_pad_4 += 1
+# 					if j_pad_4 > 15:
+# 						j_pad_4 = 15
+
+# 				for i = 0 To 15:
+# 					if JoyDown(i,joyport):
+# 						j_pad_4 = i
+
+# 				done = False
+# 			Case 4
+# 				if jdmx < 0:
+# 					j_pad_1 -= 1
+# 					if j_pad_1 < 0: j_pad_1 = 0
+# 				elif jdmx > 0:
+# 					j_pad_1 += 1
+# 					if j_pad_1 > 15:
+# 						j_pad_1 = 15
+
+# 				for i = 0 To 15:
+# 					if JoyDown(i,joyport):
+# 						j_pad_1 = i
+
+# 				done = False
+# 			Case 5
+# 				if jdmx < 0
+# 					j_pad_3 -= 1
+# 					if j_pad_3 < 0: j_pad_3 = 0
+# 				elif jdmx > 0
+# 					j_pad_3 += 1
+# 					if j_pad_3 > 15: j_pad_3 = 15
+
+# 				for i = 0 To 15
+# 					if JoyDown(i,joyport): j_pad_3 = i
+
+# 				done = False
+# 			Case 6
+# 				if jdmx < 0:
+# 					j_pad_2 -= 1
+# 					if j_pad_2 < 0:
+# 						j_pad_2 = 0
+# 				elif jdmx > 0:
+# 					j_pad_2 += 1
+# 					if j_pad_2 > 15:
+# 						j_pad_2 = 15
+
+# 				for i = 0 To 15:
+# 					if JoyDown(i,joyport):
+# 						j_pad_2 = i
+
+# 				done = False
+# 			Case 7
+# 				if jdmx != 0:
+# 					done = True
+# 				#exit
+
+# 		looper += 8
 
 
-		# map the Input values so the red dots can be drawn in position
-		Local x1j# = GetJoyByAxis(joyport,j[joyport].x1id-1,j[joyport].x1invert,j[joyport].x1scale,j[joyport].x1center)
-		Local y1j# = GetJoyByAxis(joyport,j[joyport].y1id-1,j[joyport].y1invert,j[joyport].y1scale,j[joyport].y1center)
-		Local x2j# = GetJoyByAxis(joyport,j[joyport].x2id-1,j[joyport].x2invert,j[joyport].x2scale,j[joyport].x2center)
-		Local y2j# = GetJoyByAxis(joyport,j[joyport].y2id-1,j[joyport].y2invert,j[joyport].y2scale,j[joyport].y2center)
-
-		# dead band
-		if abs(x1j) < j[joyport].x1dz: x1j = 0
-		if abs(y1j) < j[joyport].y1dz: y1j = 0
-		if abs(x2j) < j[joyport].x2dz: x2j = 0
-		if abs(y2j) < j[joyport].y2dz: y2j = 0
-
-		#scale to box size
-		Local x1:Int = FitValueToRange#( x1j, -1, 1,  10, 110 )
-		Local y1:Int = FitValueToRange#( y1j, -1, 1, 275, 375 )
-		Local x2:Int = FitValueToRange#( x2j, -1, 1, 250, 350 )
-		Local y2:Int = FitValueToRange#( y2j, -1, 1, 275, 375 )
-
-		#draw the control dots
-		SetColor 185,0,0
-		DrawOval x1-5-j[joyport].x1center*50,y1-5-j[joyport].y1center*50,10,10
-		DrawOval x2-5-j[joyport].x2center*50,y2-5-j[joyport].y2center*50,10,10
-
-		#draw cursor
-		DrawTarget(mx,my,cnt,4)
-
-		if infotimer > 0
-			DrawText info$,320,180
-			infotimer -= 1
-
-		cnt += 1
-		Flip 1
-		tim = time() - tim
-		if tim < 20 and tim > 0
-			Delay 20-tim
+#######################
+#######################
+#######################
+#######################
 
 
 
-	Setorigin 0,0
+
+# def DualAnalogControllerSettings():
+
+# 	Local done:Int = False
+# 	Local tim:Int
+# 	Local cnt:Int
+
+# 	Setorigin (SCREENW-640)/2,(SCREENH-480)/2
+
+# 	while not done:
+# 		Cls
+# 		tim = time()
+# 		drawconfigstuff()
+
+# 		mx = MouseX()
+# 		my = MouseY()
+# 		if mx>640:
+# 			mx = 640
+# 		if my>550:
+# 			my = 550
+# 		if assigning is False:
+# 			done = CheckInput(joyport)
+# 		else:
+# 			AssignAllJoyAxis(joyport)
+# 			if ax % 1 = 1:
+# 				if GetJoyAxis(joyport,1) = -1:
+# 					ax = ax + 1
+# 			if ax = 8:
+# 				assigning = False
+
+
+# 		# map the Input values so the red dots can be drawn in position
+# 		Local x1j# = GetJoyByAxis(joyport,j[joyport].x1id-1,j[joyport].x1invert,j[joyport].x1scale,j[joyport].x1center)
+# 		Local y1j# = GetJoyByAxis(joyport,j[joyport].y1id-1,j[joyport].y1invert,j[joyport].y1scale,j[joyport].y1center)
+# 		Local x2j# = GetJoyByAxis(joyport,j[joyport].x2id-1,j[joyport].x2invert,j[joyport].x2scale,j[joyport].x2center)
+# 		Local y2j# = GetJoyByAxis(joyport,j[joyport].y2id-1,j[joyport].y2invert,j[joyport].y2scale,j[joyport].y2center)
+
+# 		# dead band
+# 		if abs(x1j) < j[joyport].x1dz: x1j = 0
+# 		if abs(y1j) < j[joyport].y1dz: y1j = 0
+# 		if abs(x2j) < j[joyport].x2dz: x2j = 0
+# 		if abs(y2j) < j[joyport].y2dz: y2j = 0
+
+# 		#scale to box size
+# 		Local x1:Int = FitValueToRange#( x1j, -1, 1,  10, 110 )
+# 		Local y1:Int = FitValueToRange#( y1j, -1, 1, 275, 375 )
+# 		Local x2:Int = FitValueToRange#( x2j, -1, 1, 250, 350 )
+# 		Local y2:Int = FitValueToRange#( y2j, -1, 1, 275, 375 )
+
+# 		#draw the control dots
+# 		SetColor 185,0,0
+# 		DrawOval x1-5-j[joyport].x1center*50,y1-5-j[joyport].y1center*50,10,10
+# 		DrawOval x2-5-j[joyport].x2center*50,y2-5-j[joyport].y2center*50,10,10
+
+# 		#draw cursor
+# 		DrawTarget(mx,my,cnt,4)
+
+# 		if infotimer > 0
+# 			DrawText info$,320,180
+# 			infotimer -= 1
+
+# 		cnt += 1
+# 		Flip 1
+# 		tim = time() - tim
+# 		if tim < 20 and tim > 0
+# 			Delay 20-tim
+
+# 	Setorigin 0,0
 
 
 
@@ -2787,10 +2800,10 @@ def DrawConfigStuff():
 	DrawText "Y axis: " + joy_label$[j[joyport].y1id],20,416
 	DrawText "Y axis: " + joy_label$[j[joyport].y2id],260,416
 
-	if deadbandadjust = 1
+	if DEADBANDADJUST == 1:
 		SetColor 100,100,100
 		Rect 10+1,275+1, 100-2,100-2,1
-	elif deadbandadjust = 2
+	elif DEADBANDADJUST == 2:
 		SetColor 100,100,100
 		Rect 250+1,275+1, 100-2,100-2,1
 
@@ -2985,10 +2998,10 @@ def CheckInput(port: int) -> int:
 	if RectsOverlap  (mx-2,my-2,4,4,10,275,100,100)
 		Rect 10,275,100,100,0
 		if MouseHit(1)
-			if deadbandadjust = 1
-				deadbandadjust = 0
+			if DEADBANDADJUST = 1
+				DEADBANDADJUST = 0
 			else:
-				deadbandadjust = 1
+				DEADBANDADJUST = 1
 
 
 
@@ -2996,10 +3009,10 @@ def CheckInput(port: int) -> int:
 	if RectsOverlap  (mx-2,my-2,4,4,250,275,100,100)
 		Rect 250,275,100,100,0
 		if MouseHit(1)
-			if deadbandadjust = 2
-				deadbandadjust = 0
+			if DEADBANDADJUST = 2
+				DEADBANDADJUST = 0
 			else:
-				deadbandadjust = 2
+				DEADBANDADJUST = 2
 
 
 
@@ -3156,8 +3169,8 @@ def CheckInput(port: int) -> int:
 
 
 	if KeyDown(KEY_LSHIFT) or KeyDown(KEY_RSHIFT):
-		if deadbandadjust > 0:
-			if deadbandadjust = 1:
+		if DEADBANDADJUST > 0:
+			if DEADBANDADJUST = 1:
 				if KeyDown(KEY_UP):
 					j[joyport].y1dz -= .01
 					if j[joyport].y1dz < 0:
@@ -3200,8 +3213,8 @@ def CheckInput(port: int) -> int:
 						j[joyport].x2dz= .9
 
 	else:
-		if deadbandadjust > 0:
-			if deadbandadjust == 1:
+		if DEADBANDADJUST > 0:
+			if DEADBANDADJUST == 1:
 				if KeyDown(KEY_UP):
 					j[joyport].y1center -= .01
 					if j[joyport].y1center < -.9:

@@ -50,10 +50,7 @@ bouncyshots: int = 0
 shotspeed: float = 3
 MAXPLAYERSPEED: int = 6.5
 killcount: int = 0
-multiplier: int = 1
-
-#Global multiplieramount: int[] = [25,50,100,200,400,800,1600,3200,6400,12800]
-multiplieramount = [25,100,200,400,800,1600,2500,3500,5000,5500]
+multiplier: int = 1 # score multiplier
 
 speed_nme: float = 1
 speed_nme1: float = 1
@@ -158,7 +155,7 @@ def DoGameOver() -> int:
 		if tim < 20 and tim > 0:
 			sleep(20-tim)
 
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0)) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and CONTROLTYPE = 3 and bombtime = 0)) or (JoyDown(j_d_option,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			if Options(True):
 				return True
 
@@ -777,7 +774,7 @@ def CreateEnemy(kind: int,freeze: int,corner: int=0,rate: int=100,gkind: int=1,s
 def Updateplayer()
 
 	Local xx: float, yy: float, xy: float,  jb: int, i: int, r: int	, speed: float
-	Select controltype
+	Select CONTROLTYPE
 
 		Case 1 # mouse
 			#bombs
@@ -1288,10 +1285,10 @@ if cheat:
 			playsound2(shieldwarningsnd)
 
 
-	if supershots > 0
-		supershots  -= 1
+	if supershots > 0:
+		supershots -= 1
 
-	if bouncyshots> 0
+	if bouncyshots > 0:
 		bouncyshots -= 1
 
 
@@ -1967,7 +1964,7 @@ def main():
 
 				gcount += 1
 
-				if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype == 3 and bombtime == 0) or (JoyDown(j_d_option,joyport) and controltype == 0 and bombtime == 0)
+				if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and CONTROLTYPE == 3 and bombtime == 0) or (JoyDown(j_d_option,joyport) and CONTROLTYPE == 0 and bombtime == 0)
 					ret: int = Options(True)
 					if ret > 0:
 						done = True

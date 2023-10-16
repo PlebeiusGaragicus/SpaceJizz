@@ -211,11 +211,11 @@ def ShowFriends(f: int = -1) -> int:
 		if bombtime < 0:
 			bombtime = 0
 
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and CONTROLTYPE = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			if Options(False):
 				return True
 
-		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and CONTROLTYPE = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			counter = 1000
 			playgame = True
 
@@ -367,14 +367,14 @@ def ShowEnemies(f: int = -1) -> int:
 			bombtime = 0
 
 		if KeyHit(KEY_ESCAPE) or \
-			(JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or \
-			(JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
+			(JoyDown(j_pad_option,joyport) and CONTROLTYPE = 3 and bombtime = 0) or \
+			(JoyDown(j_d_option,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			if Options(False):
 				return True
 
 		if KeyHit(k_bomb) or MouseHit(m_bomb) or \
-			(JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or \
-			(JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
+			(JoyDown(j_pad_bomb,joyport) and CONTROLTYPE = 3 and bombtime = 0) or \
+			(JoyDown(j_d_bomb,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			counter = 1000
 			playgame = True
 
@@ -474,12 +474,12 @@ def ShowScores(f: int=-1) -> int:
 		bombtime -= 1
 		if bombtime < 0:
 			bombtime = 0
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and CONTROLTYPE = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			if Options(False):
 				return True
 			bombtime = 20
 
-		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and CONTROLTYPE = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			counter = 1000
 			playgame = True
 			bombtime = 20
@@ -574,11 +574,11 @@ def ShowTitle() -> int:
 		if tcounter > 600:
 			tcounter = 600
 
-		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and CONTROLTYPE = 3 and bombtime = 0) or (JoyDown(j_d_option,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			if Options(False):
 				return True
 
-		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and controltype = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and controltype = 0 and bombtime = 0):
+		if KeyHit(k_bomb) or MouseHit(m_bomb) or (JoyDown(j_pad_bomb,joyport) and CONTROLTYPE = 3 and bombtime = 0) or (JoyDown(j_d_bomb,joyport) and CONTROLTYPE = 0 and bombtime = 0):
 			counter = 1000
 			playgame = True
 
