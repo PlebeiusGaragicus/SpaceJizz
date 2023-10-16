@@ -194,11 +194,8 @@ def GetReady() -> int:
 		gridpoint.UpdateGrid()
 		UpdateAll()
 		DrawAll()
-#		if KeyDown(KEY_TAB): End
-#		if not KeyDown(KEY_F8)
-			SetColor 0,55+abs(Sin(count))*200,0
-			DrawString("GET READY", SCREENW/2-abs(Sin(count))*19*5*9*.5, SCREENH/2-abs(Sin(count))*100, abs(Sin(count))*20)
-#			DrawString("GET READY", SCREENW/2+60-abs(Sin(count))*SCREENW/2,SCREENH/2-abs(Sin(count))*100,abs(Sin(count))*20)
+		SetColor 0,55+abs(Sin(count))*200,0
+		DrawString("GET READY", SCREENW/2-abs(Sin(count))*19*5*9*.5, SCREENH/2-abs(Sin(count))*100, abs(Sin(count))*20)
 
 		Flip
 		tim = time() - tim
@@ -793,12 +790,6 @@ def Updateplayer()
 
 			jdmx = xx/128*(1+m_sensitivity*5)
 			jdmy = yy/128*(1+m_sensitivity*5)
-#			xy = sqrt(jdmx*jdmx+jdmy*jdmy)
-
-#			if xy > 10
-#				jdmx = jdmx/xy*10
-#				jdmy = jdmy/xy*10
-#
 
 			#fire
 			if MouseDown(m_fire):
@@ -1074,7 +1065,6 @@ def Updateplayer()
 							jdfx = mxaim
 							jdfy = myaim
 						else:
-#							MoveMouse(SCREENW/2,SCREENH/2)
 							jdfx = 0
 							jdfy = 0
 
@@ -1135,8 +1125,6 @@ def Updateplayer()
 					oldmx = jdmx
 					oldmy = jdmy
 
-
-
 	px = px + jdmx*MAXPLAYERSPEED
 	if px < 16 or px > PLAYFIELDW-16
 		px = px - jdmx*MAXPLAYERSPEED
@@ -1150,7 +1138,6 @@ def Updateplayer()
 	if jdmy != 0 or jdmx != 0
 		pr = ATan2(jdmy,jdmx)-90
 
-
 	# create player trail
 	if abs(jdmx) > 0.1 or abs(jdmy) > 0.1
 		for Local tt: int = 0 To 2
@@ -1159,9 +1146,6 @@ def Updateplayer()
 			py-jdmy*12+Cos(gcount*12+tt*45)*8,..
 			COL_TRAIL_R,COL_TRAIL_G,COL_TRAIL_B,..
 			-jdmx,-jdmy)
-
-
-
 
 	if scroll:
 		# scroll the playfield
@@ -1443,11 +1427,8 @@ if cheat:
 				PlaySound2(shot_born_snd)
 
 
-
-
 	# check triangle bond lines
-	Local ll:le
-	for ll:le = EachIn LINEEND_LIST
+	for ll in LINEEND_LIST:
 		if ll.attached is True:
 			if ll.checked == False:
 				ll.checked = True
@@ -1459,10 +1440,7 @@ if cheat:
 					Exit
 
 
-
-
 	# sucked into blackholes
-	Local n5:nme5
 	for n5 in NME5_LIST:
 		Local ddx: float = n5.x-px
 		Local ddy: float = n5.y-py
@@ -1477,7 +1455,7 @@ if cheat:
 
 
 
-def BlackholeParticles()
+def BlackholeParticles():
 	"""
 	"""
 
@@ -1630,8 +1608,6 @@ def DrawMessage():
 
 
 def DrawAll():
-#if KeyDown(KEY_TAB): End
-#if KeyDown(KEY_F8): return
 
 	#Local p:part
 	Local n:nme
@@ -1856,145 +1832,3 @@ def SafeXY(x# Var,y# Var, plx: int,ply: int,range: int, close: int = 0)
 			dx = plx-x
 			dy = ply-y
 			dist = (dx*dx + dy*dy)
-
-
-
-
-
-
-
-
-def setup():
-	pygame.init()
-	screen: pygame.display = pygame.display.set_mode((640, 480))
-
-	JoyCount()
-	LoadConfig() # see control.bmx for more global settings
-	LoadColours()
-	GetGfx%es()
-	FindSetting()
-	SetController()
-	SetupKeyTable()
-	SetUp()
-	LoadSounds()
-
-	# SeedRnd(time())
-	seed( time() )
-
-	score.LoadScores()
-	HideMouse()
-	Main()
-	ShowMouse()
-	SaveConfig()
-	SaveColours() # only needed once
-	score.SaveScores()
-
-
-
-
-
-def main():
-	setup()
-
-	tim: int
-	tim2: int
-	tim3: int
-	tim4: int
-
-	looper: int
-	f: int
-	done: bool = False
-
-	part.CreateAll()
-
-	FlushKeys()
-
-	while not done:
-		while playgame is False and done is False:
-			StartMusic(0)
-			if playgame is False and done is False:
-				done = ShowTitle()
-			if playgame is False and done is False:
-				done = ShowScores()
-			if playgame is False and done is False:
-				done = ShowFriends()
-			if playgame is False and done is False:
-				done = ShowEnemies()
-
-		if playgame and not done:
-			if not cheat:
-				valid = True
-				nokillme = False
-
-			StopMusic()
-			remove_all(True)
-			ResetGame()
-			dying = True
-			done = GetReady()
-			dying = False
-			Cls
-
-			while gameover is not True or playgame is False:
-				tim = time()
-				Spawn(gcount)
-				UpdatePlayer()
-				UpdateAll()
-				tim2: int = time()-tim
-				DrawAll()
-				tim3: int = time()-tim
-
-				if gameover:
-					StopMusic()
-					done = DoGameOver()
-					playgame = False
-
-				if cheat:
-					DrawString("Update ms: "+tim2, 10,30,3)
-					DrawString("Draw ms: " + (tim3 - tim2) , 10 , 50 , 3)
-					DrawString("Last Frame ms: " + (tim4) , 10 , 70 , 3)
-					Flip 1
-					if KeyDown(KEY_P):
-						pause: bool = True
-						while pause:
-							sleep(100)
-							if KeyHit(KEY_O):
-								pause = False
-				else:
-					Flip 1
-
-				gcount += 1
-
-				if KeyHit(KEY_ESCAPE) or (JoyDown(j_pad_option,joyport) and CONTROLTYPE == 3 and bombtime == 0) or (JoyDown(j_d_option,joyport) and CONTROLTYPE == 0 and bombtime == 0)
-					ret: int = Options(True)
-					if ret > 0:
-						done = True
-						gameover = True
-						if ret = 2:
-							StopMusic()
-							playgame = False
-							done = False
-
-					bombtime = 20
-
-				tim4: int = time() - tim
-				if tim4 < 20 and tim4 > 0:
-					sleep(20-tim4)
-
-				Cls
-			# Until gameover = True or playgame = False
-
-
-			remove_all(True) # in case some sounds still playing and we quit
-			if done == False:
-				gxoff = 0
-				gyoff = 0
-				if pscore > lowesthiscore:
-					StartMusic(2)
-					f = score.GetHighScore()
-					done = ShowScores(f)
-					pscore = 0
-					StopMusic()
-				else:
-					if pscore > 0:
-						StartMusic(0);
-						done = ShowScores(-20)

@@ -17,7 +17,7 @@ screensizew = 1024
 screensizeh = 768
 windowed = True
 
-GetGfxModes()
+# GetGfxModes()
 FindSetting()
 SetUp()
 

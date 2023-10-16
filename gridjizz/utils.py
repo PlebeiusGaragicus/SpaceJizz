@@ -1,7 +1,3 @@
-# Import BRL.Random
-# Import BRL.PNGLoader
-
-
 Global rcol% = 250, rcoldelta# = -3
 Global gcol% = 20,  gcoldelta# = 5
 Global bcol% = 30,  bcoldelta# = 7
@@ -276,10 +272,10 @@ def TurnToFace:Int(x#,y#, dx#, dy#, plx#, ply#)
 
 
 
-def SaveScreenshot(f$)
-	Local img:TPixmap = GrabPixmap(0,0,GraphicsWidth(),GraphicsHeight())
-	SavePixmapPNG(img, f$)
-Enddef
+# def SaveScreenshot(f$)
+# 	Local img:TPixmap = GrabPixmap(0,0,GraphicsWidth(),GraphicsHeight())
+# 	SavePixmapPNG(img, f$)
+# Enddef
 
 
 #Key names  -  Falken #05
